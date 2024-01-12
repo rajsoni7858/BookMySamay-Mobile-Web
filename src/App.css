@@ -57,3 +57,19 @@
   left: 0;
   z-index: 1;
 }
+
+/* Dashboard card counter */
+.ant-card-body {
+  border-radius: 20px !important;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1) !important;
+}
+@media screen and (max-width: 768px) {
+  .responsive-table .ant-table-thead > tr > th:nth-child(1),
+  .responsive-table .ant-table-tbody > tr > td:nth-child(1),
+  .responsive-table .ant-table-thead > tr > th:nth-child(3),
+  .responsive-table .ant-table-tbody > tr > td:nth-child(3),
+  .responsive-table .ant-table-thead > tr > th:nth-child(4),
+  .responsive-table .ant-table-tbody > tr > td:nth-child(4) {
+    display: none;
+  }
+}
