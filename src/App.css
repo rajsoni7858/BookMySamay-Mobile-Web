@@ -57,19 +57,238 @@
   left: 0;
   z-index: 1;
 }
+.side-drawer img {
+  width: 20px !important;
+  height: 20px !important;
+  margin-right: 15px;
+}
+.side-drawer ul {
+  text-align: start;
+  margin: 0;
+}
 
 /* Dashboard card counter */
+.ant-steps.ant-steps-vertical {
+  display: flex !important;
+  flex-direction: inherit;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+}
+.ant-statistic-content-value-int {
+  color: #1c4792;
+}
 .ant-card-body {
-  border-radius: 20px !important;
+  border-radius: 11px !important;
   box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1) !important;
 }
-@media screen and (max-width: 768px) {
-  .responsive-table .ant-table-thead > tr > th:nth-child(1),
-  .responsive-table .ant-table-tbody > tr > td:nth-child(1),
-  .responsive-table .ant-table-thead > tr > th:nth-child(3),
-  .responsive-table .ant-table-tbody > tr > td:nth-child(3),
-  .responsive-table .ant-table-thead > tr > th:nth-child(4),
-  .responsive-table .ant-table-tbody > tr > td:nth-child(4) {
-    display: none;
-  }
+.ant-card .ant-card-body {
+  padding: 5px !important;
+}
+.ant-statistic-content {
+  color: #282c34 !important;
+}
+.ant-steps .ant-steps-item-process .ant-steps-item-icon {
+  background-color: #0db7aa;
+  border-color: #0db7aa;
+}
+.ant-form-item-control-input-content {
+  margin: 6px;
+}
+.ant-form-item-control-input-content input {
+  border-color: #1c4792;
+}
+.ant-form-item-control-input-content .ant-picker {
+  background: #fff;
+  width: 100%;
+  border: 1px solid #1c4792;
+}
+.ant-form-item-control-input-content #workingDays,
+#holidayInWeek {
+  border: 1px solid #1c4792;
+  border-radius: 5px;
+  padding: 4px;
+}
+.ant-table-cell {
+  background-color: transparent;
+  border-radius: 5px;
+  border: none !important;
+}
+.ant-table-thead {
+  background: #f7f8fa;
+  border: none !important;
+}
+table {
+  border: none !important;
+}
+/* multiselect */
+/* Add custom styles to the MultiSelect dropdown */
+.p-multiselect {
+  width: 100%; /* Adjust the width as needed */
+}
+
+.p-multiselect-trigger {
+  background-color: #ffffff; /* Set the desired background color */
+  border: 1px solid #d9d9d9; /* Set the desired border color */
+  color: #333333; /* Set the desired text color */
+}
+
+.p-multiselect-trigger:hover {
+  background-color: #f0f0f0; /* Set the desired background color on hover */
+}
+
+.p-multiselect-label {
+  color: #333333; /* Set the desired text color */
+}
+
+.p-multiselect-panel {
+  background-color: #ffffff; /* Set the desired background color for the dropdown panel */
+  border: 1px solid #d9d9d9; /* Set the desired border color for the dropdown panel */
+}
+
+/* Add any other custom styles as needed */
+/* Add custom styles to the MultiSelect dropdown */
+.p-multiselect {
+  width: 100%; /* Adjust the width as needed */
+}
+
+.p-multiselect-trigger {
+  background-color: #ffffff; /* Set the desired background color */
+  border: 1px solid #d9d9d9; /* Set the desired border color */
+  color: #333333; /* Set the desired text color */
+}
+
+.p-multiselect-trigger:hover {
+  background-color: #f0f0f0; /* Set the desired background color on hover */
+}
+
+.p-multiselect-label {
+  color: #333333; /* Set the desired text color */
+}
+
+.p-multiselect-panel {
+  background-color: #ffffff; /* Set the desired background color for the dropdown panel */
+  border: 1px solid #d9d9d9; /* Set the desired border color for the dropdown panel */
+}
+
+/* Add any other custom styles as needed */
+/* Add custom styles to the MultiSelect dropdown */
+.p-multiselect {
+  width: 100%; /* Adjust the width as needed */
+}
+
+.p-multiselect-trigger {
+  background-color: #ffffff; /* Set the desired background color */
+  border: 1px solid #d9d9d9; /* Set the desired border color */
+  color: #333333; /* Set the desired text color */
+}
+
+.p-multiselect-trigger:hover {
+  background-color: #f0f0f0; /* Set the desired background color on hover */
+}
+
+.p-multiselect-label {
+  color: #333333; /* Set the desired text color */
+}
+/* Add any other custom styles as needed */
+.p-multiselect-trigger-icon {
+  margin-right: 8px; /* Adjust the right margin as needed */
+}
+
+.p-multiselect-trigger-icon-close {
+  margin-right: 4px; /* Adjust the right margin as needed */
+}
+
+.p-multiselect-trigger-icon-search {
+  margin-left: 4px; /* Adjust the left margin as needed */
+}
+/* 
+.ant-steps-vertical .ant-steps .ant-steps-item {
+  position: relative;
+  display: inline-block;
+  flex: 1;
+  overflow: hidden;
+  vertical-align: top;
+}
+.ant-steps-vertical .ant-steps-item-icon::after {
+  background-color: rgba(5, 5, 5, 0.06);
+}
+.ant-steps-vertical .ant-steps-item-icon::after {
+  position: absolute;
+  top: 16px;
+  inset-inline-start: 100%;
+  display: block;
+  width: 9999px;
+  height: 1px;
+  background: rgba(5, 5, 5, 0.06);
+  background-color: rgba(5, 5, 5, 0.06);
+  content: "";
+} */
+.ant-steps-item-title:after {
+  border: solid rgba(65, 64, 66, 0.1) !important;
+}
+
+/* user page edit  */
+.ant-space.css-dev-only-do-not-override-zl9ks2.ant-space-vertical.ant-space-gap-row-small.ant-space-gap-col-small {
+  width: 100%;
+}
+
+/* step */
+.ant-steps-item-icon {
+  width: 3em;
+  height: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-icon {
+  background-color: #21d47e;
+  border-color: #21d47e;
+}
+
+/* size of step container */
+.ant-steps {
+  width: 50%;
+}
+
+.ant-steps-horizontal .ant-steps-label-horizontal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* SideDrawer Menu */
+
+li {
+  list-style: none;
+  display: block;
+  justify-content: center;
+}
+.side-drawer nav ul li a.active {
+  color: #0db7aa;
+  height: auto;
+}
+.side-drawer nav ul li a.active::after {
+  content: "•"; /* Unicode character for a bullet, you can use other characters or an image */
+  color: #0db7aa; /* Set the same color as the active link */
+  margin-right: 5px; /* Adjust the distance between the dot and the text */
+  font-size: 8px; /* Adjust the size of the dot */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.side-drawer nav ul li a {
+  font-size: 18px;
+  color: #00140e;
+  font-weight: 300;
+  text-decoration: none;
+}
+
+ul {
+  display: block;
+  justify-content: center;
+  text-align: center;
+  align-content: center;
+  align-items: center;
 }

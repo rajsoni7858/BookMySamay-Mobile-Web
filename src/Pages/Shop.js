@@ -37,7 +37,7 @@ for (let i = 0; i < 100; i++) {
     key: i.toString(),
     ShopName: `raj ${i}`,
     MobileNo: "9427778440",
-    location: `London Park no. ${i}`,
+    setLocation: `London. ${i}`, // Corrected the key to "setLocation"
   });
 }
 
@@ -170,14 +170,14 @@ const Shop = () => {
     },
     {
       title: "Location",
-      dataIndex: "setLocation",
+      dataIndex: "setLocation", // Corrected dataIndex to match the key in originData
       width: "25%",
       editable: true,
     },
-
     {
       title: "operation",
       dataIndex: "operation",
+      width: "10%",
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
@@ -258,10 +258,7 @@ const Shop = () => {
                       dataSource={data}
                       columns={mergedColumns}
                       rowClassName="editable-row"
-                      pagination={{
-                        pageSize: 6, // Add this line to specify the number of rows per page
-                        onChange: cancel,
-                      }}
+                      // Remove the pagination prop
                     />
                   </Form>
                 </div>

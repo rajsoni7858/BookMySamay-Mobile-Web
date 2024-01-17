@@ -6,7 +6,11 @@ const { Title } = Typography;
 const Dashboard = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const currentDate = new Date();
-  const formattedDate = currentDate.toLocaleDateString();
+  const options = { day: "numeric", month: "short", year: "numeric" };
+  const formattedDate = new Intl.DateTimeFormat("en-IN", options).format(
+    currentDate
+  );
+
   const formattedTime = currentTime.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
@@ -18,18 +22,26 @@ const Dashboard = () => {
       gutter={[48, 16]}
       justify="center"
       align="middle"
-      style={{ marginTop: "20px", padding: 20 }}
+      style={{ margin: "20px", padding: 0 }}
     >
-      <Col span={24} style={{ textAlign: "left" }}>
-        <Title level={3} style={{ color: "black" }}>
+      <Col span={24} style={{ textAlign: "left", padding: 10 }}>
+        <Title level={3} style={{ color: "#00261C", margin: 0 }}>
           Hello {userName}
         </Title>
-        <Title level={5} style={{ color: "black", marginRight: "16px" }}>
+        <Title
+          level={5}
+          style={{
+            color: "#707EAE",
+            margin: "5px 0 30px",
+            fontSize: 14,
+            letterSpacing: 0.11,
+          }}
+        >
           {formattedTime}
           {formattedDate}
         </Title>
       </Col>
-      <Col xs={12} sm={12} md={12} lg={8} xl={6}>
+      <Col xs={12} sm={12} md={12} lg={8} xl={6} style={{ padding: 10 }}>
         <Card bordered={false}>
           <div>
             <img
@@ -38,8 +50,11 @@ const Dashboard = () => {
               style={{
                 display: "Flex",
                 justifyContent: "left",
-                width: 25,
-                height: 25,
+                width: 45,
+                height: 35,
+                position: "absolute",
+                top: "-15px",
+                left: "25px",
               }}
             />
             <Statistic
@@ -51,14 +66,21 @@ const Dashboard = () => {
                 textAlign: "right",
               }}
             />
-            <Title level={5} style={{ textAlign: "center", margin: 0 }}>
+            <Title
+              level={5}
+              style={{
+                textAlign: "center",
+                fontSize: 12,
+                fontweight: 700,
+                margin: 0,
+              }}
+            >
               Total Member
             </Title>
           </div>
         </Card>
       </Col>
-
-      <Col xs={12} sm={12} md={12} lg={8} xl={6}>
+      <Col xs={12} sm={12} md={12} lg={8} xl={6} style={{ padding: 10 }}>
         <Card
           bordered={false}
           style={{
@@ -74,8 +96,11 @@ const Dashboard = () => {
                 display: "Flex",
                 justifyContent: "left",
                 paddingleft: 20,
-                width: 25,
-                height: 25,
+                width: 45,
+                height: 35,
+                position: "absolute",
+                top: "-15px",
+                left: "25px",
               }}
             />
             <Statistic
@@ -88,13 +113,21 @@ const Dashboard = () => {
                 color: "#1C4792 !important",
               }}
             />
-            <Title level={5} style={{ textAlign: "center", margin: 0 }}>
+            <Title
+              level={5}
+              style={{
+                textAlign: "center",
+                fontSize: 12,
+                fontweight: 700,
+                margin: 0,
+              }}
+            >
               Active Member
             </Title>
           </div>
         </Card>
       </Col>
-      <Col xs={12} sm={12} md={12} lg={8} xl={6}>
+      <Col xs={12} sm={12} md={12} lg={8} xl={6} style={{ padding: 10 }}>
         <Card bordered={false}>
           <div>
             <img
@@ -103,8 +136,11 @@ const Dashboard = () => {
               style={{
                 display: "Flex",
                 justifyContent: "left",
-                width: 25,
-                height: 25,
+                width: 45,
+                height: 35,
+                position: "absolute",
+                top: "-15px",
+                left: "25px",
               }}
             />
             <Statistic
@@ -116,7 +152,15 @@ const Dashboard = () => {
                 textAlign: "right",
               }}
             />
-            <Title level={5} style={{ textAlign: "center", margin: 0 }}>
+            <Title
+              level={5}
+              style={{
+                textAlign: "center",
+                fontSize: 12,
+                fontweight: 700,
+                margin: 0,
+              }}
+            >
               Inactive Member
             </Title>
           </div>
