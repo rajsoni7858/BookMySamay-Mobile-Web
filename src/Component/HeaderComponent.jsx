@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Layout, Row, Col, Menu, Avatar, Image } from "antd";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import logo from "/Users/Raj/BookMySamay-Mobile-Web/src/Assets/Images/logo.png";
-import SideDrawer from "./SideDrawer";
+import SideDrawer from "./SideDrawerComponent";
 import menuIcon1 from "../Assets/Images/Avatar.png"; // Adjust the path
 
 const { Header } = Layout;

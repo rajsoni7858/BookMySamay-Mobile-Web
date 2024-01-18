@@ -35,8 +35,8 @@ const UserPage = () => {
       key: "role",
     },
     {
-      title: "Action",
-      key: "action",
+      title: "Edit",
+      key: "edit",
       render: (text, record) => (
         <Space size="middle">
           <EditOutlined onClick={() => handleEdit(record)} />
@@ -67,6 +67,8 @@ const UserPage = () => {
         columns={columns}
         dataSource={data}
         style={{ width: "100%", padding: 20 }}
+        bordered
+        className="custom-table"
       />
 
       <Modal

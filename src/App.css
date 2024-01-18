@@ -36,12 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+/* Custom Css start*/
 .hamburger-menu {
   cursor: pointer;
   font-size: 20px;
   margin-left: 10px;
 }
-/* Add styles for the side drawer */
+
 .side-drawer {
   position: fixed;
   top: 0;
@@ -52,7 +54,6 @@
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
   transition: left 0.3s ease-out;
 }
-
 .side-drawer.open {
   left: 0;
   z-index: 1;
@@ -67,7 +68,7 @@
   margin: 0;
 }
 
-/* Dashboard card counter */
+/* Dashboard page card counter */
 .ant-steps.ant-steps-vertical {
   display: flex !important;
   flex-direction: inherit;
@@ -111,9 +112,9 @@
   padding: 4px;
 }
 .ant-table-cell {
-  background-color: transparent;
   border-radius: 5px;
   border: none !important;
+  padding: 10px 0px !important;
 }
 .ant-table-thead {
   background: #f7f8fa;
@@ -122,6 +123,7 @@
 table {
   border: none !important;
 }
+
 /* multiselect */
 /* Add custom styles to the MultiSelect dropdown */
 .p-multiselect {
@@ -147,7 +149,6 @@ table {
   border: 1px solid #d9d9d9; /* Set the desired border color for the dropdown panel */
 }
 
-/* Add any other custom styles as needed */
 /* Add custom styles to the MultiSelect dropdown */
 .p-multiselect {
   width: 100%; /* Adjust the width as needed */
@@ -203,7 +204,9 @@ table {
 .p-multiselect-trigger-icon-search {
   margin-left: 4px; /* Adjust the left margin as needed */
 }
-/* 
+.ant-steps.ant-steps-vertical > .ant-steps-item {
+  padding: 0px 18px !important;
+}
 .ant-steps-vertical .ant-steps .ant-steps-item {
   position: relative;
   display: inline-block;
@@ -219,22 +222,19 @@ table {
   top: 16px;
   inset-inline-start: 100%;
   display: block;
-  width: 9999px;
-  height: 1px;
-  background: rgba(5, 5, 5, 0.06);
-  background-color: rgba(5, 5, 5, 0.06);
+  width: 100px;
+  height: 3px;
+  background: #1c4792;
   content: "";
-} */
+  left: 0;
+  z-index: -1;
+}
+.ant-steps.ant-steps-vertical > .ant-steps-item .ant-steps-item-icon {
+  float: inline-end !important;
+}
 .ant-steps-item-title:after {
-  border: solid rgba(65, 64, 66, 0.1) !important;
+  border: solid #1c4792 !important;
 }
-
-/* user page edit  */
-.ant-space.css-dev-only-do-not-override-zl9ks2.ant-space-vertical.ant-space-gap-row-small.ant-space-gap-col-small {
-  width: 100%;
-}
-
-/* step */
 .ant-steps-item-icon {
   width: 3em;
   height: 3em;
@@ -244,8 +244,46 @@ table {
 }
 
 .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-icon {
-  background-color: #21d47e;
-  border-color: #21d47e;
+  background-color: #0db7aa;
+  border-color: #0db7aa;
+}
+
+.ant-steps .ant-steps-item-wait .ant-steps-item-icon {
+  background-color: #d7d7d7;
+  border-color: transparent;
+  border: 1px solid #1c4792;
+}
+
+/* shop */
+.editable-row thead th {
+  background-color: #f7f8fa !important;
+  text-align: center;
+}
+.editable-row thead th:nth-child(4) {
+  border-top-right-radius: 5%;
+  border-bottom-right-radius: 5%;
+}
+.editable-row thead th:nth-child(1) {
+  border-top-left-radius: 5%;
+  border-bottom-left-radius: 5%;
+}
+/* user page edit  */
+.ant-table-container {
+  border: none !important;
+}
+.custom-table thead th {
+  background-color: #f7f8fa !important;
+}
+.custom-table thead th:nth-child(4) {
+  border-top-right-radius: 5%;
+  border-bottom-right-radius: 5%;
+}
+.custom-table thead th:nth-child(1) {
+  border-top-left-radius: 5%;
+  border-bottom-left-radius: 5%;
+}
+.ant-space.css-dev-only-do-not-override-zl9ks2.ant-space-vertical.ant-space-gap-row-small.ant-space-gap-col-small {
+  width: 100%;
 }
 
 /* size of step container */

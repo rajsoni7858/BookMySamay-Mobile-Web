@@ -9,8 +9,8 @@ import { CheckOutlined } from "@ant-design/icons";
 
 const { Step } = Steps;
 
-const MultiStepForm = () => {
-  const [form] = Form.useForm();
+const MultiStepForm = ({ form, formId }) => {
+  // const [form] = Form.useForm();
   const [currentStep, setCurrentStep] = useState(0);
 
   const steps = [
@@ -38,6 +38,7 @@ const MultiStepForm = () => {
   return (
     <Form
       form={form}
+      id={formId}
       onFinish={handleFinish}
       layout="vertical"
       style={{ paddingTop: 50, margin: 20 }}
@@ -53,7 +54,12 @@ const MultiStepForm = () => {
       <div style={{ marginTop: "16px" }}>
         {currentStep < steps.length - 1 && (
           <Button
-            style={{ width: "80%", background: "#1C4792", margin: 20 }}
+            style={{
+              width: "80%",
+              background: "#1C4792",
+              margin: 20,
+              borderRadius: "12px",
+            }}
             type="primary"
             onClick={handleNext}
           >

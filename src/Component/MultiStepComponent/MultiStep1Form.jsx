@@ -1,28 +1,38 @@
 // BasicDetailsForm.js
 import React, { useState } from "react";
 import Multiselect from "multiselect-react-dropdown";
-import { Form, Input, Row, Col, Select, DatePicker, TimePicker } from "antd";
-import { MultiSelect } from "primereact/multiselect";
-import "../App.css";
+import {
+  Form,
+  Input,
+  Row,
+  Col,
+  Select,
+  Space,
+  DatePicker,
+  TimePicker,
+} from "antd";
+import "../../App.css";
 const BasicDetailsForm = () => {
-  const [selectedDays, setSelectedDays] = useState(null);
   const [selectedHolidays, setSelectedHolidays] = useState(null);
-  const days = [
-    { name: "Monday", code: "M" },
-    { name: "Tuesday", code: "T" },
-    { name: "Wednesday", code: "W" },
-    { name: "Thursday", code: "T" },
-    { name: "Friday", code: "F" },
-    { name: "Saturday", code: "S" },
-    { name: "Sunday", code: "S" },
+
+  const options = [
+    { label: "Monday", value: "Monday" },
+    { label: "Tuesday", value: "Tuesday" },
+    { label: "Wednesday", value: "Wednesday" },
+    { label: "Thursday", value: "Thursday" },
+    { label: "Friday", value: "Friday" },
+    { label: "Saturday", value: "Saturday" },
   ];
 
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+  };
   return (
     <div style={{ padding: 0 }}>
       <Form>
         <h5
           style={{
-            fontSize: 20,
+            fontSize: 17,
             fontWeight: 600,
             textAlign: "center",
           }}
@@ -69,34 +79,44 @@ const BasicDetailsForm = () => {
                 { required: true, message: "Please enter the Shop Owner" },
               ]}
             >
-              <div className="card flex justify-content-center">
-                <MultiSelect
-                  value={selectedDays}
-                  onChange={(e) => setSelectedDays(e.value)}
-                  options={days}
-                  optionLabel="name"
-                  filter
-                  placeholder="Select Days"
-                  maxSelectedLabels={2}
-                  className="w-full md:w-20rem"
+              <Space
+                style={{
+                  width: "100%",
+                }}
+                direction="vertical"
+              >
+                <Select
+                  mode="multiple"
+                  allowClear
+                  style={{
+                    width: "100%",
+                  }}
+                  placeholder="Please select"
+                  onChange={handleChange}
+                  options={options}
                 />
-              </div>
+              </Space>
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Holiday in Week" name="holidayInWeek">
-              <div className="card flex justify-content-center">
-                <MultiSelect
-                  value={selectedHolidays}
-                  onChange={(e) => setSelectedHolidays(e.value)}
-                  options={days}
-                  optionLabel="name"
-                  filter
-                  placeholder="Select Days"
-                  maxSelectedLabels={2}
-                  className="w-full md:w-20rem"
+              <Space
+                style={{
+                  width: "100%",
+                }}
+                direction="vertical"
+              >
+                <Select
+                  mode="multiple"
+                  allowClear
+                  style={{
+                    width: "100%",
+                  }}
+                  placeholder="Please select"
+                  onChange={handleChange}
+                  options={options}
                 />
-              </div>
+              </Space>
             </Form.Item>
           </Col>
         </Row>

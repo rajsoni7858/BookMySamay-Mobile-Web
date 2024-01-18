@@ -8,7 +8,7 @@ const ImageUploadForm = () => {
     <>
       <h5
         style={{
-          fontSize: 20,
+          fontSize: 17,
           fontWeight: 600,
           textAlign: "center",
         }}

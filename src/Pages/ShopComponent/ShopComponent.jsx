@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../App.css";
+import "../../App.css";
 import {
   Form,
   Input,
@@ -16,6 +16,7 @@ import {
   Col,
   TimePicker,
   Select,
+  Space,
   Modal,
 } from "antd";
 import {
@@ -25,7 +26,14 @@ import {
   SaveOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
-import { useHistory } from "react-router-dom";
+import {
+  Link,
+  Route,
+  Switch,
+  useHistory,
+  useRouteMatch,
+} from "react-router-dom";
+import EditShop from "./EditShopComponent";
 
 const { useBreakpoint } = Grid;
 const { Option } = Select;
@@ -84,7 +92,8 @@ const EditableCell = ({
   );
 };
 
-const Shop = () => {
+const Shop = ({ users }) => {
+  const { path } = useRouteMatch();
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const [form] = Form.useForm();
@@ -137,77 +146,38 @@ const Shop = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-  const [additionalFieldsModalVisible, setAdditionalFieldsModalVisible] =
-    useState(false);
+
   const [selectedRecord, setSelectedRecord] = useState(null);
-
-  const showAdditionalFieldsModal = (record) => {
-    setAdditionalFieldsModalVisible(true);
-    setSelectedRecord(record);
-  };
-
-  const handleAdditionalFieldsOk = () => {
-    // Handle saving additional fields data
-    setAdditionalFieldsModalVisible(false);
-  };
-
-  const handleAdditionalFieldsCancel = () => {
-    setAdditionalFieldsModalVisible(false);
-  };
 
   const columns = [
     {
       title: "ShopName",
       dataIndex: "ShopName",
-      width: "25%",
+      width: "30%",
       editable: true,
     },
     {
       title: "MobileNo",
       dataIndex: "MobileNo",
-      width: "25%",
+      width: "30%",
       editable: true,
     },
     {
       title: "Location",
       dataIndex: "setLocation", // Corrected dataIndex to match the key in originData
-      width: "25%",
+      width: "30%",
       editable: true,
     },
     {
-      title: "operation",
-      dataIndex: "operation",
-      width: "10%",
-      render: (_, record) => {
-        const editable = isEditing(record);
-        return editable ? (
-          <span>
-            <Typography.Link
-              onClick={() => save(record.key)}
-              style={{
-                marginRight: 8,
-              }}
-            >
-              <SaveOutlined />
-            </Typography.Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <a>
-                <CloseOutlined />
-              </a>
-            </Popconfirm>
-          </span>
-        ) : (
-          <span>
-            <Typography.Link
-              disabled={editingKey !== ""}
-              onClick={() => showAdditionalFieldsModal(record)}
-              style={{ marginRight: 8 }}
-            >
-              <EditOutlined />
-            </Typography.Link>
-          </span>
-        );
-      },
+      title: "Edit",
+      key: "Edit",
+      render: (text, record) => (
+        <Space size="middle">
+          <Link to={`/editshop/${record.key}`}>
+            <EditOutlined />
+          </Link>
+        </Space>
+      ),
     },
   ];
 
@@ -229,6 +199,11 @@ const Shop = () => {
 
   const history = useHistory();
 
+  const handleAddShopClick = () => {
+    // Redirect to the AddShop component or any other page
+    history.push("/addshop"); // Change "/addshop" to the path you want to navigate to
+  };
+
   const screens = useBreakpoint();
 
   return (
@@ -245,9 +220,20 @@ const Shop = () => {
         <Layout style={{ background: "transparent", borderRadius: 15 }}>
           <Content>
             <Row gutter={[16, 16]}>
-              <Col xs={24} sm={12} md={24} lg={24} xl={24}>
+              <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <div style={{ width: "100%", padding: 0 }}>
                   <Form form={form} component={false}>
+                    <Button
+                      type="primary"
+                      style={{
+                        marginBottom: 16,
+                        float: "right",
+                        background: "#1C4792",
+                      }}
+                      onClick={handleAddShopClick}
+                    >
+                      Add Shop
+                    </Button>
                     <Table
                       components={{
                         body: {
@@ -265,49 +251,17 @@ const Shop = () => {
               </Col>
               {/* Add more Col components for responsiveness */}
             </Row>
+            {/* <div>
+              <Switch>
+                <Route exact path={path}>
+                  <Table columns={columns} dataSource={users} />
+                </Route>
+                <Route path={`${path}/editshop/:userId`}>
+                  <MultiStepForm />
+                </Route>
+              </Switch>
+            </div> */}
           </Content>
-          <div style={{ padding: 0 }}>
-            {/* ... (previous code) */}
-
-            {/* Additional Fields Modal */}
-            <Modal
-              title="Here you need to fill the shop details"
-              visible={additionalFieldsModalVisible}
-              onOk={handleAdditionalFieldsOk}
-              onCancel={handleAdditionalFieldsCancel}
-            >
-              {/* Form fields for additional information */}
-              <Form>
-                {/* Use form fields for shop owner, location, set location, working days, holiday in week, open time, close time */}
-                {/* Example: */}
-                <Form.Item label="Shop Name" name="shopName">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Shop Owner" name="shopOwner">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Shop Location" name="shopLocation">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Set Location" name="setLocation">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Working Days" name="workingdays">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Holiday in week" name="holidayinweek">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Opening Time" name="openingtime">
-                  <Input />
-                </Form.Item>
-                <Form.Item label="Closing Time" name="closingtime">
-                  <Input />
-                </Form.Item>
-                {/* ... (add other form fields) */}
-              </Form>
-            </Modal>
-          </div>
         </Layout>
       </Content>
     </div>
