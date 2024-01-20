@@ -1,4 +1,9 @@
 @font-face {
+  font-family: 'Poppins-SemiBold';
+  src: local('Poppins-SemiBold'),url('./Assets/fonts/Poppins-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
   font-family: 'Poppins';
   src: local('Poppins'),url('./Assets/fonts/Poppins-Regular.ttf') format('truetype');
 }
@@ -10,7 +15,7 @@
 
 body {
   margin: 0;
-  font-family: Poppins, Inter, sans-serif;
+  font-family: Poppins-SemiBold, Poppins, Inter, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

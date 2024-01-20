@@ -94,15 +94,6 @@
   border: 1px solid #1c4792;
 }
 
-.ant-table-cell {
-  border-radius: 5px;
-  border: none !important;
-  padding: 10px 0px !important;
-}
-.ant-table-thead {
-  background: #f7f8fa;
-  border: none !important;
-}
 table {
   border: none !important;
 }
@@ -237,19 +228,6 @@ table {
   border: 1px solid #1c4792;
 }
 
-/* shop */
-.editable-row thead th {
-  background-color: #f7f8fa !important;
-  text-align: center;
-}
-.editable-row thead th:nth-child(4) {
-  border-top-right-radius: 5%;
-  border-bottom-right-radius: 5%;
-}
-.editable-row thead th:nth-child(1) {
-  border-top-left-radius: 5%;
-  border-bottom-left-radius: 5%;
-}
 /* user page edit  */
 .ant-table-container {
   border: none !important;

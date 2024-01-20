@@ -1,182 +1,81 @@
 import React, { useState } from "react";
-import "../../App.css";
-import {
-  Form,
-  Input,
-  Layout,
-  InputNumber,
-  Popconfirm,
-  Table,
-  theme,
-  Button,
-  Typography,
-  Tabs,
-  Grid,
-  Row,
-  Col,
-  TimePicker,
-  Select,
-  Space,
-  Modal,
-} from "antd";
-import {
-  FilterOutlined,
-  SearchOutlined,
-  EditOutlined,
-  SaveOutlined,
-  CloseOutlined,
-} from "@ant-design/icons";
-import {
-  Link,
-  Route,
-  Switch,
-  useHistory,
-  useRouteMatch,
-} from "react-router-dom";
-import EditShop from "./EditShopComponent";
+import { Button, Input, Layout, Table, Typography } from "antd";
+import { Link, useHistory } from "react-router-dom";
+import { trimString } from "../../Utils/utils";
+import "./Shop.css";
 
-const { useBreakpoint } = Grid;
-const { Option } = Select;
-const { TabPane } = Tabs;
+const { Content } = Layout;
+const { Text } = Typography;
 
 const originData = [];
 for (let i = 0; i < 100; i++) {
   originData.push({
     key: i.toString(),
-    ShopName: `raj ${i}`,
+    ShopName: `Salon Royale for Kids and Mens fef fef dsd dsd dds dsds`,
     MobileNo: "9427778440",
     setLocation: `London. ${i}`, // Corrected the key to "setLocation"
   });
 }
 
-const EditableCell = ({
-  editing,
-  dataIndex,
-  title,
-  inputType,
-  record,
-  index,
-  children,
-  ...restProps
-}) => {
-  const inputNode =
-    inputType === "number" ? (
-      <InputNumber />
-    ) : inputType === "time" ? (
-      <TimePicker format="HH:mm" />
-    ) : (
-      <Input />
-    );
-
-  return (
-    <td {...restProps}>
-      {editing ? (
-        <Form.Item
-          name={dataIndex}
-          style={{
-            margin: 0,
-          }}
-          rules={[
-            {
-              required: true,
-              message: `Please Input ${title}!`,
-            },
-          ]}
-        >
-          {inputNode}
-        </Form.Item>
-      ) : (
-        children
-      )}
-    </td>
-  );
-};
-const { Search } = Input;
-const Shop = ({ users }) => {
-  const { path } = useRouteMatch();
-  const { Header, Sider, Content } = Layout;
-  const [collapsed, setCollapsed] = useState(false);
-  const [form] = Form.useForm();
+const Shop = () => {
+  const history = useHistory();
   const [data, setData] = useState(originData);
-  const [editingKey, setEditingKey] = useState("");
-  const isEditing = (record) => record.key === editingKey;
-
-  const edit = (record) => {
-    form.setFieldsValue({
-      ShopName: "",
-      MobileNo: "",
-      address: "",
-      setLocation: "",
-      workingDays: "",
-      holidayInWeek: "",
-      openTime: "",
-      closeTime: "",
-      ...record,
-    });
-    setEditingKey(record.key);
-  };
-
-  const cancel = () => {
-    setEditingKey("");
-  };
-
-  const save = async (key) => {
-    try {
-      const row = await form.validateFields();
-      const newData = [...data];
-      const index = newData.findIndex((item) => key === item.key);
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, {
-          ...item,
-          ...row,
-        });
-        setData(newData);
-        setEditingKey("");
-      } else {
-        newData.push(row);
-        setData(newData);
-        setEditingKey("");
-      }
-    } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
-    }
-  };
-
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-
-  const [selectedRecord, setSelectedRecord] = useState(null);
 
   const columns = [
     {
-      title: "ShopName",
+      title: "Shop Name",
       dataIndex: "ShopName",
-      width: "30%",
-      editable: true,
+      width: "40%",
+      render: (text) => (
+        <div style={{ paddingLeft: "8px" }}>
+          <span
+            style={{
+              fontFamily: "Poppins-SemiBold",
+              color: "#192A3E",
+              fontSize: "0.75rem",
+            }}
+          >
+            {trimString(text, 44)}
+          </span>
+        </div>
+      ),
     },
     {
-      title: "MobileNo",
+      title: "Mobile No",
       dataIndex: "MobileNo",
-      width: "30%",
-      editable: true,
+      align: "center",
+      ellipsis: true,
+      render: (text) => (
+        <Text
+          style={{
+            fontFamily: "Poppins",
+            color: "#90A0B7",
+            fontSize: "0.75rem",
+          }}
+        >
+          {text}
+        </Text>
+      ),
     },
     {
       title: "Location",
-      dataIndex: "setLocation", // Corrected dataIndex to match the key in originData
-      width: "30%",
-      editable: true,
+      dataIndex: "setLocation",
+      align: "center",
+      ellipsis: true,
     },
     {
       title: "Edit",
       key: "Edit",
+      width: "15%",
+      align: "center",
       render: (text, record) => (
-        <Space size="middle">
-          <Link to={`/editshop/${record.key}`}>
-            <EditOutlined />
-          </Link>
-        </Space>
+        <Link to={`/editshop/${record.key}`}>
+          <img
+            src={require("../../Assets/Images/edit.png")}
+            alt="Your Logo"
+            style={{ width: "17px", Height: "17px", padding: "3px" }}
+          />
+        </Link>
       ),
     },
   ];
@@ -192,31 +91,16 @@ const Shop = ({ users }) => {
         inputType: col.inputType || "text",
         dataIndex: col.dataIndex,
         title: col.title,
-        editing: isEditing(record),
+        editing: record,
       }),
     };
   });
 
-  const history = useHistory();
-
   const handleAddShopClick = () => {
-    // Redirect to the AddShop component or any other page
-    history.push("/addshop"); // Change "/addshop" to the path you want to navigate to
+    history.push("/addshop");
   };
-
-  const screens = useBreakpoint();
-  // searchbar top
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchVisible, setSearchVisible] = useState(false);
-
-  const handleSearch = (value) => {
-    setSearchQuery(value);
-  };
-
-  const handleShowSearch = () => {
-    setSearchVisible(true);
-  };
 
   const filteredData = searchQuery
     ? data.filter(
@@ -226,81 +110,46 @@ const Shop = ({ users }) => {
       )
     : data;
 
-  console.log(filteredData); // Log the filtered data for debugging
-
   return (
-    <div style={{ padding: 0 }}>
-      <Content
-        style={{
-          margin: "20px",
-          padding: 0,
-          minHeight: 280,
-          background: "transparent",
-          borderRadius: borderRadiusLG,
-        }}
-      >
-        <Layout style={{ background: "transparent", borderRadius: 15 }}>
-          <Content>
-            <Row gutter={[16, 16]}>
-              <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <div style={{ width: "100%", padding: 0 }}>
-                  <Form form={form} component={false}>
-                    <Space>
-                      <Search
-                        placeholder="Search Shop Name or Mobile No"
-                        allowClear
-                        onSearch={handleSearch}
-                        enterButton={false}
-                        style={{ width: "100%", background: "white" }}
-                        prefix={<SearchOutlined />} // Add the search icon
-                      />
-                    </Space>
-                    <style>
-                      {`
-                        .ant-input-group-addon {
-                          display: none !important;
-                        }
-                      `}
-                    </style>
-                    <Button
-                      type="primary"
-                      style={{
-                        marginBottom: 16,
-                        float: "right",
-                        background: "#1C4792",
-                      }}
-                      onClick={handleAddShopClick}
-                    >
-                      Add Shop
-                    </Button>
-                    <Table
-                      components={{
-                        body: {
-                          cell: EditableCell,
-                        },
-                      }}
-                      bordered
-                      dataSource={filteredData} // Use filteredData instead of data
-                      columns={mergedColumns}
-                      rowClassName="editable-row"
-                    />
-                  </Form>
-                </div>
-              </Col>
-              {/* Add more Col components for responsiveness */}
-            </Row>
-            {/* <div>
-              <Switch>
-                <Route exact path={path}>
-                  <Table columns={columns} dataSource={users} />
-                </Route>
-                <Route path={`${path}/editshop/:userId`}>
-                  <MultiStepForm />
-                </Route>
-              </Switch>
-            </div> */}
-          </Content>
-        </Layout>
+    <div style={{ backgroundColor: "#eff3fd", height: "calc(100vh - 55px)" }}>
+      <Content style={{ padding: "1.2rem", minHeight: 280 }}>
+        <Input
+          placeholder="Search Shop Name or Mobile No"
+          allowClear
+          prefix={
+            <img
+              src={require("../../Assets/Images/search.png")}
+              alt="Your Logo"
+              className="search"
+            />
+          }
+          style={{
+            marginBottom: "1rem",
+            fontFamily: "Poppins",
+            borderRadius: 8,
+            padding: "0.4rem",
+            paddingLeft: "0.55rem",
+            border: 0,
+          }}
+        />
+
+        {/* Add Shop */}
+        <Button
+          type="primary"
+          style={{
+            marginBottom: "0.6rem",
+            background: "#1C4792",
+            borderRadius: 5,
+            float: "right",
+            fontFamily: "Poppins",
+          }}
+          onClick={handleAddShopClick}
+        >
+          Add Shop
+        </Button>
+
+        {/* Table */}
+        <Table bordered dataSource={filteredData} columns={mergedColumns} />
       </Content>
     </div>
   );

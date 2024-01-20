@@ -89,6 +89,7 @@ const CustomDrawer = ({ onClose, open }) => {
                   borderRadius: "50%",
                   backgroundColor: "#0DB7AA",
                   marginLeft: "0.8rem",
+                  marginTop: "1px",
                 }}
               />
             )}
