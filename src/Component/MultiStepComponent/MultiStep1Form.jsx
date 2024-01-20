@@ -91,11 +91,21 @@ const BasicDetailsForm = () => {
                   style={{
                     width: "100%",
                   }}
+                  dropdownStyle={{ border: "none" }}
                   placeholder="Please select"
                   onChange={handleChange}
                   options={options}
                 />
               </Space>
+              <style>
+                {`
+                .ant-select-selector {
+                  border: 1px solid #1C4792 !important;
+                  border-radius:5px !important;
+                }
+                
+                      `}
+              </style>
             </Form.Item>
           </Col>
           <Col span={12}>

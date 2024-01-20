@@ -10,24 +10,29 @@ const UserPage = () => {
   const data = [
     {
       key: "1",
-      companyName: "Company A",
+      mobileNumber: "123-456-7890",
       username: "UserA",
       role: "Developer",
     },
-    { key: "2", companyName: "Company B", username: "UserB", role: "Manager" },
+    {
+      key: "2",
+      mobileNumber: "987-654-3210",
+      username: "UserB",
+      role: "Manager",
+    },
     // Add more dummy data as needed
   ];
 
   const columns = [
     {
-      title: "Company Name",
-      dataIndex: "companyName",
-      key: "companyName",
-    },
-    {
       title: "Username",
       dataIndex: "username",
       key: "username",
+    },
+    {
+      title: "Mobile Number",
+      dataIndex: "mobileNumber",
+      key: "mobileNumber",
     },
     {
       title: "Role",
@@ -72,7 +77,7 @@ const UserPage = () => {
       />
 
       <Modal
-        title="Organization Details"
+        title="User Details"
         visible={editModalVisible}
         onOk={handleEditModalOk}
         onCancel={handleEditModalCancel}
@@ -80,10 +85,11 @@ const UserPage = () => {
       >
         <Space direction="vertical">
           <Form form={form} layout="vertical">
-            <Form.Item name="companyName" label="Company Name">
+            {/* Change the order of Form.Item components */}
+            <Form.Item name="username" label="Username">
               <Input />
             </Form.Item>
-            <Form.Item name="username" label="Username">
+            <Form.Item name="mobileNumber" label="Mobile Number">
               <Input />
             </Form.Item>
             <Form.Item name="role" label="Role">

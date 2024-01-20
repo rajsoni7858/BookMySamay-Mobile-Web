@@ -91,7 +91,7 @@ const EditableCell = ({
     </td>
   );
 };
-
+const { Search } = Input;
 const Shop = ({ users }) => {
   const { path } = useRouteMatch();
   const { Header, Sider, Content } = Layout;
@@ -205,6 +205,28 @@ const Shop = ({ users }) => {
   };
 
   const screens = useBreakpoint();
+  // searchbar top
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchVisible, setSearchVisible] = useState(false);
+
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+  };
+
+  const handleShowSearch = () => {
+    setSearchVisible(true);
+  };
+
+  const filteredData = searchQuery
+    ? data.filter(
+        (item) =>
+          item.ShopName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.MobileNo.includes(searchQuery)
+      )
+    : data;
+
+  console.log(filteredData); // Log the filtered data for debugging
 
   return (
     <div style={{ padding: 0 }}>
@@ -223,6 +245,23 @@ const Shop = ({ users }) => {
               <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <div style={{ width: "100%", padding: 0 }}>
                   <Form form={form} component={false}>
+                    <Space>
+                      <Search
+                        placeholder="Search Shop Name or Mobile No"
+                        allowClear
+                        onSearch={handleSearch}
+                        enterButton={false}
+                        style={{ width: "100%", background: "white" }}
+                        prefix={<SearchOutlined />} // Add the search icon
+                      />
+                    </Space>
+                    <style>
+                      {`
+                        .ant-input-group-addon {
+                          display: none !important;
+                        }
+                      `}
+                    </style>
                     <Button
                       type="primary"
                       style={{
@@ -241,10 +280,9 @@ const Shop = ({ users }) => {
                         },
                       }}
                       bordered
-                      dataSource={data}
+                      dataSource={filteredData} // Use filteredData instead of data
                       columns={mergedColumns}
                       rowClassName="editable-row"
-                      // Remove the pagination prop
                     />
                   </Form>
                 </div>

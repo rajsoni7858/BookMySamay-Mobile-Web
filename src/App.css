@@ -105,12 +105,7 @@
   width: 100%;
   border: 1px solid #1c4792;
 }
-.ant-form-item-control-input-content #workingDays,
-#holidayInWeek {
-  border: 1px solid #1c4792;
-  border-radius: 5px;
-  padding: 4px;
-}
+
 .ant-table-cell {
   border-radius: 5px;
   border: none !important;
