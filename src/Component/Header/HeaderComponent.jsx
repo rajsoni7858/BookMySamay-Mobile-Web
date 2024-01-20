@@ -1,12 +1,7 @@
 import React, { useState } from "react";
-import { Layout, Menu, Avatar, Dropdown } from "antd";
-import {
-  MenuOutlined,
-  UserOutlined,
-  SettingOutlined,
-  LogoutOutlined,
-} from "@ant-design/icons";
-import "./header.css"; // Import your CSS file
+import { Layout, Avatar, Dropdown } from "antd";
+import { MenuOutlined, UserOutlined } from "@ant-design/icons";
+import "./Header.css"; // Import your CSS file
 import CustomDrawer from "../Drawer/DrawerComponent";
 
 const { Header } = Layout;

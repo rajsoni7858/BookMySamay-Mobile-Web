@@ -1,10 +1,10 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import Dashboard from "../Pages/DashboardComponent";
 import Shop from "../Pages/ShopComponent/ShopComponent.jsx";
 import User from "../Pages/UserComponent.jsx";
 import Editshop from "../Pages/ShopComponent/EditShopComponent.jsx";
 import AddShop from "../Pages/ShopComponent/AddShopComponent.jsx";
+import Dashboard from "../Pages/Dashboard/DashboardComponent.jsx";
 
 function Routerconfig() {
   return (

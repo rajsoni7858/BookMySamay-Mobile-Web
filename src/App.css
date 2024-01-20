@@ -77,19 +77,7 @@
   align-content: center;
   width: 100%;
 }
-.ant-statistic-content-value-int {
-  color: #1c4792;
-}
-.ant-card-body {
-  border-radius: 11px !important;
-  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1) !important;
-}
-.ant-card .ant-card-body {
-  padding: 5px !important;
-}
-.ant-statistic-content {
-  color: #282c34 !important;
-}
+
 .ant-steps .ant-steps-item-process .ant-steps-item-icon {
   background-color: #0db7aa;
   border-color: #0db7aa;

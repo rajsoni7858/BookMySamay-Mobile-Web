@@ -1,0 +1,25 @@
+.absoulute-img {
+  display: flex;
+  justify-content: left;
+  width: 45px;
+  height: 35px;
+  position: absolute;
+  top: -15px;
+  left: 20px;
+}
+
+.statistic-value {
+  font-size: 1rem;
+  font-family: Poppins;
+  font-weight: 600;
+  text-align: right;
+  color: "#1C4792";
+}
+
+.ant-card-body {
+  border-radius: 11px !important;
+  box-shadow: 2.128px 2.128px 5.32px 0px rgba(0, 0, 0, 0.25);
+}
+.ant-card .ant-card-body {
+  padding: 5px !important;
+}
