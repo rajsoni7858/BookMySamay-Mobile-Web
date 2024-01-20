@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Row, Col, Card, Statistic, Flex } from "antd";
+import moment from "moment";
 
 const { Title } = Typography;
 
@@ -11,11 +12,7 @@ const Dashboard = () => {
     currentDate
   );
 
-  const formattedTime = currentTime.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  const userName = "Raj Soni "; // Replace with the actual user's name
+  const currentDateTimeFormatted = moment().format("h.mm A D MMM YYYY");
 
   return (
     <Row
@@ -25,20 +22,27 @@ const Dashboard = () => {
       style={{ margin: "20px", padding: 0 }}
     >
       <Col span={24} style={{ textAlign: "left", padding: 10 }}>
-        <Title level={3} style={{ color: "#00261C", margin: 0 }}>
-          Hello {userName}
+        <Title
+          level={3}
+          style={{
+            margin: 0,
+            color: "black",
+            fontSize: "1.3rem",
+            fontFamily: "Inter",
+            fontWeight: "400",
+          }}
+        >
+          Hello Gaurav Soni 👋
         </Title>
         <Title
           level={5}
           style={{
             color: "#707EAE",
-            margin: "5px 0 30px",
+            margin: 0,
             fontSize: 14,
-            letterSpacing: 0.11,
           }}
         >
-          {formattedTime}
-          {formattedDate}
+          {currentDateTimeFormatted}
         </Title>
       </Col>
       <Col xs={12} sm={12} md={12} lg={8} xl={6} style={{ padding: 10 }}>

@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { Switch, Route } from "react-router-dom";
 import Dashboard from "../Pages/DashboardComponent";
 import Shop from "../Pages/ShopComponent/ShopComponent.jsx";
@@ -15,6 +14,7 @@ function Routerconfig() {
       <Route path="/editshop/:id" component={Editshop} />
       <Route path="/addshop" component={AddShop} />
       <Route path="/user" component={User} />
+      <Route path="/" component={Dashboard} />
     </Switch>
   );
 }

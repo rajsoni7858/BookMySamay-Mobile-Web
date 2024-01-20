@@ -1,0 +1,30 @@
+/* App.css */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white; /* Ant Design default header background color */
+  padding: 0 20px;
+  height: 60px;
+}
+
+.logo {
+  color: #fff; /* Text color for the logo */
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.mobile-menu {
+  display: block; /* Show the mobile menu only on small screens */
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #fff;
+}
+
+.user-menu:hover {
+  color: #1890ff; /* Change color on hover */
+}

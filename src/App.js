@@ -2,15 +2,9 @@ import { useState } from "react";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import Routerconfig from "./Config/Routerconfig";
-import HeaderComponent from "./Component/HeaderComponent";
+import HeaderComponent from "./Component/Header/HeaderComponent";
 
 const App = () => {
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
-
-  const toggleDrawer = () => {
-    setDrawerOpen(!isDrawerOpen);
-  };
-
   return (
     <div>
       <BrowserRouter>
