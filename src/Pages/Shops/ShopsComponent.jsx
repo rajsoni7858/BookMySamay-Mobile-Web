@@ -69,7 +69,7 @@ const ShopsComponent = () => {
       width: "15%",
       align: "center",
       render: (text, record) => (
-        <Link to={`/editshop/${record.key}`}>
+        <Link to={`/shops/editshop/${record.key}`}>
           <img
             src={require("../../Assets/Images/edit.png")}
             alt="Your Logo"
@@ -97,7 +97,7 @@ const ShopsComponent = () => {
   });
 
   const handleAddShopClick = () => {
-    history.push("/addshop");
+    history.push("/shops/addshop");
   };
 
   const [searchQuery, setSearchQuery] = useState("");
