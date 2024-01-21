@@ -1,0 +1,50 @@
+/* Input */
+.search {
+  width: 19px;
+  Height: 19px;
+  margin: 2px 3px 0px 0px;
+}
+
+.search-input {
+  margin-bottom: 1rem;
+  font-family: Poppins;
+  border-radius: 8;
+  padding: 0.4rem;
+  padding-left: 0.55rem;
+  border: 0;
+}
+
+.ant-input-affix-wrapper>input.ant-input {
+  font-family: Poppins;
+  margin-top: 2px;
+  font-size: 0.8rem;
+}
+
+/* Table */
+.ant-table-cell {
+  border: none !important;
+  padding: 10px 0px !important;
+  font-size: 0.75rem;
+  font-family: Poppins;
+}
+
+.ant-table-thead {
+  background: #f7f8fa;
+  border: none !important;
+}
+
+.ant-table-wrapper .ant-table {
+  background: transparent;
+  border-radius: 8px !important
+}
+
+.ant-table-wrapper .ant-table-thead>tr>th {
+  color: #505470;
+  text-align: center !important;
+}
+
+.ant-table-wrapper .ant-table-tbody>tr>td {
+  color: #192A3E !important;
+  padding: 0 !important;
+  padding-top: 10px !important;
+}

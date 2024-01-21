@@ -1,11 +1,11 @@
 import React from "react";
-import MultiStepForm from "../../Component/MultiStepComponent/MultiStepForm";
+import MultiStepForm from "../../../Component/MultiStepComponent/MultiStepForm";
 import { Form } from "antd";
 
-function Editshop() {
+function EditshopComponent() {
   const [form] = Form.useForm();
 
   return <MultiStepForm form={form} formId="editForm" />;
 }
 
-export default Editshop;
+export default EditshopComponent;

@@ -1,0 +1,34 @@
+.ant-modal-content {
+  width: 90%
+}
+
+.ant-btn-primary {
+  background-color: #1C4792 !important;
+  border-color: #1C4792 !important;
+  border-radius: 5px,
+}
+
+.ant-btn>span {
+  font-family: Poppins;
+}
+
+.ant-form-item .ant-form-item-control-input-content {
+  margin: 0;
+}
+
+.ant-form-item .ant-form-item-label {
+  padding: 0 0 2px !important;
+  font-family: Poppins-SemiBold;
+}
+
+.ant-form-item-control-input-content input {
+  border-color: #1c4792;
+  font-family: Poppins;
+  border-radius: 8px;
+  padding: 0.4rem;
+  padding-left: 0.55rem;
+}
+
+.ant-modal .ant-modal-footer {
+  margin-top: 0px;
+}

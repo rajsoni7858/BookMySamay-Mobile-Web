@@ -17,7 +17,7 @@ for (let i = 0; i < 100; i++) {
   });
 }
 
-const Shop = () => {
+const ShopsComponent = () => {
   const history = useHistory();
   const [data, setData] = useState(originData);
 
@@ -142,6 +142,7 @@ const Shop = () => {
             borderRadius: 5,
             float: "right",
             fontFamily: "Poppins",
+            border: 0,
           }}
           onClick={handleAddShopClick}
         >
@@ -154,4 +155,4 @@ const Shop = () => {
     </div>
   );
 };
-export default Shop;
+export default ShopsComponent;
