@@ -1,78 +1,63 @@
 import React from "react";
-import { Select, Form } from "antd";
+import { Select, Form, Typography } from "antd";
 
 const { Option } = Select;
+const { Title } = Typography;
 
 const Step3Component = () => {
   function handleChange(value) {
     console.log(`Selected: ${value}`);
   }
   return (
-    <>
-      <h5
+    <Form>
+      <Title
+        level={5}
         style={{
-          fontSize: 17,
-          fontWeight: 600,
           textAlign: "center",
+          margin: 0,
+          padding: "1.4rem 0rem",
+          fontFamily: "Inter",
         }}
       >
         Add services from the dropdown with cost
-      </h5>
+      </Title>
+
+      {/* Content */}
       <Form.Item
-        style={{ padding: 0 }}
         label="Hair Services"
         name="services"
         rules={[{ required: true, message: "Please select services" }]}
       >
-        <Select
-          defaultValue="default"
-          style={{ width: "100%" }}
-          onChange={handleChange}
-        >
-          <Option value="default" disabled>
-            Select an option
-          </Option>
+        <Select onChange={handleChange} placeholder="Select an option">
           <Option value="option1">Hair Service 1</Option>
           <Option value="option2">Hair Service 2</Option>
         </Select>
       </Form.Item>
+
+      {/* 2 */}
       <Form.Item
-        style={{ padding: 0 }}
         label="Massage Services"
-        name="services"
+        name="services1"
         rules={[{ required: true, message: "Please select services" }]}
       >
-        <Select
-          defaultValue="default"
-          style={{ width: "100%" }}
-          onChange={handleChange}
-        >
-          <Option value="default" disabled>
-            Select an option
-          </Option>
+        <Select onChange={handleChange} placeholder="Select an option">
           <Option value="option1">Massage Service 1</Option>
           <Option value="option2">Massage Service 2</Option>
         </Select>
       </Form.Item>
+
+      {/* 3 */}
       <Form.Item
-        style={{ padding: 0 }}
         label="Beard Services"
-        name="services"
+        name="services2"
         rules={[{ required: true, message: "Please select services" }]}
       >
-        <Select
-          defaultValue="default"
-          style={{ width: "100%" }}
-          onChange={handleChange}
-        >
-          <Option value="default" disabled>
-            Select an option
-          </Option>
+        <Select onChange={handleChange} placeholder="Select an option">
           <Option value="option1">Beard Service1</Option>
           <Option value="option2">Beard Service2</Option>
         </Select>
       </Form.Item>
-    </>
+    </Form>
   );
 };
 

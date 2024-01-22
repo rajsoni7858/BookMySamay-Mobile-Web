@@ -31,7 +31,7 @@ const EditUserComponent = ({ visible, onOk, onCancel, initialValues }) => {
       }}
       destroyOnClose
     >
-      <Space direction="vertical" style={{ marginTop: "10px" }}>
+      <Space direction="vertical" style={{ marginTop: "10px", width: "100%" }}>
         <Form form={form} layout="vertical">
           <Form.Item name="username" label="Username:">
             <Input />

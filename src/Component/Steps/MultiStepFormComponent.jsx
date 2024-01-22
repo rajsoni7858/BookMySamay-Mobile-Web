@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Form, Button, Steps, message } from "antd";
-import { CheckOutlined } from "@ant-design/icons";
 import Step1Component from "./Step Forms/Step1Component";
 import Step2Component from "./Step Forms/Step2Component";
 import Step3Component from "./Step Forms/Step3Component";
@@ -61,7 +60,7 @@ const MultiStepFormComponent = ({ form, formId }) => {
               background: "#1C4792",
               borderRadius: "12px",
               fontFamily: "Poppins",
-              height: "2.2rem",
+              height: "2.5rem",
             }}
             type="primary"
             onClick={handleNext}
@@ -76,13 +75,12 @@ const MultiStepFormComponent = ({ form, formId }) => {
               background: "#1C4792",
               borderRadius: "12px",
               fontFamily: "Poppins",
-              height: "2.2rem",
+              height: "2.5rem",
             }}
             type="primary"
             htmlType="submit"
           >
             SUBMIT
-            <CheckOutlined />
           </Button>
         )}
       </div>

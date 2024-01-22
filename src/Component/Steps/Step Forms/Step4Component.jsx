@@ -1,38 +1,32 @@
-import React, { useState } from "react";
-import { Form } from "antd";
+import React from "react";
+import { Form, Input, Typography } from "antd";
+
+const { Title } = Typography;
 
 const Step4Component = () => {
-  const [amount, setAmount] = useState("");
-  const handleAmountChange = (e) => {
-    setAmount(e.target.value);
-  };
   return (
-    <>
-      <h5
+    <Form>
+      <Title
+        level={5}
         style={{
-          fontSize: 17,
-          fontWeight: 600,
           textAlign: "center",
+          margin: 0,
+          padding: "1.4rem 0rem",
+          fontFamily: "Inter",
         }}
       >
         Payment Method
-      </h5>
+      </Title>
+
+      {/* Content */}
       <Form.Item
-        style={{ padding: 20 }}
-        label="UPI Payment Mode"
         name="upiMode"
         rules={[{ required: true, message: "Please select UPI mode" }]}
+        style={{ marginBottom: "3rem" }}
       >
-        <input
-          style={{ width: "100%", height: "35px" }}
-          placeholder="UPI"
-          type="text"
-          value={amount}
-          onChange={handleAmountChange}
-        />
+        <Input placeholder="Enter your UPI here" />
       </Form.Item>
-      {/* Add other UPI-related fields */}
-    </>
+    </Form>
   );
 };
 

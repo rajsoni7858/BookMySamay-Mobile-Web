@@ -8,7 +8,7 @@
 }
 
 .ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after {
-  /* background-color: red; */
+  background-color: #0DB7AA !important;
 }
 
 .ant-steps .ant-steps-item-process .ant-steps-item-icon {
@@ -54,4 +54,50 @@
 
 .ant-select-selector {
   border-color: #1C4792 !important;
+}
+
+.ant-steps-finish-icon {
+  color: #0DB7AA !important;
+}
+
+/* step 2 */
+
+.drag-and-drop-text {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.ant-upload-wrapper .ant-upload-drag {
+  border-color: #1C4792 !important;
+  background-color: transparent !important;
+}
+
+.upload-img {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.ant-upload-wrapper .ant-upload-list {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+.ant-upload-list-item-container {
+  flex-grow: 1 !important;
+}
+
+/* Step 3 */
+
+.ant-select-selector {
+  border-color: #1C4792 !important;
+  padding: 10px;
+}
+
+.ant-select-single {
+  height: 35px;
 }

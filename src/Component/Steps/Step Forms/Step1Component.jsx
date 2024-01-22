@@ -1,20 +1,9 @@
-import React, { useState } from "react";
-import {
-  Form,
-  Input,
-  Row,
-  Col,
-  Select,
-  Space,
-  TimePicker,
-  Typography,
-} from "antd";
+import React from "react";
+import { Form, Input, Row, Col, Select, TimePicker, Typography } from "antd";
 
 const { Title } = Typography;
 
 const Step1Component = () => {
-  const [selectedHolidays, setSelectedHolidays] = useState(null);
-
   const options = [
     { label: "Monday", value: "Monday" },
     { label: "Tuesday", value: "Tuesday" },
@@ -42,6 +31,7 @@ const Step1Component = () => {
         Here you need to fill the shop details
       </Title>
 
+      {/* Content */}
       <Form.Item
         label="Shop Name:"
         name="shopName"

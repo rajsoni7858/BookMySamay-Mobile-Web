@@ -1,42 +1,67 @@
 import React from "react";
-import { Form, Upload, Button } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Form, Upload, Typography, message } from "antd";
+
+const { Title, Text } = Typography;
+const { Dragger } = Upload;
 
 const Step2Component = () => {
+  const props = {
+    name: "file",
+    multiple: true,
+    action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
+    onChange(info) {
+      const { status } = info.file;
+      if (status !== "uploading") {
+        console.log(info.file, info.fileList);
+      }
+      if (status === "done") {
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    onDrop(e) {
+      console.log("Dropped files", e.dataTransfer.files);
+    },
+  };
+
   return (
-    <>
-      <h5
+    <Form>
+      <Title
+        level={5}
         style={{
-          fontSize: 17,
-          fontWeight: 600,
           textAlign: "center",
+          margin: 0,
+          padding: "1.4rem 0rem",
+          fontFamily: "Inter",
         }}
       >
         Upload Your shop images here
-      </h5>
+      </Title>
+
+      {/* Content */}
       <Form.Item
-        style={{ padding: 20 }}
-        label="Upload Image"
         name="image"
         valuePropName="fileList"
         getValueFromEvent={(e) => e.fileList}
         rules={[{ required: true, message: "Please upload an image" }]}
       >
-        <Upload beforeUpload={() => false} listType="picture">
-          <Button icon={<UploadOutlined />}>Browse to select file</Button>
-          <div
-            style={{
-              paddingTop: 50,
-              fontSize: 15,
-              fontWeight: 600,
-              textAlign: "center",
-            }}
-          >
-            Image Preview
+        <Dragger {...props} listType="picture-card">
+          <div className="drag-and-drop-text">
+            <p>
+              <img
+                src={require("../../../Assets/Images/upload.png")}
+                alt="Group Member Icon"
+                className="upload-img"
+              />
+            </p>
+            <Text style={{ fontFamily: "Poppins", fontSize: "0.75rem" }}>
+              Browse to select file
+            </Text>
           </div>
-        </Upload>
+        </Dragger>
       </Form.Item>
-    </>
+    </Form>
   );
 };
 
