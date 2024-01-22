@@ -1,9 +1,9 @@
-// ServicesSelectionForm.js
 import React from "react";
-import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Select, Space, Form, Typography } from "antd";
+import { Select, Form } from "antd";
+
 const { Option } = Select;
-const ServicesSelectionForm = () => {
+
+const Step3Component = () => {
   function handleChange(value) {
     console.log(`Selected: ${value}`);
   }
@@ -76,4 +76,4 @@ const ServicesSelectionForm = () => {
   );
 };
 
-export default ServicesSelectionForm;
+export default Step3Component;

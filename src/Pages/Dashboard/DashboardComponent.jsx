@@ -61,6 +61,7 @@ const Dashboard = () => {
             color: "#707EAE",
             margin: 0,
             fontSize: "0.8rem",
+            fontFamily: "Inter",
           }}
         >
           {currentDateTimeFormatted}

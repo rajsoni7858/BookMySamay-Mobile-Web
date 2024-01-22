@@ -1,24 +1,22 @@
-// MultiStepForm.js
 import React, { useState } from "react";
 import { Form, Button, Steps, message } from "antd";
-import BasicDetailsForm from "./MultiStep1Form";
-import ImageUploadForm from "./MultiStep2Form";
-import ServicesSelectionForm from "./MultiStep3Form";
-import UpiPaymentForm from "./MultiStep4Form";
 import { CheckOutlined } from "@ant-design/icons";
+import Step1Component from "./Step Forms/Step1Component";
+import Step2Component from "./Step Forms/Step2Component";
+import Step3Component from "./Step Forms/Step3Component";
+import Step4Component from "./Step Forms/Step4Component";
+import "./Step.css";
 
 const { Step } = Steps;
 
-const MultiStepForm = ({ form, formId }) => {
-  // const [form] = Form.useForm();
+const MultiStepFormComponent = ({ form, formId }) => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const steps = [
-    { content: <BasicDetailsForm /> },
-    { content: <ImageUploadForm /> },
-    { content: <ServicesSelectionForm /> },
-    { content: <UpiPaymentForm /> },
-    // Add more steps as needed
+    { id: 1, content: <Step1Component /> },
+    { id: 2, content: <Step2Component /> },
+    { id: 3, content: <Step3Component /> },
+    { id: 4, content: <Step4Component /> },
   ];
 
   const handleNext = () => {
@@ -29,7 +27,6 @@ const MultiStepForm = ({ form, formId }) => {
 
   const handleFinish = () => {
     form.validateFields().then((values) => {
-      // Handle submission logic
       message.success("Form submitted successfully!");
       console.log(values);
     });
@@ -41,38 +38,50 @@ const MultiStepForm = ({ form, formId }) => {
       id={formId}
       onFinish={handleFinish}
       layout="vertical"
-      style={{ paddingTop: 50, margin: 20 }}
+      style={{ margin: "2rem", padding: 0 }}
     >
-      <Steps current={currentStep}>
+      {/* Steps */}
+      <Steps
+        current={currentStep}
+        responsive={false}
+        style={{ padding: "1rem 0rem" }}
+      >
         {steps.map((step) => (
-          <Step key={step.title} title={step.title} />
+          <Step key={step.id} title={null} />
         ))}
       </Steps>
-      <div style={{ marginTop: "16px", padding: 20 }}>
-        {steps[currentStep].content}
-      </div>
-      <div style={{ marginTop: "16px" }}>
+
+      {/* Content */}
+      <div>{steps[currentStep].content}</div>
+      <div style={{ marginTop: "1.5rem", textAlign: "center" }}>
         {currentStep < steps.length - 1 && (
           <Button
             style={{
               width: "80%",
               background: "#1C4792",
-              margin: 20,
               borderRadius: "12px",
+              fontFamily: "Poppins",
+              height: "2.2rem",
             }}
             type="primary"
             onClick={handleNext}
           >
-            Next
+            NEXT
           </Button>
         )}
         {currentStep === steps.length - 1 && (
           <Button
-            style={{ width: "80%", background: "#1C4792", margin: 20 }}
+            style={{
+              width: "80%",
+              background: "#1C4792",
+              borderRadius: "12px",
+              fontFamily: "Poppins",
+              height: "2.2rem",
+            }}
             type="primary"
             htmlType="submit"
           >
-            Submit
+            SUBMIT
             <CheckOutlined />
           </Button>
         )}
@@ -80,4 +89,4 @@ const MultiStepForm = ({ form, formId }) => {
     </Form>
   );
 };
-export default MultiStepForm;
+export default MultiStepFormComponent;

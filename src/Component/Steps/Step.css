@@ -1,0 +1,57 @@
+.ant-steps-item-title {
+  /* display: none;  */
+  padding-inline-end: 0px !important;
+}
+
+.ant-steps.ant-steps-horizontal:not(.ant-steps-label-vertical) .ant-steps-item {
+  padding-inline-start: 8px !important;
+}
+
+.ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after {
+  /* background-color: red; */
+}
+
+.ant-steps .ant-steps-item-process .ant-steps-item-icon {
+  background-color: #1C4792;
+  border-color: #1C4792;
+}
+
+.ant-steps .ant-steps-item-process .ant-steps-item-icon>.ant-steps-icon {
+  font-family: Poppins;
+}
+
+.ant-steps .ant-steps-item-wait .ant-steps-item-icon>.ant-steps-icon {
+  font-family: Poppins;
+}
+
+.ant-select-multiple .ant-select-selection-placeholder {
+  font-family: Poppins;
+}
+
+.ant-form-item .ant-form-item-explain-error {
+  font-family: Poppins;
+}
+
+.ant-picker-outlined {
+  border-color: #1C4792;
+}
+
+.ant-picker .ant-picker-input>input:placeholder-shown {
+  font-family: Poppins;
+}
+
+.ant-picker-dropdown .ant-picker-ranges {
+  font-family: Poppins;
+}
+
+.ant-picker-dropdown .ant-picker-time-panel-column>li.ant-picker-time-panel-cell .ant-picker-time-panel-cell-inner {
+  font-family: Poppins;
+}
+
+.ant-btn-primary[disabled] {
+  background: #f5f5f5 !important
+}
+
+.ant-select-selector {
+  border-color: #1C4792 !important;
+}

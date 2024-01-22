@@ -1,9 +1,8 @@
-// ImageUploadForm.js
 import React from "react";
 import { Form, Upload, Button } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
-const ImageUploadForm = () => {
+const Step2Component = () => {
   return (
     <>
       <h5
@@ -41,4 +40,4 @@ const ImageUploadForm = () => {
   );
 };
 
-export default ImageUploadForm;
+export default Step2Component;

@@ -1,9 +1,7 @@
-// UpiPaymentForm.js
 import React, { useState } from "react";
-import { Form, input } from "antd";
-//import { GooglePayLogo } from "./path/to/your/googlePayLogo"; // Import the Google Pay logo component
+import { Form } from "antd";
 
-const UpiPaymentForm = () => {
+const Step4Component = () => {
   const [amount, setAmount] = useState("");
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
@@ -38,4 +36,4 @@ const UpiPaymentForm = () => {
   );
 };
 
-export default UpiPaymentForm;
+export default Step4Component;
