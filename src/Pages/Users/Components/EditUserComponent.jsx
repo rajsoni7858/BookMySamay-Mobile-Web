@@ -23,6 +23,7 @@ const EditUserComponent = ({ visible, onOk, onCancel, initialValues }) => {
       }}
       onCancel={onCancel}
       width="100%"
+      height="100%"
       style={{
         display: "flex",
         alignItems: "center",
@@ -30,6 +31,7 @@ const EditUserComponent = ({ visible, onOk, onCancel, initialValues }) => {
         fontFamily: "Poppins",
       }}
       destroyOnClose
+      centered
     >
       <Space direction="vertical" style={{ marginTop: "10px", width: "100%" }}>
         <Form form={form} layout="vertical">

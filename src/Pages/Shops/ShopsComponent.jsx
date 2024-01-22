@@ -27,7 +27,7 @@ const ShopsComponent = () => {
       dataIndex: "ShopName",
       width: "40%",
       render: (text) => (
-        <div style={{ paddingLeft: "8px" }}>
+        <div style={{ paddingLeft: "14px" }}>
           <span
             style={{
               fontFamily: "Poppins-SemiBold",
@@ -35,7 +35,7 @@ const ShopsComponent = () => {
               fontSize: "0.75rem",
             }}
           >
-            {trimString(text, 44)}
+            {trimString(text, 40)}
           </span>
         </div>
       ),
@@ -112,7 +112,13 @@ const ShopsComponent = () => {
 
   return (
     <div style={{ backgroundColor: "#eff3fd", height: "calc(100vh - 55px)" }}>
-      <Content style={{ padding: "1.2rem", minHeight: 280 }}>
+      <Content
+        style={{
+          padding: "1.2rem",
+          minHeight: 280,
+          backgroundColor: "#eff3fd",
+        }}
+      >
         <Input
           placeholder="Search Shop Name or Mobile No"
           allowClear

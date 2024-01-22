@@ -51,7 +51,11 @@ const MultiStepFormComponent = ({ form, formId }) => {
       </Steps>
 
       {/* Content */}
-      <div>{steps[currentStep].content}</div>
+      <div style={{ minHeight: "calc(100vh - 250px)" }}>
+        {steps[currentStep].content}
+      </div>
+
+      {/* Button */}
       <div style={{ marginTop: "1.5rem", textAlign: "center" }}>
         {currentStep < steps.length - 1 && (
           <Button
