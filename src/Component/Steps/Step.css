@@ -7,20 +7,24 @@
   padding-inline-start: 8px !important;
 }
 
-.ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after {
-  background-color: #0DB7AA !important;
+.ant-steps
+  .ant-steps-item-finish
+  > .ant-steps-item-container
+  > .ant-steps-item-content
+  > .ant-steps-item-title::after {
+  background-color: #0db7aa !important;
 }
 
 .ant-steps .ant-steps-item-process .ant-steps-item-icon {
-  background-color: #1C4792;
-  border-color: #1C4792;
+  background-color: #1c4792;
+  border-color: #1c4792;
 }
 
-.ant-steps .ant-steps-item-process .ant-steps-item-icon>.ant-steps-icon {
+.ant-steps .ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon {
   font-family: Poppins;
 }
 
-.ant-steps .ant-steps-item-wait .ant-steps-item-icon>.ant-steps-icon {
+.ant-steps .ant-steps-item-wait .ant-steps-item-icon > .ant-steps-icon {
   font-family: Poppins;
 }
 
@@ -33,10 +37,10 @@
 }
 
 .ant-picker-outlined {
-  border-color: #1C4792;
+  border-color: #1c4792;
 }
 
-.ant-picker .ant-picker-input>input:placeholder-shown {
+.ant-picker .ant-picker-input > input:placeholder-shown {
   font-family: Poppins;
 }
 
@@ -44,20 +48,23 @@
   font-family: Poppins;
 }
 
-.ant-picker-dropdown .ant-picker-time-panel-column>li.ant-picker-time-panel-cell .ant-picker-time-panel-cell-inner {
+.ant-picker-dropdown
+  .ant-picker-time-panel-column
+  > li.ant-picker-time-panel-cell
+  .ant-picker-time-panel-cell-inner {
   font-family: Poppins;
 }
 
 .ant-btn-primary[disabled] {
-  background: #f5f5f5 !important
+  background: #f5f5f5 !important;
 }
 
 .ant-select-selector {
-  border-color: #1C4792 !important;
+  border-color: #1c4792 !important;
 }
 
 .ant-steps-finish-icon {
-  color: #0DB7AA !important;
+  color: #0db7aa !important;
 }
 
 /* step 2 */
@@ -70,7 +77,7 @@
 }
 
 .ant-upload-wrapper .ant-upload-drag {
-  border-color: #1C4792 !important;
+  border-color: #1c4792 !important;
   background-color: transparent !important;
 }
 
@@ -94,10 +101,42 @@
 /* Step 3 */
 
 .ant-select-selector {
-  border-color: #1C4792 !important;
+  border-color: #1c4792 !important;
   padding: 10px;
 }
 
-.ant-select-single {
+/* .ant-select-single {
   height: 35px;
+} */
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+  font-family: "Poppins";
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 15px;
+}
+.ant-collapse-content-box .ant-input {
+  width: 100px;
+  height: auto;
+  margin: 0 5px;
+  border-color: #1c4792;
+}
+.ant-checkbox-inner {
+  padding: 12px;
+  border-color: #1c4792 !important;
+}
+.custom-collapse .ant-collapse {
+  border-color: #1c4792;
+  font-family: Poppins;
+}
+.ant-collapse > .ant-collapse-item {
+  border-bottom: 1px solid #1c4792;
+}
+.ant-collapse-header {
+  color: rgba(0, 0, 0, 0.88);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.ant-collapse-content-box {
+  padding: 12px 14px;
 }

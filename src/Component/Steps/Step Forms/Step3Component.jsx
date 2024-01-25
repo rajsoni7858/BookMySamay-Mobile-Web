@@ -1,15 +1,32 @@
-import React from "react";
-import { Select, Form, Typography } from "antd";
-
-const { Option } = Select;
+import { Collapse, Typography, Form, Input, Checkbox } from "antd";
+import React, { useState } from "react";
+const { Panel } = Collapse;
 const { Title } = Typography;
 
+function callback(key) {
+  console.log(key);
+}
+
+const text = `
+  Simple Hair Style
+`;
+
 const Step3Component = () => {
-  function handleChange(value) {
-    console.log(`Selected: ${value}`);
-  }
+  const showHide = (isActive) => <p>{isActive ? "SHOW" : "HIDE"}</p>;
+  const onFinish = (values) => {
+    // Handle the form submission here
+    console.log("Form values:", values);
+  };
+  const [timeInMin, setTimeInMin] = useState("");
+  const [charges, setCharges] = useState("");
+
+  const handleSubmit = () => {
+    // Handle the form submission here
+    console.log("Time In Min:", timeInMin);
+    console.log("Charges:", charges);
+  };
   return (
-    <Form>
+    <div className="custom-collapse">
       <Title
         level={5}
         style={{
@@ -21,43 +38,56 @@ const Step3Component = () => {
       >
         Add services from the dropdown with cost
       </Title>
-
-      {/* Content */}
-      <Form.Item
-        label="Hair Services"
-        name="services"
-        rules={[{ required: true, message: "Please select services" }]}
+      <Collapse
+        defaultActiveKey={["1"]}
+        onChange={callback}
+        expandIconPosition="right"
       >
-        <Select onChange={handleChange} placeholder="Select an option">
-          <Option value="option1">Hair Service 1</Option>
-          <Option value="option2">Hair Service 2</Option>
-        </Select>
-      </Form.Item>
-
-      {/* 2 */}
-      <Form.Item
-        label="Massage Services"
-        name="services1"
-        rules={[{ required: true, message: "Please select services" }]}
-      >
-        <Select onChange={handleChange} placeholder="Select an option">
-          <Option value="option1">Massage Service 1</Option>
-          <Option value="option2">Massage Service 2</Option>
-        </Select>
-      </Form.Item>
-
-      {/* 3 */}
-      <Form.Item
-        label="Beard Services"
-        name="services2"
-        rules={[{ required: true, message: "Please select services" }]}
-      >
-        <Select onChange={handleChange} placeholder="Select an option">
-          <Option value="option1">Beard Service1</Option>
-          <Option value="option2">Beard Service2</Option>
-        </Select>
-      </Form.Item>
-    </Form>
+        <Panel header=" Hair Services" key="1" extra={showHide}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "Space-between",
+              alignItems: "center",
+            }}
+          >
+            <div>{text}</div>
+            <Input placeholder="Time In Min" />
+            <Input placeholder="Charges" />
+            <Checkbox></Checkbox>
+          </div>
+        </Panel>
+        <Panel header=" Beard Services" key="2" extra={showHide}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "Space-between",
+              alignItems: "center",
+            }}
+          >
+            <div>{text}</div>
+            <Input placeholder="Time In Min" />
+            <Input placeholder=" Charges" />
+            <Checkbox></Checkbox>
+          </div>
+        </Panel>
+        <Panel header=" Massage Services" key="3" extra={showHide}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div>{text}</div>
+            <Input placeholder="Time In Min" />
+            <Input placeholder="Charges" />
+            <Checkbox></Checkbox>
+          </div>
+        </Panel>
+      </Collapse>
+      <br />
+    </div>
   );
 };
 
