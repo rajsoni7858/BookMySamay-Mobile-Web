@@ -1,9 +1,20 @@
 import React from "react";
 import { Form, Input, Row, Col, Select, TimePicker, Typography } from "antd";
+import moment from "moment";
 
 const { Title } = Typography;
 
 const Step1Component = () => {
+  const disabledMinutes = (hour) => {
+    // Disable minutes that are not at 00 or 30
+    const minutes = [];
+    for (let i = 0; i < 60; i++) {
+      if (i % 30 !== 0) {
+        minutes.push(i);
+      }
+    }
+    return minutes;
+  };
   const options = [
     { label: "Monday", value: "Monday" },
     { label: "Tuesday", value: "Tuesday" },
@@ -91,12 +102,24 @@ const Step1Component = () => {
       <Row gutter={12}>
         <Col span={12}>
           <Form.Item label="Opening Time:" name="openingTime">
-            <TimePicker style={{ width: "100%" }} />
+            <TimePicker
+              minuteStep={30}
+              disabledMinutes={disabledMinutes}
+              format="h:mm A"
+              defaultValue={moment("09:00", "HH:mm")}
+              style={{ width: "100%" }}
+            />
           </Form.Item>
         </Col>
         <Col span={12}>
           <Form.Item label="Closing Time:" name="closingTime">
-            <TimePicker style={{ width: "100%" }} />
+            <TimePicker
+              minuteStep={30}
+              disabledMinutes={disabledMinutes}
+              format="h:mm A"
+              defaultValue={moment("09:00", "HH:mm")}
+              style={{ width: "100%" }}
+            />
           </Form.Item>
         </Col>
       </Row>

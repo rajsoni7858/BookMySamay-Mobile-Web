@@ -1,0 +1,37 @@
+h2 {
+  font-family: Helvetica !important;
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  line-height: 42px !important;
+  letter-spacing: 0em !important;
+  text-align: left !important;
+  color: #1c4792 !important;
+}
+label {
+  font-family: Helvetica;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #2d3748 !important;
+}
+input#loginForm_username,
+input#loginForm_password {
+  font-size: 15px;
+  padding: 3%;
+}
+
+.button {
+  background-color: #1c4792;
+  height: 50px !important;
+}
+.toggle-button {
+  background-color: #1c4792 !important;
+}
+@media (max-width: 767px) {
+  .right {
+    border-left: none !important;
+    padding-left: 0 !important;
+  }
+}

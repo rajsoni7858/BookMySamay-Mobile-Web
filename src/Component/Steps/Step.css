@@ -140,3 +140,10 @@
 .ant-collapse-content-box {
   padding: 12px 14px;
 }
+.ant-collapse-header {
+  border: 1px solid #1c4792;
+}
+.ant-collapse-content-box {
+  border: 1px solid #1c4792;
+  border-top: none;
+}
