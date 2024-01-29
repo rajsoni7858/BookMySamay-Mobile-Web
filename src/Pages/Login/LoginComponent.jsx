@@ -45,33 +45,10 @@ const LoginForm = () => {
           borderRadius: "8px",
           width: "100%", // Set width to 100%
           maxWidth: "1000px",
-          padding: "30px", // Add padding for space
+          padding: "0px", // Add padding for space
         }}
       >
         <Row justify="center" align="middle" gutter={[16, 16]}>
-          <Col
-            className="left"
-            xs={24}
-            sm={24}
-            md={12}
-            lg={12}
-            style={{
-              paddingRight: "40px", // Adjust left padding for space
-            }}
-          >
-            {/* Left Side - Image */}
-            <div style={{ textAlign: "center" }}>
-              <img
-                src={require("../../Assets/Images/loginimage.png")}
-                alt="Your Image"
-                style={{
-                  maxWidth: "100%",
-                  maxHeight: "100%",
-                  borderRadius: "8px",
-                }}
-              />
-            </div>
-          </Col>
           <Col
             className="right"
             xs={24}
@@ -79,8 +56,7 @@ const LoginForm = () => {
             md={12}
             lg={12}
             style={{
-              borderLeft: "1px solid #1A1E29", // Add left border
-              paddingLeft: "40px", // Adjust left padding for space
+              padding: "10px 40px", // Adjust left padding for space
             }}
           >
             {/* Right Side - Login Form */}
@@ -100,10 +76,15 @@ const LoginForm = () => {
               </div>
 
               {/* Title */}
-              <Title level={2}>Welcome Back</Title>
+              <Title
+                level={5}
+                style={{ textAlign: "center", color: "#1C4792" }}
+              >
+                Login To Dashboard
+              </Title>
 
               {/* Subtext */}
-              <Paragraph>Enter your email and password to sign in</Paragraph>
+              {/* <Paragraph>Enter your email and password to sign in</Paragraph> */}
 
               <Form.Item
                 label="Username"
@@ -133,6 +114,29 @@ const LoginForm = () => {
                 </Button>
               </Form.Item>
             </Form>
+          </Col>
+          <Col
+            className="left"
+            xs={24}
+            sm={24}
+            md={12}
+            lg={12}
+            style={{
+              padding: "10px 40px", // Adjust left padding for space
+            }}
+          >
+            {/* Left Side - Image */}
+            <div style={{ textAlign: "center" }}>
+              <img
+                src={require("../../Assets/Images/loginimage.png")}
+                alt="Your Image"
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  borderRadius: "8px",
+                }}
+              />
+            </div>
           </Col>
         </Row>
       </Card>

@@ -29,6 +29,13 @@ input#loginForm_password {
 .toggle-button {
   background-color: #1c4792 !important;
 }
+/* .ant-card-body {
+  border-radius: 11px !important;
+  box-shadow: 2.128px 2.128px 5.32px 0px rgba(0, 0, 0, 0.25);
+} */
+.ant-card .ant-card-body {
+  padding: 5px !important;
+}
 @media (max-width: 767px) {
   .right {
     border-left: none !important;

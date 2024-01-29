@@ -10,9 +10,9 @@ const App = () => {
     <div>
       <BrowserRouter>
         <div className="App">
-          {/* <HeaderComponent /> */}
-          <AuthRouterconfig />
-          {/* <Routerconfig /> */}
+          <HeaderComponent />
+          {/* <AuthRouterconfig /> */}
+          <Routerconfig />
         </div>
       </BrowserRouter>
     </div>
