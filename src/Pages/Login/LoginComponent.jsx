@@ -87,11 +87,11 @@ const LoginForm = () => {
               {/* <Paragraph>Enter your email and password to sign in</Paragraph> */}
 
               <Form.Item
-                label="Username"
-                name="username"
-                rules={[{ message: "Please input your username!" }]}
+                label="Email"
+                name="email"
+                rules={[{ message: "Please input your email!" }]}
               >
-                <Input placeholder="Enter your username" />
+                <Input placeholder="Enter your email" />
               </Form.Item>
 
               <Form.Item

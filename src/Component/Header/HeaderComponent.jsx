@@ -3,11 +3,13 @@ import { Layout, Avatar, Dropdown } from "antd";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import "./Header.css"; // Import your CSS file
 import CustomDrawer from "../Drawer/DrawerComponent";
+import LogoutModal from "../Logout/LogoutModal"; // Import the new component
 
 const { Header } = Layout;
 
 const HeaderComponent = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const showDrawer = () => {
     setDrawerVisible(true);
@@ -17,7 +19,22 @@ const HeaderComponent = () => {
     setDrawerVisible(false);
   };
 
-  const onClick = ({ key }) => {};
+  // logout
+  const showModal = () => {
+    setModalVisible(true);
+  };
+
+  const handleMenuClick = (item) => {
+    if (item.key === "2") {
+      showModal();
+    } else {
+      console.log("Clicked on", item.label);
+    }
+  };
+
+  const handleLogout = () => {
+    setModalVisible(false);
+  };
 
   const items = [
     {
@@ -41,20 +58,27 @@ const HeaderComponent = () => {
           <img
             src={require("../../Assets/Images/logo.png")}
             alt="Your Logo"
-            style={{ display: "block", width: 94, Height: 32 }}
+            style={{ display: "block", width: 94, height: 32 }}
           />
         </div>
         <div className="user-menu">
           <Dropdown
             menu={{
               items,
-              onClick,
+              onClick: handleMenuClick,
             }}
             placement="bottomRight"
           >
             <Avatar size="small" icon={<UserOutlined />} />
           </Dropdown>
         </div>
+
+        {/* Logout Confirmation Modal */}
+        <LogoutModal
+          visible={modalVisible}
+          onOk={handleLogout}
+          onCancel={() => setModalVisible(false)}
+        />
       </Header>
     </Layout>
   );

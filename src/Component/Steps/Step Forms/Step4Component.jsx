@@ -3,9 +3,9 @@ import { Form, Input, Typography } from "antd";
 
 const { Title } = Typography;
 
-const Step4Component = () => {
+const Step4Component = ({ form }) => {
   return (
-    <Form>
+    <Form form={form}>
       <Title
         level={5}
         style={{
@@ -21,7 +21,7 @@ const Step4Component = () => {
       {/* Content */}
       <Form.Item
         name="upiMode"
-        rules={[{ required: true, message: "Please select UPI mode" }]}
+        // rules={[{ required: true, message: "Please select UPI mode" }]}
         style={{ marginBottom: "3rem" }}
       >
         <Input placeholder="Enter your UPI here" />

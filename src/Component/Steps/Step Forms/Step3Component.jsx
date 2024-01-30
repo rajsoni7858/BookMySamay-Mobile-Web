@@ -1,4 +1,4 @@
-import { Collapse, Typography, theme, Input, Checkbox } from "antd";
+import { Collapse, Typography, Form, theme, Input, Checkbox } from "antd";
 import React from "react";
 import { DownOutlined } from "@ant-design/icons";
 
@@ -71,7 +71,7 @@ const getItems = (panelStyle) => [
   },
 ];
 
-const Step3Component = () => {
+const Step3Component = ({ form }) => {
   const { token } = theme.useToken();
   const panelStyle = {
     marginBottom: 24,
@@ -81,24 +81,38 @@ const Step3Component = () => {
   };
 
   return (
-    <Collapse
-      bordered={false}
-      defaultActiveKey={["1"]}
-      expandIconPosition="right"
-      expandIcon={({ isActive }) => (
-        <DownOutlined rotate={isActive ? 180 : 0} />
-      )}
-      style={{
-        background: token.colorBgContainer,
-      }}
-      onChange={callback}
-    >
-      {getItems(panelStyle).map((item) => (
-        <Panel key={item.key} header={item.label} style={item.style}>
-          {item.children}
-        </Panel>
-      ))}
-    </Collapse>
+    <Form form={form}>
+      <Title
+        level={5}
+        style={{
+          textAlign: "center",
+          margin: 0,
+          padding: "1.4rem 0rem",
+          fontFamily: "Inter",
+        }}
+      >
+        Here you need to fill the shop details
+      </Title>
+
+      <Collapse
+        bordered={false}
+        defaultActiveKey={["1"]}
+        expandIconPosition="right"
+        expandIcon={({ isActive }) => (
+          <DownOutlined rotate={isActive ? 180 : 0} />
+        )}
+        style={{
+          background: token.colorBgContainer,
+        }}
+        onChange={callback}
+      >
+        {getItems(panelStyle).map((item) => (
+          <Panel key={item.key} header={item.label} style={item.style}>
+            {item.children}
+          </Panel>
+        ))}
+      </Collapse>
+    </Form>
   );
 };
 

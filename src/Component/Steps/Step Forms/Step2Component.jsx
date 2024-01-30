@@ -4,7 +4,7 @@ import { Form, Upload, Typography, message } from "antd";
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
 
-const Step2Component = () => {
+const Step2Component = ({ form }) => {
   const props = {
     name: "file",
     multiple: true,
@@ -26,7 +26,7 @@ const Step2Component = () => {
   };
 
   return (
-    <Form>
+    <Form form={form}>
       <Title
         level={5}
         style={{
@@ -44,7 +44,7 @@ const Step2Component = () => {
         name="image"
         valuePropName="fileList"
         getValueFromEvent={(e) => e.fileList}
-        rules={[{ required: true, message: "Please upload an image" }]}
+        //rules={[{ required: true, message: "Please upload an image" }]}
       >
         <Dragger {...props} listType="picture-card">
           <div className="drag-and-drop-text">

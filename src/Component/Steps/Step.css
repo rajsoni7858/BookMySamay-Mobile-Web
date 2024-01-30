@@ -105,14 +105,14 @@
   padding: 10px;
 }
 
-/* .ant-select-single {
-  height: 35px;
-} */
-
 .ant-collapse > .ant-collapse-item > .ant-collapse-header {
   font-family: "Poppins";
   color: #afafaf;
   font-size: 15px;
+}
+.ant-collapse-item {
+  border: 1px solid #1c4792 !important;
+  border-radius: 5px !important;
 }
 .ant-collapse-content-box .ant-input {
   width: 100px;

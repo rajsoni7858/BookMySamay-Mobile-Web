@@ -23,12 +23,6 @@ const menuItems = [
     icon: "user.png",
     active: "user-active.png",
   },
-  {
-    route: "/logout",
-    label: "Logout",
-    icon: "logout.png",
-    active: "logout.png",
-  },
 ];
 
 const CustomDrawer = ({ onClose, open }) => {

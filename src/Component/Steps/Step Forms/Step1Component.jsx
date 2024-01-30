@@ -1,10 +1,23 @@
 import React from "react";
-import { Form, Input, Row, Col, Select, TimePicker, Typography } from "antd";
+import {
+  Form,
+  Input,
+  Row,
+  Col,
+  Select,
+  Button,
+  TimePicker,
+  Typography,
+} from "antd";
 import moment from "moment";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
+dayjs.extend(customParseFormat);
 const { Title } = Typography;
 
-const Step1Component = () => {
+const Step1Component = ({ form }) => {
+  //const [form] = Form.useForm();
   const disabledMinutes = (hour) => {
     // Disable minutes that are not at 00 or 30
     const minutes = [];
@@ -29,7 +42,7 @@ const Step1Component = () => {
   };
 
   return (
-    <Form>
+    <Form form={form}>
       <Title
         level={5}
         style={{
@@ -46,65 +59,37 @@ const Step1Component = () => {
       <Form.Item
         label="Shop Name:"
         name="shopName"
-        rules={[
-          { required: true, message: "Please enter the Shop Name" },
-          { max: 50, message: "Shop Name cannot be more than 50 characters" },
-        ]}
+        rules={[{ required: true, message: "Please enter shop name" }]}
       >
         <Input placeholder="Enter shop name" />
       </Form.Item>
       <Form.Item
         label="Shop Owner:"
         name="shopOwner"
-        rules={[
-          { required: true, message: "Please enter the Shop Owner" },
-          { max: 50, message: "Shop Owner cannot be more than 50 characters" },
-        ]}
+        rules={[{ required: true, message: "Please enter shop owner" }]}
       >
         <Input placeholder="Enter shop Owner" />
       </Form.Item>
       <Form.Item
         label="Shop Location:"
         name="shopLocation"
-        rules={[
-          { required: true, message: "Please enter the Shop Location" },
-          {
-            max: 100,
-            message: "Shop Location cannot be more than 100 characters",
-          },
-        ]}
+        rules={[{ required: true, message: "Please enter shop location" }]}
       >
         <Input placeholder="Enter shop location" />
       </Form.Item>
       <Form.Item
         label="Set Location:"
         name="setLocation"
-        rules={[
-          { required: true, message: "Please enter the Set Location" },
-          {
-            max: 100,
-            message: "Set Location cannot be more than 100 characters",
-          },
-        ]}
+        rules={[{ required: true, message: "Please enter set location" }]}
       >
-        <Input />
+        <Input placeholder="Enter set location " />
       </Form.Item>
       <Row gutter={12}>
         <Col span={12}>
           <Form.Item
             label="Working Days:"
             name="workingDays"
-            rules={[
-              {
-                required: true,
-                message: "Please select at least one Working Day",
-              },
-              {
-                type: "array",
-                min: 1,
-                message: "Please select at least one Working Day",
-              },
-            ]}
+            rules={[{ required: true, message: "Please select working days" }]}
           >
             <Select
               mode="multiple"
@@ -116,7 +101,13 @@ const Step1Component = () => {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item label="Holiday in Week:" name="holidayInWeek">
+          <Form.Item
+            label="Holiday in Week:"
+            name="holidayInWeek"
+            rules={[
+              { required: true, message: "Please select holiday in week" },
+            ]}
+          >
             <Select
               mode="multiple"
               allowClear
@@ -129,35 +120,21 @@ const Step1Component = () => {
       </Row>
       <Row gutter={12}>
         <Col span={12}>
-          <Form.Item
-            label="Opening Time:"
-            name="openingTime"
-            rules={[
-              { required: true, message: "Please select the Opening Time" },
-            ]}
-          >
+          <Form.Item label="Opening Time:" name="openingTime">
             <TimePicker
               minuteStep={30}
-              disabledMinutes={disabledMinutes}
               format="h:mm A"
-              defaultValue={moment("09:00", "HH:mm")}
+              defaultValue={dayjs("13:30", "HH:mm")}
               style={{ width: "100%" }}
             />
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item
-            label="Closing Time:"
-            name="closingTime"
-            rules={[
-              { required: true, message: "Please select the Closing Time" },
-            ]}
-          >
+          <Form.Item label="Closing Time:" name="closingTime">
             <TimePicker
               minuteStep={30}
-              disabledMinutes={disabledMinutes}
               format="h:mm A"
-              defaultValue={moment("09:00", "HH:mm")}
+              defaultValue={dayjs("13:30", "HH:mm")}
               style={{ width: "100%" }}
             />
           </Form.Item>

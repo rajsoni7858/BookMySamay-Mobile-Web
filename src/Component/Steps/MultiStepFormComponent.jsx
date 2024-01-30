@@ -4,31 +4,70 @@ import Step1Component from "./Step Forms/Step1Component";
 import Step2Component from "./Step Forms/Step2Component";
 import Step3Component from "./Step Forms/Step3Component";
 import Step4Component from "./Step Forms/Step4Component";
+import { useHistory } from "react-router-dom";
 import "./Step.css";
 
 const { Step } = Steps;
 
 const MultiStepFormComponent = ({ form, formId }) => {
+  let history = useHistory();
   const [currentStep, setCurrentStep] = useState(0);
 
   const steps = [
-    { id: 1, content: <Step1Component /> },
-    { id: 2, content: <Step2Component /> },
-    { id: 3, content: <Step3Component /> },
-    { id: 4, content: <Step4Component /> },
+    {
+      id: 1,
+      content: (
+        <Step1Component
+          form={form}
+          onNext={() => setCurrentStep(currentStep + 1)}
+        />
+      ),
+    },
+    {
+      id: 2,
+      content: (
+        <Step2Component
+          form={form}
+          onNext={() => setCurrentStep(currentStep + 1)}
+        />
+      ),
+    },
+    {
+      id: 3,
+      content: (
+        <Step3Component
+          form={form}
+          onNext={() => setCurrentStep(currentStep + 1)}
+        />
+      ),
+    },
+    {
+      id: 4,
+      content: (
+        <Step4Component
+          form={form}
+          onNext={() => setCurrentStep(currentStep + 1)}
+        />
+      ),
+    },
   ];
 
-  const handleNext = () => {
-    form.validateFields().then(() => {
+  const handleNext = async () => {
+    try {
+      await form.validateFields();
+      // If validation succeeds, call the parent component's onNext function
       setCurrentStep(currentStep + 1);
-    });
+    } catch (errorInfo) {
+      // Handle validation errors
+      console.log("Validation failed:", errorInfo);
+    }
   };
 
   const handleFinish = () => {
     form.validateFields().then((values) => {
       message.success("Form submitted successfully!");
-      console.log(values);
     });
+    history.push("/shops");
   };
 
   return (
@@ -83,6 +122,7 @@ const MultiStepFormComponent = ({ form, formId }) => {
             }}
             type="primary"
             htmlType="submit"
+            onClick={handleFinish}
           >
             SUBMIT
           </Button>
