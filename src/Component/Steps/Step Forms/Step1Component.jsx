@@ -40,6 +40,28 @@ const Step1Component = ({ form }) => {
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
+  // Validation function for opening and closing times
+  const validateTime = (rule, value, callback) => {
+    if (value) {
+      const selectedTime = dayjs(value);
+      const currentTime = dayjs();
+      if (selectedTime.isBefore(currentTime)) {
+        callback();
+      } else {
+        callback();
+      }
+    } else {
+      // Remove the error message for empty values
+      callback();
+    }
+  };
+  const disabledClosingHours = () => {
+    const hours = [];
+    for (let i = 0; i < 12; i++) {
+      hours.push(i);
+    }
+    return hours;
+  };
 
   return (
     <Form form={form}>
@@ -120,7 +142,19 @@ const Step1Component = ({ form }) => {
       </Row>
       <Row gutter={12}>
         <Col span={12}>
-          <Form.Item label="Opening Time:" name="openingTime">
+          <Form.Item
+            label="Opening Time:"
+            name="openingTime"
+            rules={[
+              {
+                required: true,
+                message: "Please select opening time",
+              },
+              {
+                validator: validateTime,
+              },
+            ]}
+          >
             <TimePicker
               minuteStep={30}
               format="h:mm A"
@@ -130,12 +164,25 @@ const Step1Component = ({ form }) => {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item label="Closing Time:" name="closingTime">
+          <Form.Item
+            label="Closing Time:"
+            name="closingTime"
+            rules={[
+              {
+                required: true,
+                message: "Please select closing time",
+              },
+              {
+                validator: validateTime,
+              },
+            ]}
+          >
             <TimePicker
               minuteStep={30}
               format="h:mm A"
               defaultValue={dayjs("13:30", "HH:mm")}
               style={{ width: "100%" }}
+              disabledClosingHours={disabledClosingHours}
             />
           </Form.Item>
         </Col>

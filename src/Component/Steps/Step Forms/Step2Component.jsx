@@ -44,7 +44,7 @@ const Step2Component = ({ form }) => {
         name="image"
         valuePropName="fileList"
         getValueFromEvent={(e) => e.fileList}
-        //rules={[{ required: true, message: "Please upload an image" }]}
+        rules={[{ required: true, message: "Please upload an image" }]}
       >
         <Dragger {...props} listType="picture-card">
           <div className="drag-and-drop-text">

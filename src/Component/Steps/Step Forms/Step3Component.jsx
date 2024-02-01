@@ -20,12 +20,22 @@ const getItems = (panelStyle) => [
         style={{
           display: "flex",
           justifyContent: "Space-between",
-          alignItems: "center",
+          alignItems: "baseline",
         }}
       >
         <p>{text}</p>
-        <Input placeholder="Time In Min" />
-        <Input placeholder="Charges" />
+        <Form.Item
+          name="timeInMin"
+          rules={[{ required: true, message: "Please enter time in min" }]}
+        >
+          <Input placeholder="Time In Min" />
+        </Form.Item>
+        <Form.Item
+          name="charges"
+          rules={[{ required: true, message: "Please enter charges" }]}
+        >
+          <Input placeholder="Charges" />
+        </Form.Item>
         <Checkbox></Checkbox>
       </div>
     ),
@@ -39,12 +49,22 @@ const getItems = (panelStyle) => [
         style={{
           display: "flex",
           justifyContent: "Space-between",
-          alignItems: "center",
+          alignItems: "baseline",
         }}
       >
         <p>{text}</p>
-        <Input placeholder="Time In Min" />
-        <Input placeholder=" Charges" />
+        <Form.Item
+          name="timeInMin"
+          rules={[{ required: true, message: "Please enter time in min" }]}
+        >
+          <Input placeholder="Time In Min" />
+        </Form.Item>
+        <Form.Item
+          name="charges"
+          rules={[{ required: true, message: "Please enter charges" }]}
+        >
+          <Input placeholder="Charges" />
+        </Form.Item>
         <Checkbox></Checkbox>
       </div>
     ),
@@ -58,12 +78,22 @@ const getItems = (panelStyle) => [
         style={{
           display: "flex",
           justifyContent: "Space-between",
-          alignItems: "center",
+          alignItems: "baseline",
         }}
       >
         <p>{text}</p>
-        <Input placeholder="Time In Min" />
-        <Input placeholder="Charges" />
+        <Form.Item
+          name="timeInMin"
+          rules={[{ required: true, message: "Please enter time in min" }]}
+        >
+          <Input placeholder="Time In Min" />
+        </Form.Item>
+        <Form.Item
+          name="charges"
+          rules={[{ required: true, message: "Please enter charges" }]}
+        >
+          <Input placeholder="Charges" />
+        </Form.Item>
         <Checkbox></Checkbox>
       </div>
     ),

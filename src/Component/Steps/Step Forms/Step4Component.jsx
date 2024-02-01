@@ -21,7 +21,7 @@ const Step4Component = ({ form }) => {
       {/* Content */}
       <Form.Item
         name="upiMode"
-        // rules={[{ required: true, message: "Please select UPI mode" }]}
+        rules={[{ required: true, message: "Please select UPI mode" }]}
         style={{ marginBottom: "3rem" }}
       >
         <Input placeholder="Enter your UPI here" />
