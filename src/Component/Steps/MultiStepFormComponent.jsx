@@ -54,11 +54,11 @@ const MultiStepFormComponent = ({ form, formId }) => {
 
   const handleNext = async () => {
     try {
-      await form.validateFields();
-      // If validation succeeds, call the parent component's onNext function
+      await form.validateFields().then((values) => {
+        console.log("hi ronak", values);
+      });
       setCurrentStep(currentStep + 1);
     } catch (errorInfo) {
-      // Handle validation errors
       console.log("Validation failed:", errorInfo);
     }
   };

@@ -101,7 +101,7 @@ const getItems = (panelStyle) => [
   },
 ];
 
-const Step3Component = ({ form }) => {
+const Step3Component = () => {
   const { token } = theme.useToken();
   const panelStyle = {
     marginBottom: 24,
@@ -111,7 +111,7 @@ const Step3Component = ({ form }) => {
   };
 
   return (
-    <Form form={form}>
+    <>
       <Title
         level={5}
         style={{
@@ -142,7 +142,7 @@ const Step3Component = ({ form }) => {
           </Panel>
         ))}
       </Collapse>
-    </Form>
+    </>
   );
 };
 

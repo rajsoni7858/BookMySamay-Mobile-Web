@@ -1,5 +1,5 @@
 import React from "react";
-import { Drawer, Menu, Image, Typography } from "antd";
+import { Drawer, Image, Typography } from "antd";
 import { useHistory, useLocation } from "react-router-dom";
 
 const { Text } = Typography;

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Layout, Avatar, Dropdown } from "antd";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
-import "./Header.css"; // Import your CSS file
 import CustomDrawer from "../Drawer/DrawerComponent";
-import LogoutModal from "../Logout/LogoutModal"; // Import the new component
+import LogoutModal from "../Logout/LogoutModal";
+import "./Header.css";
 
 const { Header } = Layout;
 

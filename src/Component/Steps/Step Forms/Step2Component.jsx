@@ -4,7 +4,7 @@ import { Form, Upload, Typography, message } from "antd";
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
 
-const Step2Component = ({ form }) => {
+const Step2Component = () => {
   const props = {
     name: "file",
     multiple: true,
@@ -26,7 +26,7 @@ const Step2Component = ({ form }) => {
   };
 
   return (
-    <Form form={form}>
+    <>
       <Title
         level={5}
         style={{
@@ -61,7 +61,7 @@ const Step2Component = ({ form }) => {
           </div>
         </Dragger>
       </Form.Item>
-    </Form>
+    </>
   );
 };
 

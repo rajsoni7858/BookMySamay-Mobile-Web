@@ -20,6 +20,7 @@ for (let i = 0; i < 100; i++) {
 const ShopsComponent = () => {
   const history = useHistory();
   const [data, setData] = useState(originData);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const columns = [
     {
@@ -99,8 +100,6 @@ const ShopsComponent = () => {
   const handleAddShopClick = () => {
     history.push("/shops/addshop");
   };
-
-  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredData = searchQuery
     ? data.filter(

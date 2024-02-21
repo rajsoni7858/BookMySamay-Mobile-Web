@@ -3,9 +3,9 @@ import { Form, Input, Typography } from "antd";
 
 const { Title } = Typography;
 
-const Step4Component = ({ form }) => {
+const Step4Component = () => {
   return (
-    <Form form={form}>
+    <>
       <Title
         level={5}
         style={{
@@ -26,7 +26,7 @@ const Step4Component = ({ form }) => {
       >
         <Input placeholder="Enter your UPI here" />
       </Form.Item>
-    </Form>
+    </>
   );
 };
 

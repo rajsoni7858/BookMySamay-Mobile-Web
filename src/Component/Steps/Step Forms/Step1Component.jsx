@@ -1,33 +1,12 @@
 import React from "react";
-import {
-  Form,
-  Input,
-  Row,
-  Col,
-  Select,
-  Button,
-  TimePicker,
-  Typography,
-} from "antd";
-import moment from "moment";
+import { Form, Input, Row, Col, Select, TimePicker, Typography } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(customParseFormat);
 const { Title } = Typography;
 
-const Step1Component = ({ form }) => {
-  //const [form] = Form.useForm();
-  const disabledMinutes = (hour) => {
-    // Disable minutes that are not at 00 or 30
-    const minutes = [];
-    for (let i = 0; i < 60; i++) {
-      if (i % 30 !== 0) {
-        minutes.push(i);
-      }
-    }
-    return minutes;
-  };
+const Step1Component = () => {
   const options = [
     { label: "Monday", value: "Monday" },
     { label: "Tuesday", value: "Tuesday" },
@@ -40,7 +19,7 @@ const Step1Component = ({ form }) => {
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
-  // Validation function for opening and closing times
+
   const validateTime = (rule, value, callback) => {
     if (value) {
       const selectedTime = dayjs(value);
@@ -55,6 +34,7 @@ const Step1Component = ({ form }) => {
       callback();
     }
   };
+
   const disabledClosingHours = () => {
     const hours = [];
     for (let i = 0; i < 12; i++) {
@@ -64,7 +44,7 @@ const Step1Component = ({ form }) => {
   };
 
   return (
-    <Form form={form}>
+    <>
       <Title
         level={5}
         style={{
@@ -158,7 +138,7 @@ const Step1Component = ({ form }) => {
             <TimePicker
               minuteStep={30}
               format="h:mm A"
-              defaultValue={dayjs("13:30", "HH:mm")}
+              // defaultValue={dayjs("13:30", "HH:mm")}
               style={{ width: "100%" }}
             />
           </Form.Item>
@@ -180,14 +160,14 @@ const Step1Component = ({ form }) => {
             <TimePicker
               minuteStep={30}
               format="h:mm A"
-              defaultValue={dayjs("13:30", "HH:mm")}
+              // defaultValue={dayjs("13:30", "HH:mm")}
               style={{ width: "100%" }}
               disabledClosingHours={disabledClosingHours}
             />
           </Form.Item>
         </Col>
       </Row>
-    </Form>
+    </>
   );
 };
 

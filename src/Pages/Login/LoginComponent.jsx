@@ -1,51 +1,35 @@
-import React, { useState } from "react";
-import { Row, Col, Form, Input, Button, Card, Switch, Typography } from "antd";
+import React from "react";
+import { Row, Col, Form, Input, Button, Card, Typography } from "antd";
 import { useHistory } from "react-router-dom";
 
-const { Title, Paragraph, Text, Link } = Typography;
+const { Title } = Typography;
+
 const LoginForm = () => {
-  const [rememberMe, setRememberMe] = useState(false);
-  const [additionalToggle, setAdditionalToggle] = useState(false);
-  const onFinish = (values) => {
-    console.log("Received values:", values);
-    // You can handle login logic here
-  };
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  let history = useHistory();
+  const history = useHistory();
+  const [form] = Form.useForm();
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-  const handleLogin = () => {
-    // Implement your login logic here
-    console.log(
-      "Login clicked with username:",
-      username,
-      "and password:",
-      password
-    );
+  const onFinish = async () => {
+    form.validateFields().then((values) => {
+      console.log("hi ronak", values);
+    });
     history.push("/dashboard");
   };
+
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "100vh", // Set the minimum height of the container to 100% of the viewport height
+        minHeight: "100vh",
       }}
     >
       <Card
         style={{
           borderRadius: "8px",
-          width: "100%", // Set width to 100%
+          width: "100%",
           maxWidth: "1000px",
-          padding: "0px", // Add padding for space
+          padding: "0px",
         }}
       >
         <Row justify="center" align="middle" gutter={[16, 16]}>
@@ -56,13 +40,13 @@ const LoginForm = () => {
             md={12}
             lg={12}
             style={{
-              padding: "10px 40px", // Adjust left padding for space
+              padding: "10px 40px",
             }}
           >
             {/* Right Side - Login Form */}
             <Form
+              form={form}
               name="loginForm"
-              initialValues={{ remember: true }}
               onFinish={onFinish}
               layout="vertical"
             >
@@ -83,9 +67,6 @@ const LoginForm = () => {
                 Login To Dashboard
               </Title>
 
-              {/* Subtext */}
-              {/* <Paragraph>Enter your email and password to sign in</Paragraph> */}
-
               <Form.Item
                 label="Email"
                 name="email"
@@ -102,13 +83,13 @@ const LoginForm = () => {
               >
                 <Input.Password placeholder="Enter your password" />
               </Form.Item>
+
               <Form.Item>
                 <Button
                   type="primary"
                   htmlType="submit"
                   block
                   className="button"
-                  onClick={handleLogin}
                 >
                   SIGN IN
                 </Button>
@@ -122,14 +103,14 @@ const LoginForm = () => {
             md={12}
             lg={12}
             style={{
-              padding: "10px 40px", // Adjust left padding for space
+              padding: "10px 40px",
             }}
           >
             {/* Left Side - Image */}
             <div style={{ textAlign: "center" }}>
               <img
                 src={require("../../Assets/Images/loginimage.png")}
-                alt="Your Image"
+                alt="login"
                 style={{
                   maxWidth: "100%",
                   maxHeight: "100%",
