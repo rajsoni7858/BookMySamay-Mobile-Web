@@ -21,3 +21,12 @@
   box-shadow: 2.128px 2.128px 5.32px 0px rgba(0, 0, 0, 0.25);
   padding: 5px;
 }
+
+.meta .ant-card-meta-description {
+  font-size: 0.7rem;
+}
+
+.meta .ant-card-meta-title {
+  margin-bottom: 4px;
+  margin-top: 4px;
+}

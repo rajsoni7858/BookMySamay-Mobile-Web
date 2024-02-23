@@ -1,11 +1,14 @@
 import React from "react";
-import { Typography, Row, Col, Card, Statistic } from "antd";
+import { Typography, Row, Col, Card, Statistic, Grid } from "antd";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 import "./Dashboard.css";
 
 const { Title } = Typography;
+const { Meta } = Card;
 
 const Dashboard = () => {
+  const history = useHistory();
   const currentDateTimeFormatted = moment().format("h.mm A D MMM YYYY");
 
   const renderStatisticValue = (value) => (
@@ -134,6 +137,89 @@ const Dashboard = () => {
               {renderStatisticValue(10)}
               {renderTitle("Inactive Member")}
             </div>
+          </Card>
+        </Col>
+      </Row>
+
+      <Row
+        gutter={[16, 16]}
+        justify="center"
+        align="middle"
+        style={{ margin: "0 1.2rem", padding: "1.2rem 0" }}
+      >
+        <Col xs={12} sm={12}>
+          <Card
+            hoverable
+            cover={
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "10rem",
+                }}
+              >
+                <img
+                  alt="example"
+                  src={require("../../../src/Assets/Images/salon.png")}
+                  style={{
+                    width: "10rem",
+                    height: "10rem",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+            }
+            style={{
+              height: "100%",
+              boxShadow: "2.128px 2.128px 5.32px 0px rgba(0, 0, 0, 0.25)",
+            }}
+            bodyStyle={{ padding: "8px" }}
+            onClick={() => history.push("shops/addshop")}
+          >
+            <Meta
+              className="meta"
+              title="Salon/Beauty Parlor"
+              description="To Add or fill the details of salons “Click on the Salon”"
+              style={{ padding: "0", paddingBottom: "5px" }}
+            />
+          </Card>
+        </Col>
+        <Col xs={12} sm={12}>
+          <Card
+            hoverable
+            cover={
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "10rem",
+                }}
+              >
+                <img
+                  alt="example"
+                  src={require("../../../src/Assets/Images/hospital.jpeg")}
+                  style={{
+                    width: "10rem",
+                    height: "10rem",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+            }
+            style={{
+              height: "100%",
+              boxShadow: "2.128px 2.128px 5.32px 0px rgba(0, 0, 0, 0.25)",
+            }}
+            bodyStyle={{ padding: "8px" }}
+          >
+            <Meta
+              className="meta"
+              title="Hospital"
+              description="To Add or fill the details of hospitals “Click on the Hospital”"
+              style={{ padding: "0", paddingBottom: "5px" }}
+            />
           </Card>
         </Col>
       </Row>
