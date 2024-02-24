@@ -1,67 +1,124 @@
-import React from "react";
-import { Form, Upload, Typography, message } from "antd";
+import React, { useState } from "react";
+import { Collapse, TimePicker, Button, Space } from "antd";
 
-const { Title, Text } = Typography;
-const { Dragger } = Upload;
+const { Panel } = Collapse;
+
+const daysOfWeek = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 
 const Step2Component = () => {
-  const props = {
-    name: "file",
-    multiple: true,
-    action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
-    onChange(info) {
-      const { status } = info.file;
-      if (status !== "uploading") {
-        console.log(info.file, info.fileList);
-      }
-      if (status === "done") {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-    onDrop(e) {
-      console.log("Dropped files", e.dataTransfer.files);
-    },
+  const [timeValues, setTimeValues] = useState(
+    Array.from({ length: 7 }, () => Array(4).fill(""))
+  );
+
+  const handleTimeChange = (dayIndex, timeIndex, time) => {
+    const newTimeValues = [...timeValues];
+    newTimeValues[dayIndex][timeIndex] = time;
+    setTimeValues(newTimeValues);
+  };
+
+  const handleCopyFromAbove = (dayIndex) => {
+    const newTimeValues = [...timeValues];
+    const aboveDayIndex = dayIndex > 0 ? dayIndex - 1 : 6;
+    newTimeValues[dayIndex] = [...timeValues[aboveDayIndex]];
+    setTimeValues(newTimeValues);
+  };
+
+  const renderTimePickers = (dayIndex) => {
+    return (
+      <Space style={{ width: "100%" }} direction="horizontal">
+        <Space direction="vertical">
+          <div>Open At:</div>
+          <TimePicker
+            value={timeValues[dayIndex][0]}
+            onChange={(time) => handleTimeChange(dayIndex, 0, time)}
+            format="h:mm a"
+            minuteStep={15}
+            placeholder="Select Time"
+            style={{ width: "100%" }}
+            required
+          />
+        </Space>
+        <Space direction="vertical">
+          <div>Close At:</div>
+          <TimePicker
+            value={timeValues[dayIndex][1]}
+            onChange={(time) => handleTimeChange(dayIndex, 1, time)}
+            format="h:mm a"
+            minuteStep={15}
+            placeholder="Select Time"
+            style={{ width: "100%" }}
+            required
+          />
+        </Space>
+        <Space direction="vertical">
+          <div>Break Start:</div>
+          <TimePicker
+            value={timeValues[dayIndex][2]}
+            onChange={(time) => handleTimeChange(dayIndex, 2, time)}
+            format="h:mm a"
+            minuteStep={15}
+            placeholder="Select Time"
+            style={{ width: "100%" }}
+            required
+          />
+        </Space>
+        <Space direction="vertical">
+          <div>Break End:</div>
+          <TimePicker
+            value={timeValues[dayIndex][3]}
+            onChange={(time) => handleTimeChange(dayIndex, 3, time)}
+            format="h:mm a"
+            minuteStep={15}
+            placeholder="Select Time"
+            style={{ width: "100%" }}
+            required
+          />
+        </Space>
+      </Space>
+    );
   };
 
   return (
-    <>
-      <Title
-        level={5}
-        style={{
-          textAlign: "center",
-          margin: 0,
-          padding: "1.4rem 0rem",
-          fontFamily: "Inter",
-        }}
+    <div style={{ paddingTop: "0.6rem" }}>
+      <Collapse
+        defaultActiveKey={daysOfWeek.map((day, index) => `${index}`)}
+        bordered={false}
       >
-        Upload Your shop images here
-      </Title>
-
-      {/* Content */}
-      <Form.Item
-        name="image"
-        valuePropName="fileList"
-        getValueFromEvent={(e) => e.fileList}
-        rules={[{ required: true, message: "Please upload an image" }]}
-      >
-        <Dragger {...props} listType="picture-card">
-          <div className="drag-and-drop-text">
-            <p>
-              <img
-                src={require("../../../Assets/Images/upload.png")}
-                alt="Group Member Icon"
-                className="upload-img"
-              />
-            </p>
-            <Text style={{ fontFamily: "Poppins", fontSize: "0.75rem" }}>
-              Browse to select file
-            </Text>
-          </div>
-        </Dragger>
-      </Form.Item>
-    </>
+        {daysOfWeek.map((day, index) => (
+          <Panel
+            collapsible="disabled"
+            header={day}
+            key={index}
+            extra={
+              index !== 0 && (
+                <Button
+                  type="primary"
+                  size="small"
+                  style={{ fontSize: "12px" }}
+                  onClick={() => handleCopyFromAbove(index)}
+                >
+                  Copy From Above
+                </Button>
+              )
+            }
+            style={{
+              borderBottom: 0,
+            }}
+            showArrow={false}
+          >
+            {renderTimePickers(index)}
+          </Panel>
+        ))}
+      </Collapse>
+    </div>
   );
 };
 

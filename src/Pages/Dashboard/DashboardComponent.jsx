@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Row, Col, Card, Statistic, Grid } from "antd";
+import { Typography, Row, Col, Card, Statistic } from "antd";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 import "./Dashboard.css";

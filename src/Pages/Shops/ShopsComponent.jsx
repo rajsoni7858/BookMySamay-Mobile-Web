@@ -70,13 +70,22 @@ const ShopsComponent = () => {
       width: "15%",
       align: "center",
       render: (text, record) => (
-        <Link to={`/shops/editshop/${record.key}`}>
-          <img
-            src={require("../../Assets/Images/edit.png")}
-            alt="Your Logo"
-            style={{ width: "17px", Height: "17px", padding: "3px" }}
-          />
-        </Link>
+        <>
+          <Link to={`/shops/editshop/${record.key}`}>
+            <img
+              src={require("../../Assets/Images/edit.png")}
+              alt="Your Logo"
+              style={{ width: "17px", Height: "17px", padding: "3px" }}
+            />
+          </Link>
+          <Link to={`/shops/editshop/${record.key}`}>
+            <img
+              src={require("../../Assets/Images/setting.png")}
+              alt="Your Logo"
+              style={{ width: "22px", Height: "22px", padding: "3px" }}
+            />
+          </Link>
+        </>
       ),
     },
   ];
@@ -119,7 +128,7 @@ const ShopsComponent = () => {
         }}
       >
         <Input
-          placeholder="Search Shop Name or Mobile No"
+          placeholder="Search by Shop Name/Mobile No."
           allowClear
           prefix={
             <img
@@ -132,9 +141,9 @@ const ShopsComponent = () => {
             marginBottom: "1rem",
             fontFamily: "Poppins",
             borderRadius: 8,
-            padding: "0.4rem",
+            padding: "0.5rem",
             paddingLeft: "0.55rem",
-            border: 0,
+            border: "1px solid #1C4792",
           }}
         />
 
@@ -151,7 +160,7 @@ const ShopsComponent = () => {
           }}
           onClick={handleAddShopClick}
         >
-          Add Shop
+          ADD SALON
         </Button>
 
         {/* Table */}

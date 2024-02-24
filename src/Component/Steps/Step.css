@@ -7,11 +7,7 @@
   padding-inline-start: 8px !important;
 }
 
-.ant-steps
-  .ant-steps-item-finish
-  > .ant-steps-item-container
-  > .ant-steps-item-content
-  > .ant-steps-item-title::after {
+.ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after {
   background-color: #0db7aa !important;
 }
 
@@ -20,11 +16,11 @@
   border-color: #1c4792;
 }
 
-.ant-steps .ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon {
+.ant-steps .ant-steps-item-process .ant-steps-item-icon>.ant-steps-icon {
   font-family: Poppins;
 }
 
-.ant-steps .ant-steps-item-wait .ant-steps-item-icon > .ant-steps-icon {
+.ant-steps .ant-steps-item-wait .ant-steps-item-icon>.ant-steps-icon {
   font-family: Poppins;
 }
 
@@ -40,7 +36,7 @@
   border-color: #1c4792;
 }
 
-.ant-picker .ant-picker-input > input:placeholder-shown {
+.ant-picker .ant-picker-input>input:placeholder-shown {
   font-family: Poppins;
 }
 
@@ -48,10 +44,7 @@
   font-family: Poppins;
 }
 
-.ant-picker-dropdown
-  .ant-picker-time-panel-column
-  > li.ant-picker-time-panel-cell
-  .ant-picker-time-panel-cell-inner {
+.ant-picker-dropdown .ant-picker-time-panel-column>li.ant-picker-time-panel-cell .ant-picker-time-panel-cell-inner {
   font-family: Poppins;
 }
 
@@ -67,8 +60,7 @@
   color: #0db7aa !important;
 }
 
-/* step 2 */
-
+/* step 3 */
 .drag-and-drop-text {
   display: flex;
   flex-direction: row;
@@ -98,48 +90,27 @@
   flex-grow: 1 !important;
 }
 
-/* Step 3 */
-
-.ant-select-selector {
-  border-color: #1c4792 !important;
-  padding: 10px;
-}
-
-.ant-collapse > .ant-collapse-item > .ant-collapse-header {
-  font-family: "Poppins";
-  color: #afafaf;
-  font-size: 15px;
-}
-.ant-collapse-item {
-  border: 1px solid #1c4792 !important;
-  border-radius: 5px !important;
-}
-.ant-collapse-content-box .ant-input {
-  width: 100px;
-  height: auto;
-  margin: 0 5px;
-  border-color: #1c4792;
-}
-.ant-checkbox-inner {
-  padding: 12px;
-  border-color: #1c4792 !important;
-}
-.custom-collapse .ant-collapse {
-  border-color: #1c4792;
-  font-family: Poppins;
-}
-.ant-collapse > .ant-collapse-item {
-  border-bottom: 1px solid #1c4792;
-}
+/* Step 2 */
 .ant-collapse-header {
-  color: rgba(0, 0, 0, 0.88);
-  font-weight: 400;
+  align-items: center !important;
+  background-color: #EFF3FD !important;
+  border-radius: 10px !important;
+  height: 50px !important;
+}
+
+.ant-collapse>.ant-collapse-item>.ant-collapse-header {
+  font-family: "Poppins";
   font-size: 15px;
-  line-height: 1.5;
 }
-.ant-collapse-content-box {
-  padding: 12px 14px;
+
+.ant-collapse-content>.ant-collapse-content-box {
+  padding: 16px 8px !important;
 }
+
 .ant-collapse-content-box {
-  background-color: #eeeeee;
+  background-color: white !important;
+}
+
+.ant-collapse-item-disabled>.ant-collapse-header {
+  color: black !important;
 }

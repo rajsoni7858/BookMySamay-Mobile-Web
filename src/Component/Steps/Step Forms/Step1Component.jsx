@@ -1,46 +1,11 @@
 import React from "react";
-import { Form, Input, Row, Col, Select, TimePicker, Typography } from "antd";
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
+import { Form, Input, Select, Typography } from "antd";
 
-dayjs.extend(customParseFormat);
 const { Title } = Typography;
 
 const Step1Component = () => {
-  const options = [
-    { label: "Monday", value: "Monday" },
-    { label: "Tuesday", value: "Tuesday" },
-    { label: "Wednesday", value: "Wednesday" },
-    { label: "Thursday", value: "Thursday" },
-    { label: "Friday", value: "Friday" },
-    { label: "Saturday", value: "Saturday" },
-  ];
-
   const handleChange = (value) => {
     console.log(`selected ${value}`);
-  };
-
-  const validateTime = (rule, value, callback) => {
-    if (value) {
-      const selectedTime = dayjs(value);
-      const currentTime = dayjs();
-      if (selectedTime.isBefore(currentTime)) {
-        callback();
-      } else {
-        callback();
-      }
-    } else {
-      // Remove the error message for empty values
-      callback();
-    }
-  };
-
-  const disabledClosingHours = () => {
-    const hours = [];
-    for (let i = 0; i < 12; i++) {
-      hours.push(i);
-    }
-    return hours;
   };
 
   return (
@@ -86,87 +51,39 @@ const Step1Component = () => {
       >
         <Input placeholder="Enter set location " />
       </Form.Item>
-      <Row gutter={12}>
-        <Col span={12}>
-          <Form.Item
-            label="Working Days:"
-            name="workingDays"
-            rules={[{ required: true, message: "Please select working days" }]}
-          >
-            <Select
-              mode="multiple"
-              allowClear
-              placeholder="Please select"
-              onChange={handleChange}
-              options={options}
-            />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
-            label="Holiday in Week:"
-            name="holidayInWeek"
-            rules={[
-              { required: true, message: "Please select holiday in week" },
-            ]}
-          >
-            <Select
-              mode="multiple"
-              allowClear
-              placeholder="Please select"
-              onChange={handleChange}
-              options={options}
-            />
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row gutter={12}>
-        <Col span={12}>
-          <Form.Item
-            label="Opening Time:"
-            name="openingTime"
-            rules={[
-              {
-                required: true,
-                message: "Please select opening time",
-              },
-              {
-                validator: validateTime,
-              },
-            ]}
-          >
-            <TimePicker
-              minuteStep={30}
-              format="h:mm A"
-              // defaultValue={dayjs("13:30", "HH:mm")}
-              style={{ width: "100%" }}
-            />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
-            label="Closing Time:"
-            name="closingTime"
-            rules={[
-              {
-                required: true,
-                message: "Please select closing time",
-              },
-              {
-                validator: validateTime,
-              },
-            ]}
-          >
-            <TimePicker
-              minuteStep={30}
-              format="h:mm A"
-              // defaultValue={dayjs("13:30", "HH:mm")}
-              style={{ width: "100%" }}
-              disabledClosingHours={disabledClosingHours}
-            />
-          </Form.Item>
-        </Col>
-      </Row>
+      <Form.Item
+        label="Services offered:"
+        name="service_type"
+        rules={[{ required: true, message: "Please select service" }]}
+      >
+        <Select
+          onChange={handleChange}
+          placeholder="men, women, unisex"
+          style={{ fontFamily: "Poppins", height: "38px" }}
+          options={[
+            { value: "men", label: "Men" },
+            { value: "women", label: "Women" },
+            { value: "unisex", label: "Unisex" },
+          ]}
+        />
+      </Form.Item>
+      <Form.Item
+        label="General Time Slot:"
+        name="general_timeslot"
+        rules={[{ required: true, message: "Please select general time slot" }]}
+      >
+        <Select
+          onChange={handleChange}
+          placeholder="select general time slot"
+          style={{ fontFamily: "Poppins", height: "38px" }}
+          options={[
+            { value: "15", label: "15" },
+            { value: "30", label: "30" },
+            { value: "45", label: "45" },
+            { value: "60", label: "60" },
+          ]}
+        />
+      </Form.Item>
     </>
   );
 };

@@ -1,113 +1,28 @@
-import { Collapse, Typography, Form, theme, Input, Checkbox } from "antd";
 import React from "react";
-import { DownOutlined } from "@ant-design/icons";
+import { Form, Upload, Typography, message } from "antd";
 
-const { Panel } = Collapse;
-const { Title } = Typography;
-
-function callback(key) {
-  console.log(key);
-}
-
-const text = `Hair Style`;
-
-const getItems = (panelStyle) => [
-  {
-    key: "1",
-    label: "Hair Services",
-    children: (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "Space-between",
-          alignItems: "baseline",
-        }}
-      >
-        <p>{text}</p>
-        <Form.Item
-          name="timeInMin"
-          rules={[{ required: true, message: "Please enter time in min" }]}
-        >
-          <Input placeholder="Time In Min" />
-        </Form.Item>
-        <Form.Item
-          name="charges"
-          rules={[{ required: true, message: "Please enter charges" }]}
-        >
-          <Input placeholder="Charges" />
-        </Form.Item>
-        <Checkbox></Checkbox>
-      </div>
-    ),
-    style: panelStyle,
-  },
-  {
-    key: "2",
-    label: "Beard Services",
-    children: (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "Space-between",
-          alignItems: "baseline",
-        }}
-      >
-        <p>{text}</p>
-        <Form.Item
-          name="timeInMin"
-          rules={[{ required: true, message: "Please enter time in min" }]}
-        >
-          <Input placeholder="Time In Min" />
-        </Form.Item>
-        <Form.Item
-          name="charges"
-          rules={[{ required: true, message: "Please enter charges" }]}
-        >
-          <Input placeholder="Charges" />
-        </Form.Item>
-        <Checkbox></Checkbox>
-      </div>
-    ),
-    style: panelStyle,
-  },
-  {
-    key: "3",
-    label: "Massage Services",
-    children: (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "Space-between",
-          alignItems: "baseline",
-        }}
-      >
-        <p>{text}</p>
-        <Form.Item
-          name="timeInMin"
-          rules={[{ required: true, message: "Please enter time in min" }]}
-        >
-          <Input placeholder="Time In Min" />
-        </Form.Item>
-        <Form.Item
-          name="charges"
-          rules={[{ required: true, message: "Please enter charges" }]}
-        >
-          <Input placeholder="Charges" />
-        </Form.Item>
-        <Checkbox></Checkbox>
-      </div>
-    ),
-    style: panelStyle,
-  },
-];
+const { Title, Text } = Typography;
+const { Dragger } = Upload;
 
 const Step3Component = () => {
-  const { token } = theme.useToken();
-  const panelStyle = {
-    marginBottom: 24,
-    background: token.colorFillAlter,
-    borderRadius: token.borderRadiusLG,
-    border: "none",
+  const props = {
+    name: "file",
+    multiple: true,
+    action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
+    onChange(info) {
+      const { status } = info.file;
+      if (status !== "uploading") {
+        console.log(info.file, info.fileList);
+      }
+      if (status === "done") {
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    onDrop(e) {
+      console.log("Dropped files", e.dataTransfer.files);
+    },
   };
 
   return (
@@ -121,27 +36,31 @@ const Step3Component = () => {
           fontFamily: "Inter",
         }}
       >
-        Here you need to fill the shop details
+        Upload Your shop images here
       </Title>
 
-      <Collapse
-        bordered={false}
-        defaultActiveKey={["1"]}
-        expandIconPosition="right"
-        expandIcon={({ isActive }) => (
-          <DownOutlined rotate={isActive ? 180 : 0} />
-        )}
-        style={{
-          background: token.colorBgContainer,
-        }}
-        onChange={callback}
+      {/* Content */}
+      <Form.Item
+        name="image"
+        valuePropName="fileList"
+        getValueFromEvent={(e) => e.fileList}
+        rules={[{ required: true, message: "Please upload an image" }]}
       >
-        {getItems(panelStyle).map((item) => (
-          <Panel key={item.key} header={item.label} style={item.style}>
-            {item.children}
-          </Panel>
-        ))}
-      </Collapse>
+        <Dragger {...props} listType="picture-card">
+          <div className="drag-and-drop-text">
+            <p>
+              <img
+                src={require("../../../Assets/Images/upload.png")}
+                alt="Group Member Icon"
+                className="upload-img"
+              />
+            </p>
+            <Text style={{ fontFamily: "Poppins", fontSize: "0.75rem" }}>
+              Browse to select file
+            </Text>
+          </div>
+        </Dragger>
+      </Form.Item>
     </>
   );
 };
