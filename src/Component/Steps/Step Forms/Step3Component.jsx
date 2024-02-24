@@ -1,10 +1,10 @@
 import React from "react";
-import { Form, Upload, Typography, message } from "antd";
+import { Form, Upload, Typography, message, Button } from "antd";
 
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
 
-const Step3Component = () => {
+const Step3Component = ({ onNext }) => {
   const props = {
     name: "file",
     multiple: true,
@@ -25,43 +25,85 @@ const Step3Component = () => {
     },
   };
 
+  const handleNext = async () => {
+    onNext();
+  };
+
   return (
-    <>
-      <Title
-        level={5}
+    <div
+      style={{
+        display: "flex",
+        flex: 1,
+        flexDirection: "column",
+      }}
+    >
+      <div
         style={{
-          textAlign: "center",
-          margin: 0,
-          padding: "1.4rem 0rem",
-          fontFamily: "Inter",
+          display: "flex",
+          flex: 1,
+          flexDirection: "column",
         }}
       >
-        Upload Your shop images here
-      </Title>
+        <Title
+          level={5}
+          style={{
+            textAlign: "center",
+            margin: 0,
+            padding: "1.4rem 0rem",
+            fontFamily: "Inter",
+          }}
+        >
+          Upload Your shop images here
+        </Title>
 
-      {/* Content */}
-      <Form.Item
-        name="image"
-        valuePropName="fileList"
-        getValueFromEvent={(e) => e.fileList}
-        rules={[{ required: true, message: "Please upload an image" }]}
+        {/* Content */}
+        <Form.Item
+          name="image"
+          valuePropName="fileList"
+          getValueFromEvent={(e) => e.fileList}
+          rules={[{ required: true, message: "Please upload an image" }]}
+        >
+          <Dragger {...props} listType="picture-card">
+            <div className="drag-and-drop-text">
+              <p>
+                <img
+                  src={require("../../../Assets/Images/upload.png")}
+                  alt="Group Member Icon"
+                  className="upload-img"
+                />
+              </p>
+              <Text style={{ fontFamily: "Poppins", fontSize: "0.75rem" }}>
+                Browse to select file
+              </Text>
+            </div>
+          </Dragger>
+        </Form.Item>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          marginTop: "1.5rem",
+        }}
       >
-        <Dragger {...props} listType="picture-card">
-          <div className="drag-and-drop-text">
-            <p>
-              <img
-                src={require("../../../Assets/Images/upload.png")}
-                alt="Group Member Icon"
-                className="upload-img"
-              />
-            </p>
-            <Text style={{ fontFamily: "Poppins", fontSize: "0.75rem" }}>
-              Browse to select file
-            </Text>
-          </div>
-        </Dragger>
-      </Form.Item>
-    </>
+        <Button
+          style={{
+            width: "80%",
+            background: "#1C4792",
+            borderRadius: "12px",
+            fontFamily: "Poppins",
+            height: "2.5rem",
+          }}
+          type="primary"
+          onClick={handleNext}
+        >
+          NEXT
+        </Button>
+      </div>
+    </div>
   );
 };
 

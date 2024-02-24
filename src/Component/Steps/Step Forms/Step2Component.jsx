@@ -13,7 +13,7 @@ const daysOfWeek = [
   "Sunday",
 ];
 
-const Step2Component = () => {
+const Step2Component = ({ onNext }) => {
   const [timeValues, setTimeValues] = useState(
     Array.from({ length: 7 }, () => Array(4).fill(""))
   );
@@ -86,38 +86,82 @@ const Step2Component = () => {
     );
   };
 
+  const handleNext = async () => {
+    console.log("hi ronak", timeValues);
+    onNext();
+  };
+
   return (
-    <div style={{ paddingTop: "0.6rem" }}>
-      <Collapse
-        defaultActiveKey={daysOfWeek.map((day, index) => `${index}`)}
-        bordered={false}
+    <div
+      style={{
+        paddingTop: "0.6rem",
+        display: "flex",
+        flex: 1,
+        flexDirection: "column",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          flexDirection: "column",
+        }}
       >
-        {daysOfWeek.map((day, index) => (
-          <Panel
-            collapsible="disabled"
-            header={day}
-            key={index}
-            extra={
-              index !== 0 && (
-                <Button
-                  type="primary"
-                  size="small"
-                  style={{ fontSize: "12px" }}
-                  onClick={() => handleCopyFromAbove(index)}
-                >
-                  Copy From Above
-                </Button>
-              )
-            }
-            style={{
-              borderBottom: 0,
-            }}
-            showArrow={false}
-          >
-            {renderTimePickers(index)}
-          </Panel>
-        ))}
-      </Collapse>
+        <Collapse
+          defaultActiveKey={daysOfWeek.map((day, index) => `${index}`)}
+          bordered={false}
+        >
+          {daysOfWeek.map((day, index) => (
+            <Panel
+              collapsible="disabled"
+              header={day}
+              key={index}
+              extra={
+                index !== 0 && (
+                  <Button
+                    type="primary"
+                    size="small"
+                    style={{ fontSize: "12px" }}
+                    onClick={() => handleCopyFromAbove(index)}
+                  >
+                    Copy From Above
+                  </Button>
+                )
+              }
+              style={{
+                borderBottom: 0,
+              }}
+              showArrow={false}
+            >
+              {renderTimePickers(index)}
+            </Panel>
+          ))}
+        </Collapse>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          marginTop: "1.5rem",
+        }}
+      >
+        <Button
+          style={{
+            width: "80%",
+            background: "#1C4792",
+            borderRadius: "12px",
+            fontFamily: "Poppins",
+            height: "2.5rem",
+          }}
+          type="primary"
+          onClick={handleNext}
+        >
+          NEXT
+        </Button>
+      </div>
     </div>
   );
 };
