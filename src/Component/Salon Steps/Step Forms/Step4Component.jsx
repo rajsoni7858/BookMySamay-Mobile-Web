@@ -9,7 +9,7 @@ const Step4Component = () => {
 
   const handleFinish = () => {
     message.success("Form submitted successfully!");
-    history.push("/shops");
+    history.push("/salons");
   };
 
   return (

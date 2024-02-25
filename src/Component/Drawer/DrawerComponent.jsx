@@ -12,7 +12,7 @@ const menuItems = [
     active: "dashboard-active.png",
   },
   {
-    route: "/shops",
+    route: "/salons",
     label: "Shop",
     icon: "list.png",
     active: "list-active.png",

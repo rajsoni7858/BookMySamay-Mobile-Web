@@ -14,10 +14,10 @@ function Routerconfig() {
       <Route path="/" exact={true} component={LoginForm} />
       <Route path="/login" exact={true} component={LoginForm} />
       <Route path="/dashboard" component={Dashboard} />
-      <Route exact path="/shops" component={ShopsComponent} />
-      <Route path="/shops/addshop" component={AddShopComponent} />
-      <Route path="/shops/editshop/:id" component={EditshopComponent} />
-      <Route exact path="/shops/services" component={ServicesComponent} />
+      <Route exact path="/salons" component={ShopsComponent} />
+      <Route path="/salons/add-salon" component={AddShopComponent} />
+      <Route path="/salons/edit-salon/:id" component={EditshopComponent} />
+      <Route exact path="/salons/:id/services" component={ServicesComponent} />
       <Route path="/users" component={UsersComponent} />
     </Switch>
   );

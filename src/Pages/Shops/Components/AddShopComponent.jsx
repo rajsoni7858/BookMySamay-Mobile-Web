@@ -1,6 +1,6 @@
 import React from "react";
 import { Form } from "antd";
-import MultiStepFormComponent from "../../../Component/Steps/MultiStepFormComponent";
+import MultiStepFormComponent from "../../../Component/Salon Steps/MultiStepFormComponent";
 
 function AddShopComponent() {
   const [form] = Form.useForm();

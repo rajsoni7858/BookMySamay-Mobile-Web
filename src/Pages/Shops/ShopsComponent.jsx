@@ -71,14 +71,14 @@ const ShopsComponent = () => {
       align: "center",
       render: (text, record) => (
         <>
-          <Link to={`/shops/editshop/${record.key}`}>
+          <Link to={`/salons/edit-salon/${record.key}`}>
             <img
               src={require("../../Assets/Images/edit.png")}
               alt="Your Logo"
               style={{ width: "17px", Height: "17px", padding: "3px" }}
             />
           </Link>
-          <Link to={"/shops/services"}>
+          <Link to={`/salons/${record.key}/services`}>
             <img
               src={require("../../Assets/Images/setting.png")}
               alt="Your Logo"
@@ -107,7 +107,7 @@ const ShopsComponent = () => {
   });
 
   const handleAddShopClick = () => {
-    history.push("/shops/addshop");
+    history.push("/salons/add-salon#1");
   };
 
   const filteredData = searchQuery
