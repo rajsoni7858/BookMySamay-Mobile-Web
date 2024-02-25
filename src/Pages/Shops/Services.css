@@ -18,3 +18,7 @@
 .ant-tabs-large>.ant-tabs-nav .ant-tabs-tab {
   padding: 10px;
 }
+
+.ant-collapse>.ant-collapse-item.ant-collapse-no-arrow>.ant-collapse-header {
+  padding-left: 15px !important;
+}
