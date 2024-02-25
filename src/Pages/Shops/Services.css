@@ -1,0 +1,20 @@
+.services .ant-collapse-content-box {
+  background-color: #FAFAFA !important;
+}
+
+.services .ant-checkbox .ant-checkbox-inner {
+  width: 25px;
+  height: 25px;
+  align-self: center;
+  text-align: center;
+  margin-bottom: 5px;
+  border: 1px solid #1C4792 !important
+}
+
+.ant-input-number .ant-input-number-input {
+  font-family: Inter;
+}
+
+.ant-tabs-large>.ant-tabs-nav .ant-tabs-tab {
+  padding: 10px;
+}

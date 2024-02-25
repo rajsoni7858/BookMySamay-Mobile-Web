@@ -78,7 +78,7 @@ const ShopsComponent = () => {
               style={{ width: "17px", Height: "17px", padding: "3px" }}
             />
           </Link>
-          <Link to={`/shops/editshop/${record.key}`}>
+          <Link to={"/shops/services"}>
             <img
               src={require("../../Assets/Images/setting.png")}
               alt="Your Logo"
