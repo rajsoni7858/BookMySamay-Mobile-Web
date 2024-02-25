@@ -12,10 +12,16 @@ const menuItems = [
     active: "dashboard-active.png",
   },
   {
+    route: "/hospitals",
+    label: "Hospital",
+    icon: "hospital-menu.png",
+    active: "hospital-active.png",
+  },
+  {
     route: "/salons",
-    label: "Shop",
-    icon: "list.png",
-    active: "list-active.png",
+    label: "Salon",
+    icon: "salon-menu.png",
+    active: "salon-active.png",
   },
   {
     route: "/users",
@@ -44,7 +50,7 @@ const CustomDrawer = ({ onClose, open }) => {
       style={{ border: "none", padding: "10px" }}
     >
       {menuItems.map((item) => {
-        const active = location.pathname === item.route;
+        const active = location.pathname.includes(item.route);
 
         return (
           <div
