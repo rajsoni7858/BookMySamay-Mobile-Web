@@ -213,6 +213,7 @@ const Dashboard = () => {
               boxShadow: "2.128px 2.128px 5.32px 0px rgba(0, 0, 0, 0.25)",
             }}
             bodyStyle={{ padding: "8px" }}
+            onClick={() => history.push("/hospitals/add-hospital#1")}
           >
             <Meta
               className="meta"

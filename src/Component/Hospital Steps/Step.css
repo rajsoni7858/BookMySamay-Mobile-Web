@@ -1,0 +1,120 @@
+.ant-steps-item-title {
+  /* display: none;  */
+  padding-inline-end: 0px !important;
+}
+
+.ant-steps.ant-steps-horizontal:not(.ant-steps-label-vertical) .ant-steps-item {
+  padding-inline-start: 8px !important;
+}
+
+.ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after {
+  background-color: #0db7aa !important;
+}
+
+.ant-steps .ant-steps-item-process .ant-steps-item-icon {
+  background-color: #1c4792;
+  border-color: #1c4792;
+}
+
+.ant-steps .ant-steps-item-process .ant-steps-item-icon>.ant-steps-icon {
+  font-family: Poppins;
+}
+
+.ant-steps .ant-steps-item-wait .ant-steps-item-icon>.ant-steps-icon {
+  font-family: Poppins;
+}
+
+.ant-select-multiple .ant-select-selection-placeholder {
+  font-family: Poppins;
+}
+
+.ant-form-item .ant-form-item-explain-error {
+  font-family: Poppins;
+}
+
+.ant-picker-outlined {
+  border-color: #1c4792;
+}
+
+.ant-picker .ant-picker-input>input:placeholder-shown {
+  font-family: Poppins;
+}
+
+.ant-picker-dropdown .ant-picker-ranges {
+  font-family: Poppins;
+}
+
+.ant-picker-dropdown .ant-picker-time-panel-column>li.ant-picker-time-panel-cell .ant-picker-time-panel-cell-inner {
+  font-family: Poppins;
+}
+
+.ant-btn-primary[disabled] {
+  background: #f5f5f5 !important;
+}
+
+.ant-select-selector {
+  border-color: #1c4792 !important;
+}
+
+.ant-steps-finish-icon {
+  color: #0db7aa !important;
+}
+
+/* step 3 */
+.drag-and-drop-text {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.ant-upload-wrapper .ant-upload-drag {
+  border-color: #1c4792 !important;
+  background-color: transparent !important;
+}
+
+.upload-img {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.ant-upload-wrapper .ant-upload-list {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+.ant-upload-list-item-container {
+  flex-grow: 1 !important;
+}
+
+/* Step 2 */
+.ant-collapse-header {
+  align-items: center !important;
+  background-color: #EFF3FD !important;
+  border-radius: 10px !important;
+  height: 50px !important;
+}
+
+.ant-collapse>.ant-collapse-item>.ant-collapse-header {
+  font-family: "Poppins";
+  font-size: 15px;
+}
+
+.ant-collapse-content>.ant-collapse-content-box {
+  padding: 16px 8px !important;
+}
+
+.ant-collapse-content-box {
+  background-color: white !important;
+}
+
+.ant-collapse-item-disabled>.ant-collapse-header {
+  color: black !important;
+}
+
+.ant-input-number .ant-input-number-input {
+  font-family: Poppins;
+}

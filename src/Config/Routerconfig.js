@@ -7,6 +7,9 @@ import ShopsComponent from "../Pages/Shops/ShopsComponent.jsx";
 import AddShopComponent from "../Pages/Shops/Components/AddShopComponent.jsx";
 import EditshopComponent from "../Pages/Shops/Components/EditShopComponent.jsx";
 import ServicesComponent from "../Pages/Shops/ServicesComponent.jsx";
+import HospitalsComponent from "../Pages/Hospitals/HospitalsComponent.jsx";
+import AddHospitalComponent from "../Pages/Hospitals/Components/AddHospitalComponent.jsx";
+import EditHospitalComponent from "../Pages/Hospitals/Components/EditHospitalComponent.jsx";
 
 function Routerconfig() {
   return (
@@ -18,6 +21,12 @@ function Routerconfig() {
       <Route path="/salons/add-salon" component={AddShopComponent} />
       <Route path="/salons/edit-salon/:id" component={EditshopComponent} />
       <Route exact path="/salons/:id/services" component={ServicesComponent} />
+      <Route exact path="/hospitals" component={HospitalsComponent} />
+      <Route path="/hospitals/add-hospital" component={AddHospitalComponent} />
+      <Route
+        path="/hospitals/edit-hospital/:id"
+        component={EditHospitalComponent}
+      />
       <Route path="/users" component={UsersComponent} />
     </Switch>
   );

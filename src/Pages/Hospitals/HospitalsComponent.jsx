@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Input, Layout, Table, Typography } from "antd";
 import { Link, useHistory } from "react-router-dom";
 import { trimString } from "../../Utils/utils";
-import "./Shop.css";
+import "./Hospital.css";
 
 const { Content } = Layout;
 const { Text } = Typography;
@@ -17,14 +17,14 @@ for (let i = 0; i < 100; i++) {
   });
 }
 
-const ShopsComponent = () => {
+const HospitalsComponent = () => {
   const history = useHistory();
   const [data, setData] = useState(originData);
   const [searchQuery, setSearchQuery] = useState("");
 
   const columns = [
     {
-      title: "Shop Name",
+      title: "Hospital Name",
       dataIndex: "ShopName",
       width: "40%",
       render: (text) => (
@@ -71,18 +71,11 @@ const ShopsComponent = () => {
       align: "center",
       render: (text, record) => (
         <>
-          <Link to={`/salons/edit-salon/${record.key}#1`}>
+          <Link to={`/hospitals/edit-hospital/${record.key}#1`}>
             <img
               src={require("../../Assets/Images/edit.png")}
               alt="Your Logo"
               style={{ width: "17px", Height: "17px", padding: "3px" }}
-            />
-          </Link>
-          <Link to={`/salons/${record.key}/services`}>
-            <img
-              src={require("../../Assets/Images/setting.png")}
-              alt="Your Logo"
-              style={{ width: "22px", Height: "22px", padding: "3px" }}
             />
           </Link>
         </>
@@ -90,24 +83,8 @@ const ShopsComponent = () => {
     },
   ];
 
-  const mergedColumns = columns.map((col) => {
-    if (!col.editable) {
-      return col;
-    }
-    return {
-      ...col,
-      onCell: (record) => ({
-        record,
-        inputType: col.inputType || "text",
-        dataIndex: col.dataIndex,
-        title: col.title,
-        editing: record,
-      }),
-    };
-  });
-
   const handleAddShopClick = () => {
-    history.push("/salons/add-salon#1");
+    history.push("/hospitals/add-hospital#1");
   };
 
   const filteredData = searchQuery
@@ -128,7 +105,7 @@ const ShopsComponent = () => {
         }}
       >
         <Input
-          placeholder="Search by Shop Name/Mobile No."
+          placeholder="Search by Hospital Name/Mobile No."
           allowClear
           prefix={
             <img
@@ -160,13 +137,13 @@ const ShopsComponent = () => {
           }}
           onClick={handleAddShopClick}
         >
-          ADD SALON
+          ADD HOSPITAL
         </Button>
 
         {/* Table */}
-        <Table bordered dataSource={filteredData} columns={mergedColumns} />
+        <Table bordered dataSource={filteredData} columns={columns} />
       </Content>
     </div>
   );
 };
-export default ShopsComponent;
+export default HospitalsComponent;
