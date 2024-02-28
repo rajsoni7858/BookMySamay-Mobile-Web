@@ -71,7 +71,7 @@ const HospitalsComponent = () => {
       align: "center",
       render: (text, record) => (
         <>
-          <Link to={`/hospitals/edit-hospital/${record.key}#1`}>
+          <Link to={`/hospitals/${record.key}/edit-hospital#1`}>
             <img
               src={require("../../Assets/Images/edit.png")}
               alt="Your Logo"

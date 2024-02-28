@@ -1,10 +1,11 @@
 import React from "react";
 import { Form, Upload, Typography, message, Button } from "antd";
+import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
 
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
 
-const Step4Component = ({ onNext }) => {
+const Step4Component = ({ formId, onNext }) => {
   const props = {
     name: "file",
     multiple: true,
@@ -39,17 +40,37 @@ const Step4Component = ({ onNext }) => {
     >
       <div
         style={{
+          paddingTop: "0.6rem",
           display: "flex",
           flex: 1,
           flexDirection: "column",
         }}
       >
+        <CustomBreadcrumb
+          items={[
+            {
+              title: "Hospitals",
+            },
+            {
+              title: "Application Center",
+            },
+            {
+              title:
+                formId === "editHospitalForm"
+                  ? "Edit Hospital"
+                  : "Add Hospital",
+            },
+          ]}
+          path={"/hospitals"}
+        />
+
         <Title
           level={5}
           style={{
             textAlign: "center",
             margin: 0,
-            padding: "1.4rem 0rem",
+            paddingTop: "0.4rem",
+            paddingBottom: "1.4rem",
             fontFamily: "Inter",
           }}
         >

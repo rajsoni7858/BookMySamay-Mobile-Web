@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Form, Input, InputNumber, Select, Typography } from "antd";
+import { Button, Form, InputNumber, Select, Typography } from "antd";
+import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
 
 const { Title } = Typography;
 
@@ -25,17 +26,37 @@ const Step2Component = ({ form, formId, onNext }) => {
     >
       <div
         style={{
+          paddingTop: "0.6rem",
           display: "flex",
           flex: 1,
           flexDirection: "column",
         }}
       >
+        <CustomBreadcrumb
+          items={[
+            {
+              title: "Hospitals",
+            },
+            {
+              title: "Application Center",
+            },
+            {
+              title:
+                formId === "editHospitalForm"
+                  ? "Edit Hospital"
+                  : "Add Hospital",
+            },
+          ]}
+          path={"/hospitals"}
+        />
+
         <Title
           level={5}
           style={{
             textAlign: "center",
             margin: 0,
-            padding: "1.4rem 0rem",
+            paddingTop: "0.4rem",
+            paddingBottom: "1.4rem",
             fontFamily: "Inter",
           }}
         >

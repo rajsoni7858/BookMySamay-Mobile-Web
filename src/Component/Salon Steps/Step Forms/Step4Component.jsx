@@ -1,10 +1,11 @@
 import React from "react";
 import { Button, Form, Input, Typography, message } from "antd";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
 
 const { Title } = Typography;
 
-const Step4Component = () => {
+const Step4Component = ({ formId }) => {
   const history = useHistory();
 
   const handleFinish = () => {
@@ -15,6 +16,7 @@ const Step4Component = () => {
   return (
     <div
       style={{
+        paddingTop: "0.6rem",
         display: "flex",
         flex: 1,
         flexDirection: "column",
@@ -27,12 +29,28 @@ const Step4Component = () => {
           flex: 1,
         }}
       >
+        <CustomBreadcrumb
+          items={[
+            {
+              title: "Salons",
+            },
+            {
+              title: "Application Center",
+            },
+            {
+              title: formId === "editForm" ? "Edit Salon" : "Add Salon",
+            },
+          ]}
+          path={"/salons"}
+        />
+
         <Title
           level={5}
           style={{
             textAlign: "center",
             margin: 0,
-            padding: "1.4rem 0rem",
+            paddingTop: "0.4rem",
+            paddingBottom: "1.4rem",
             fontFamily: "Inter",
           }}
         >

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Collapse, TimePicker, Button, Space } from "antd";
+import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
 
 const { Panel } = Collapse;
 
@@ -13,7 +14,7 @@ const daysOfWeek = [
   "Sunday",
 ];
 
-const Step2Component = ({ onNext }) => {
+const Step2Component = ({ formId, onNext }) => {
   const [timeValues, setTimeValues] = useState(
     Array.from({ length: 7 }, () => Array(4).fill(""))
   );
@@ -107,6 +108,21 @@ const Step2Component = ({ onNext }) => {
           flexDirection: "column",
         }}
       >
+        <CustomBreadcrumb
+          items={[
+            {
+              title: "Salons",
+            },
+            {
+              title: "Application Center",
+            },
+            {
+              title: formId === "editForm" ? "Edit Salon" : "Add Salon",
+            },
+          ]}
+          path={"/salons"}
+        />
+
         <Collapse
           defaultActiveKey={daysOfWeek.map((day, index) => `${index}`)}
           bordered={false}

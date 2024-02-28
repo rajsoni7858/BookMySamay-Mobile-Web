@@ -33,6 +33,7 @@ const MultiStepFormComponent = ({ form, formId }) => {
       content: (
         <Step2Component
           form={form}
+          formId={formId}
           onNext={() =>
             setCurrentStep((prevStep) => {
               const nextStep = prevStep + 1;
@@ -48,6 +49,7 @@ const MultiStepFormComponent = ({ form, formId }) => {
       content: (
         <Step3Component
           form={form}
+          formId={formId}
           onNext={() =>
             setCurrentStep((prevStep) => {
               const nextStep = prevStep + 1;
@@ -63,6 +65,7 @@ const MultiStepFormComponent = ({ form, formId }) => {
       content: (
         <Step4Component
           form={form}
+          formId={formId}
           onNext={() =>
             setCurrentStep((prevStep) => {
               const nextStep = prevStep + 1;

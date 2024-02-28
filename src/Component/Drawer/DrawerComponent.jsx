@@ -13,19 +13,19 @@ const menuItems = [
   },
   {
     route: "/hospitals",
-    label: "Hospital",
+    label: "Hospitals",
     icon: "hospital-menu.png",
     active: "hospital-active.png",
   },
   {
     route: "/salons",
-    label: "Salon",
+    label: "Salons",
     icon: "salon-menu.png",
     active: "salon-active.png",
   },
   {
     route: "/users",
-    label: "User",
+    label: "Users",
     icon: "user.png",
     active: "user-active.png",
   },

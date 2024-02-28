@@ -51,6 +51,7 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
       content: (
         <Step3Component
           form={form}
+          formId={formId}
           onNext={() =>
             setCurrentStep((prevStep) => {
               const nextStep = prevStep + 1;
@@ -66,6 +67,7 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
       content: (
         <Step4Component
           form={form}
+          formId={formId}
           onNext={() =>
             setCurrentStep((prevStep) => {
               const nextStep = prevStep + 1;
@@ -81,6 +83,7 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
       content: (
         <Step5Component
           form={form}
+          formId={formId}
           onNext={() =>
             setCurrentStep((prevStep) => {
               const nextStep = prevStep + 1;

@@ -19,12 +19,12 @@ function Routerconfig() {
       <Route path="/dashboard" component={Dashboard} />
       <Route exact path="/salons" component={ShopsComponent} />
       <Route path="/salons/add-salon" component={AddShopComponent} />
-      <Route path="/salons/edit-salon/:id" component={EditshopComponent} />
+      <Route path="/salons/:id/edit-salon" component={EditshopComponent} />
       <Route exact path="/salons/:id/services" component={ServicesComponent} />
       <Route exact path="/hospitals" component={HospitalsComponent} />
       <Route path="/hospitals/add-hospital" component={AddHospitalComponent} />
       <Route
-        path="/hospitals/edit-hospital/:id"
+        path="/hospitals/:id/edit-hospital"
         component={EditHospitalComponent}
       />
       <Route path="/users" component={UsersComponent} />

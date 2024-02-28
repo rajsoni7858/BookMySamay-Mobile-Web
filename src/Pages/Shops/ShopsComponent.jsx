@@ -71,7 +71,7 @@ const ShopsComponent = () => {
       align: "center",
       render: (text, record) => (
         <>
-          <Link to={`/salons/edit-salon/${record.key}#1`}>
+          <Link to={`/salons/${record.key}/edit-salon#1`}>
             <img
               src={require("../../Assets/Images/edit.png")}
               alt="Your Logo"

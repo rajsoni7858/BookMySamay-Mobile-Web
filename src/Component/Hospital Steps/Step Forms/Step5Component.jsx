@@ -1,15 +1,16 @@
 import React from "react";
 import { Button, Form, Input, Typography, message } from "antd";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
 
 const { Title } = Typography;
 
-const Step5Component = () => {
+const Step5Component = ({ formId }) => {
   const history = useHistory();
 
   const handleFinish = () => {
     message.success("Form submitted successfully!");
-    history.push("/salons");
+    history.push("/hospitals");
   };
 
   return (
@@ -22,17 +23,37 @@ const Step5Component = () => {
     >
       <div
         style={{
+          paddingTop: "0.6rem",
           display: "flex",
           flexDirection: "column",
           flex: 1,
         }}
       >
+        <CustomBreadcrumb
+          items={[
+            {
+              title: "Hospitals",
+            },
+            {
+              title: "Application Center",
+            },
+            {
+              title:
+                formId === "editHospitalForm"
+                  ? "Edit Hospital"
+                  : "Add Hospital",
+            },
+          ]}
+          path={"/hospitals"}
+        />
+
         <Title
           level={5}
           style={{
             textAlign: "center",
             margin: 0,
-            padding: "1.4rem 0rem",
+            paddingTop: "0.4rem",
+            paddingBottom: "1.4rem",
             fontFamily: "Inter",
           }}
         >
