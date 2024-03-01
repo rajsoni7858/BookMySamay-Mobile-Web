@@ -1,10 +1,17 @@
 import React from "react";
-import { Button, Form, InputNumber, Select, Typography } from "antd";
+import {
+  Button,
+  Form,
+  InputNumber,
+  Select,
+  TimePicker,
+  Typography,
+} from "antd";
 import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
 
 const { Title } = Typography;
 
-const Step2Component = ({ form, formId, onNext }) => {
+const Step2Component = ({ form, formId, onPrevious, onNext }) => {
   const handleNext = async () => {
     onNext();
     // try {
@@ -64,30 +71,57 @@ const Step2Component = ({ form, formId, onNext }) => {
         </Title>
 
         {/* Content */}
-        <Form.Item
-          label="Marketing time slots:"
-          name="general_timeslot"
-          rules={[
-            {
-              required: true,
-              message: "Please select marketing time slots",
-            },
-          ]}
-        >
-          <Select
-            placeholder="select marketing time slots"
-            style={{ fontFamily: "Poppins", height: "38px" }}
-            options={[
-              { value: "15", label: "15" },
-              { value: "30", label: "30" },
-              { value: "45", label: "45" },
-              { value: "60", label: "60" },
-            ]}
-          />
-        </Form.Item>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Form.Item
+            label="Day"
+            name="day"
+            style={{ width: "32%" }}
+            rules={[{ required: true, message: "Please select a day" }]}
+          >
+            <Select
+              placeholder="Select a day"
+              style={{ fontFamily: "Poppins", height: "38px" }}
+              options={[
+                { value: "Monday", label: "Monday" },
+                { value: "Tuesday", label: "Tuesday" },
+                { value: "Wednesday", label: "Wednesday" },
+                { value: "Thursday", label: "Thursday" },
+                { value: "Friday", label: "Friday" },
+                { value: "Saturday", label: "Saturday" },
+                { value: "Sunday", label: "Sunday" },
+              ]}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Opening Time"
+            name="openingTime"
+            style={{ width: "32%" }}
+            rules={[{ required: true, message: "Please select opening time" }]}
+          >
+            <TimePicker
+              style={{ width: "100%", height: "38px" }}
+              format="h:mm a"
+              minuteStep={15}
+              placeholder="Select Time"
+            />
+          </Form.Item>
+          <Form.Item
+            label="Closing Time"
+            name="closingTime"
+            style={{ width: "32%" }}
+            rules={[{ required: true, message: "Please select closing time" }]}
+          >
+            <TimePicker
+              style={{ width: "100%", height: "38px" }}
+              format="h:mm a"
+              minuteStep={15}
+              placeholder="Select Time"
+            />
+          </Form.Item>
+        </div>
         <Form.Item
           label="Total Number of Appointment:"
-          name="shopLocation"
+          name="totalAppointment"
           rules={[
             {
               required: true,
@@ -96,7 +130,7 @@ const Step2Component = ({ form, formId, onNext }) => {
           ]}
         >
           <InputNumber
-            placeholder="Enter  number of appointment"
+            placeholder="Enter number of appointment"
             style={{
               width: "100%",
               borderRadius: 8,
@@ -107,13 +141,8 @@ const Step2Component = ({ form, formId, onNext }) => {
         </Form.Item>
         <Form.Item
           label="Appointment Fee:"
-          name="shopLocation"
-          rules={[
-            {
-              required: true,
-              message: "Please enter appointment fee",
-            },
-          ]}
+          name="appointmentFee"
+          rules={[{ required: true, message: "Please enter appointment fee" }]}
         >
           <InputNumber
             placeholder="Enter appointment fee"
@@ -130,19 +159,36 @@ const Step2Component = ({ form, formId, onNext }) => {
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
+          flexDirection: "row",
+          justifyContent: "space-between",
           alignItems: "center",
           marginTop: "1.5rem",
         }}
       >
         <Button
           style={{
-            width: "80%",
+            width: "100%",
+            color: "#1C4792",
+            borderColor: "#1C4792",
+            borderRadius: "12px",
+            fontFamily: "Poppins",
+            height: "2.5rem",
+            marginRight: "0.4rem",
+            background: "white",
+          }}
+          onClick={onPrevious}
+        >
+          PREVIOUS
+        </Button>
+
+        <Button
+          style={{
+            width: "100%",
             background: "#1C4792",
             borderRadius: "12px",
             fontFamily: "Poppins",
             height: "2.5rem",
+            marginLeft: "0.4rem",
           }}
           type="primary"
           onClick={handleNext}

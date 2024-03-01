@@ -5,7 +5,7 @@ import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
 
 const { Title } = Typography;
 
-const Step5Component = ({ formId }) => {
+const Step5Component = ({ formId, onPrevious }) => {
   const history = useHistory();
 
   const handleFinish = () => {
@@ -73,19 +73,36 @@ const Step5Component = ({ formId }) => {
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
+          flexDirection: "row",
+          justifyContent: "space-between",
           alignItems: "center",
           marginTop: "1.5rem",
         }}
       >
         <Button
           style={{
-            width: "80%",
+            width: "100%",
+            color: "#1C4792",
+            borderColor: "#1C4792 !important",
+            borderRadius: "12px",
+            fontFamily: "Poppins",
+            height: "2.5rem",
+            marginRight: "0.4rem",
+            background: "white !important",
+          }}
+          onClick={onPrevious}
+        >
+          PREVIOUS
+        </Button>
+
+        <Button
+          style={{
+            width: "100%",
             background: "#1C4792",
             borderRadius: "12px",
             fontFamily: "Poppins",
             height: "2.5rem",
+            marginLeft: "0.4rem",
           }}
           type="primary"
           onClick={handleFinish}

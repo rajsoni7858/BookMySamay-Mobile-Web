@@ -13,21 +13,27 @@ const { Step } = Steps;
 const MultiStepHospitalFormComponent = ({ form, formId }) => {
   const [currentStep, setCurrentStep] = useState(0);
 
+  const handlePrevious = () => {
+    setCurrentStep((prevStep) => {
+      const nextStep = prevStep;
+      window.location.hash = `#${nextStep}`;
+      return nextStep;
+    });
+  };
+
+  const handleNext = () => {
+    setCurrentStep((prevStep) => {
+      const nextStep = prevStep + 1;
+      window.location.hash = `#${nextStep + 1}`;
+      return nextStep;
+    });
+  };
+
   const steps = [
     {
       id: 1,
       content: (
-        <Step1Component
-          form={form}
-          formId={formId}
-          onNext={() =>
-            setCurrentStep((prevStep) => {
-              const nextStep = prevStep + 1;
-              window.location.hash = `#${nextStep + 1}`;
-              return nextStep;
-            })
-          }
-        />
+        <Step1Component form={form} formId={formId} onNext={handleNext} />
       ),
     },
     {
@@ -36,13 +42,8 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
         <Step2Component
           form={form}
           formId={formId}
-          onNext={() =>
-            setCurrentStep((prevStep) => {
-              const nextStep = prevStep + 1;
-              window.location.hash = `#${nextStep + 1}`;
-              return nextStep;
-            })
-          }
+          onPrevious={handlePrevious}
+          onNext={handleNext}
         />
       ),
     },
@@ -52,13 +53,8 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
         <Step3Component
           form={form}
           formId={formId}
-          onNext={() =>
-            setCurrentStep((prevStep) => {
-              const nextStep = prevStep + 1;
-              window.location.hash = `#${nextStep + 1}`;
-              return nextStep;
-            })
-          }
+          onPrevious={handlePrevious}
+          onNext={handleNext}
         />
       ),
     },
@@ -68,13 +64,8 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
         <Step4Component
           form={form}
           formId={formId}
-          onNext={() =>
-            setCurrentStep((prevStep) => {
-              const nextStep = prevStep + 1;
-              window.location.hash = `#${nextStep + 1}`;
-              return nextStep;
-            })
-          }
+          onPrevious={handlePrevious}
+          onNext={handleNext}
         />
       ),
     },
@@ -84,13 +75,7 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
         <Step5Component
           form={form}
           formId={formId}
-          onNext={() =>
-            setCurrentStep((prevStep) => {
-              const nextStep = prevStep + 1;
-              window.location.hash = `#${nextStep + 1}`;
-              return nextStep;
-            })
-          }
+          onPrevious={handlePrevious}
         />
       ),
     },
