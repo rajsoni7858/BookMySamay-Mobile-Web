@@ -65,6 +65,13 @@ const Step1Component = ({ form, formId, onNext }) => {
           <Input placeholder="Enter shop location" />
         </Form.Item>
         <Form.Item
+          label="Mobile No:"
+          name="shopOwner"
+          rules={[{ required: true, message: "Please enter mobile number" }]}
+        >
+          <Input placeholder="Enter mobile no." />
+        </Form.Item>
+        <Form.Item
           label="Set Location:"
           name="setLocation"
           rules={[{ required: true, message: "Please enter set location" }]}

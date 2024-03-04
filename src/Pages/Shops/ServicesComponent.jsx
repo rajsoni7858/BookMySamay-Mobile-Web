@@ -1,11 +1,14 @@
 import { useState, useCallback } from "react";
-import { Tabs, Collapse, Input, InputNumber, Checkbox, Button } from "antd";
+import { Tabs, Collapse, Input, InputNumber, Button, Typography } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import "./Services.css";
+import CustomBreadcrumb from "../../Component/Breadcrumb/CustomBreadcrumbComponent";
+import { useHistory, useParams } from "react-router-dom";
 
 const { TabPane } = Tabs;
 const { Panel } = Collapse;
 const { TextArea } = Input;
+const { Text } = Typography;
 
 const sampleData = [
   {
@@ -47,6 +50,9 @@ const sampleData = [
 ];
 
 const ServicesComponent = () => {
+  const history = useHistory();
+  let { id } = useParams();
+
   const [data, setData] = useState(sampleData);
 
   const handleInputChange = useCallback(
@@ -56,19 +62,6 @@ const ServicesComponent = () => {
         newData[tabIndex].services[serviceIndex].sub_services[subServiceIndex][
           key
         ] = value;
-        return newData;
-      });
-    },
-    []
-  );
-
-  const handleCheckboxChange = useCallback(
-    (tabIndex, serviceIndex, subServiceIndex, checked) => {
-      setData((prevData) => {
-        const newData = [...prevData];
-        newData[tabIndex].services[serviceIndex].sub_services[
-          subServiceIndex
-        ].selected = checked;
         return newData;
       });
     },
@@ -95,9 +88,26 @@ const ServicesComponent = () => {
         display: "flex",
         flex: 1,
         flexDirection: "column",
-        minHeight: "calc(100vh - 65px)",
+        minHeight: "calc(100vh - 88px)",
+        padding: "0 1.4rem",
+        paddingTop: "2rem",
       }}
     >
+      <CustomBreadcrumb
+        items={[
+          {
+            title: "Salons",
+          },
+          {
+            title: "Application Center",
+          },
+          {
+            title: "Services",
+          },
+        ]}
+        path={"/salons"}
+      />
+
       <div
         style={{
           display: "flex",
@@ -109,7 +119,11 @@ const ServicesComponent = () => {
           defaultActiveKey="0"
           centered
           size="large"
-          style={{ margin: "1.4rem", fontFamily: "Poppins" }}
+          style={{
+            marginTop: "0.5rem",
+            marginBottom: "0.8rem",
+            fontFamily: "Poppins",
+          }}
           tabBarStyle={{
             backgroundColor: "#f0f2f5",
             borderRadius: "8px",
@@ -260,136 +274,32 @@ const ServicesComponent = () => {
                     </Panel>
                   </Collapse>
                 ) : (
-                  <Collapse
+                  <div
                     key={serviceIndex}
-                    bordered={false}
-                    className="services"
-                    defaultActiveKey={"0"}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      padding: "0.7rem",
+                      borderBottom: "1px solid #C1C1C1",
+                    }}
+                    onClick={() =>
+                      history.push(`/salons/${id}/services/${serviceIndex}`)
+                    }
                   >
-                    <Panel
-                      header={service.type}
-                      key={serviceIndex}
-                      showArrow={false}
-                      className="services"
+                    <Text
+                      style={{
+                        fontFamily: "Poppins",
+                        color: "black",
+                        fontSize: "15px",
+                      }}
                     >
-                      {service.sub_services.map(
-                        (subService, subServiceIndex) => (
-                          <div
-                            key={subServiceIndex}
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "space-between",
-                              marginBottom: "0.5rem",
-                            }}
-                          >
-                            {!subService.name ? (
-                              <Input
-                                placeholder="Enter other services"
-                                value={subService.name}
-                                onChange={(e) =>
-                                  handleInputChange(
-                                    e.target.value,
-                                    tabIndex,
-                                    serviceIndex,
-                                    subServiceIndex,
-                                    "name"
-                                  )
-                                }
-                                style={{
-                                  width: "42%",
-                                  fontFamily: "Poppins",
-                                  borderRadius: 8,
-                                  padding: "0.35rem",
-                                  border: "1px solid #1C4792",
-                                }}
-                              />
-                            ) : (
-                              <div
-                                style={{ width: "42%", fontFamily: "Poppins" }}
-                              >
-                                {subService.name}
-                              </div>
-                            )}
-                            <InputNumber
-                              placeholder="Time in min"
-                              value={subService.time}
-                              onChange={(value) =>
-                                handleInputChange(
-                                  value,
-                                  tabIndex,
-                                  serviceIndex,
-                                  subServiceIndex,
-                                  "time"
-                                )
-                              }
-                              style={{
-                                width: "22%",
-                                borderRadius: 8,
-                                padding: "0.1rem",
-                                border: "1px solid #1C4792",
-                              }}
-                            />
-                            <InputNumber
-                              placeholder="Charges"
-                              value={subService.charge}
-                              onChange={(value) =>
-                                handleInputChange(
-                                  value,
-                                  tabIndex,
-                                  serviceIndex,
-                                  subServiceIndex,
-                                  "charge"
-                                )
-                              }
-                              style={{
-                                width: "22%",
-                                borderRadius: 8,
-                                padding: "0.1rem",
-                                border: "1px solid #1C4792",
-                              }}
-                            />
-                            <Checkbox
-                              checked={subService.selected}
-                              onChange={(e) =>
-                                handleCheckboxChange(
-                                  tabIndex,
-                                  serviceIndex,
-                                  subServiceIndex,
-                                  e.target.checked
-                                )
-                              }
-                            />
-                          </div>
-                        )
-                      )}
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          marginTop: "1rem",
-                        }}
-                      >
-                        <Button
-                          type="text"
-                          onClick={() => handleAddExtra(tabIndex, serviceIndex)}
-                          style={{
-                            borderRadius: "8px",
-                            backgroundColor: "rgb(235 235 235)",
-                            fontFamily: "Poppins",
-                            paddingTop: "5px",
-                          }}
-                        >
-                          <PlusCircleOutlined
-                            size="large"
-                            style={{ fontSize: "16px" }}
-                          />{" "}
-                          Add Other Services
-                        </Button>
-                      </div>
-                    </Panel>
-                  </Collapse>
+                      {service.type}
+                    </Text>
+                    <Text style={{ fontFamily: "Poppins" }}>
+                      2 services Added
+                    </Text>
+                  </div>
                 )
               )}
             </TabPane>
