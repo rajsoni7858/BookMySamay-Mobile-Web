@@ -1,0 +1,8 @@
+const otpActionTypes = {
+  VERIFY_OTP: 'VERIFY_OTP',
+  VERIFY_OTP_SUCCEEDED: 'VERIFY_OTP_SUCCEEDED',
+  VERIFY_OTP_FAILED: 'VERIFY_OTP_FAILED',
+  LOGOUT: 'LOGOUT',
+};
+
+export default otpActionTypes;

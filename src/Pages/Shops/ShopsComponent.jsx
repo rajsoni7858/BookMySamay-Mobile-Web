@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Input, Layout, Table, Typography } from "antd";
 import { Link, useHistory } from "react-router-dom";
-import { trimString } from "../../Utils/utils";
+import { trimString } from "../../utils/utils";
 import "./Shop.css";
 
 const { Content } = Layout;

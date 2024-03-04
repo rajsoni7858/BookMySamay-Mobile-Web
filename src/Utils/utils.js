@@ -1,3 +1,6 @@
+// production
+export const URL = "https://backend.bookmysamay.com/api/";
+
 export const trimString = (originalString, maxLength) => {
   let trimmedString = originalString;
 
