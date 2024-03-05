@@ -7,7 +7,7 @@ function* processUpdateServices(params) {
   const { data, onSuccess, onFailure } = params;
 
   try {
-    const response = yield call(updateAPI, "api/admin/shops/services", data);
+    const response = yield call(updateAPI, "admin/shops/services", data);
 
     if (response.status === 200 && response.data.success) {
       yield put(updateServicesSucceeded());

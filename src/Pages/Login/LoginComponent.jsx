@@ -1,18 +1,75 @@
-import React from "react";
-import { Row, Col, Form, Input, Button, Card, Typography } from "antd";
+import React, { useState } from "react";
+import { Row, Col, Form, Input, Button, Card, Typography, message } from "antd";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import SaveParams from "../../models/SaveParams";
+import { getOtp, verifyOtp } from "../../redux/actions";
 
 const { Title } = Typography;
 
 const LoginForm = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
+
+  const [loading, setLoading] = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(false);
+
+  const handleVerifyOTPSuccessed = (data) => {
+    localStorage.setItem("token", data.token);
+    history.push("/dashboard");
+    setButtonClicked(false);
+    setLoading(false);
+  };
+
+  const handleVerifyOTPFailed = () => {
+    setLoading(false);
+    setButtonClicked(false);
+  };
+
+  const handleVerifyOTP = (mobile, otp) => {
+    dispatch(
+      verifyOtp(
+        new SaveParams(
+          { mobile, otp },
+          handleVerifyOTPSuccessed,
+          handleVerifyOTPFailed
+        )
+      )
+    );
+  };
+
+  const handleGetOTPSuccessed = () => {
+    setLoading(false);
+    setButtonClicked(false);
+  };
+
+  const handleGetOTPFailed = () => {
+    message.error(
+      "Not registerd as business entity. Please contact support team."
+    );
+    setLoading(false);
+    setButtonClicked(false);
+  };
+
+  const handleGetOTP = (mobile) => {
+    setLoading(true);
+    setButtonClicked(true);
+    dispatch(
+      getOtp(
+        new SaveParams({ mobile }, handleGetOTPSuccessed, handleGetOTPFailed)
+      )
+    );
+  };
 
   const onFinish = async () => {
     form.validateFields().then((values) => {
-      console.log("hi ronak", values);
+      if (values.email && !values.password) {
+        handleGetOTP(values.email);
+      } else if (values.email && values.password) {
+        handleVerifyOTP(values.email, values.password);
+      }
     });
-    history.push("/dashboard");
   };
 
   return (
@@ -90,6 +147,9 @@ const LoginForm = () => {
                   htmlType="submit"
                   block
                   className="button"
+                  disabled={buttonClicked}
+                  loading={loading}
+                  style={{ background: "#1c4792" }}
                 >
                   SIGN IN
                 </Button>

@@ -1,13 +1,13 @@
-import {call, put, take} from 'redux-saga/effects';
-import {LOGIN} from '../../action-types';
-import {getOtpFailed, getOtpSucceeded} from '../../actions';
-import saveAPI from '../../../apis/saveAPI';
+import { call, put, take } from "redux-saga/effects";
+import { LOGIN } from "../../action-types";
+import { getOtpFailed, getOtpSucceeded } from "../../actions";
+import saveAPI from "../../../apis/saveAPI";
 
 function* processSaveLogin(params) {
-  const {data, onSuccess, onFailure} = params;
+  const { data, onSuccess, onFailure } = params;
 
   try {
-    const response = yield call(saveAPI, 'auth/staff/login', data);
+    const response = yield call(saveAPI, "admin/auth/login", data);
 
     if (response.status === 200 && response.data.success) {
       yield put(getOtpSucceeded());
@@ -24,7 +24,7 @@ function* processSaveLogin(params) {
 
 export default function* watchSaveLogin() {
   while (true) {
-    const {params} = yield take(LOGIN.GET_OTP);
+    const { params } = yield take(LOGIN.GET_OTP);
     yield call(processSaveLogin, params);
   }
 }

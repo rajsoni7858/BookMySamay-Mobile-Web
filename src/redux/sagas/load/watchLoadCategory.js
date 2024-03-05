@@ -7,7 +7,7 @@ function* processLoadCategory(params) {
   const { onSuccess, onFailure } = params;
 
   try {
-    const response = yield call(loadAPI, "api/admin/categories");
+    const response = yield call(loadAPI, "admin/categories");
 
     if (response.status === 200 && response.data.success) {
       yield put(loadCategorySucceeded());

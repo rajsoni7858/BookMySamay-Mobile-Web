@@ -23,10 +23,10 @@
 }
 
 .meta .ant-card-meta-description {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
 }
 
 .meta .ant-card-meta-title {
-  margin-bottom: 4px;
+  margin-bottom: 4px !important;
   margin-top: 4px;
 }

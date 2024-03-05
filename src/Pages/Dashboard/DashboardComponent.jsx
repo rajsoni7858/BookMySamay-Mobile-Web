@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Row, Col, Card, Statistic } from "antd";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import LoadParams from "../../models/LoadParams";
+import { loadCategory } from "../../redux/actions/categoryActions";
 import "./Dashboard.css";
 
 const { Title } = Typography;
 const { Meta } = Card;
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const currentDateTimeFormatted = moment().format("h.mm A D MMM YYYY");
+
+  const [categories, setCategories] = useState([]);
 
   const renderStatisticValue = (value) => (
     <Statistic
@@ -37,6 +43,19 @@ const Dashboard = () => {
       {title}
     </Title>
   );
+
+  const handleLoadCategorySuccessed = (data) => {
+    setCategories(data);
+  };
+
+  useEffect(() => {
+    dispatch(
+      loadCategory(new LoadParams({}, handleLoadCategorySuccessed, () => {}))
+    );
+  }, [dispatch]);
+
+  const category1 = require("../../../src/Assets/Images/salon.png");
+  const category3 = require("../../../src/Assets/Images/hospital.jpeg");
 
   return (
     <div
@@ -147,82 +166,52 @@ const Dashboard = () => {
         align="middle"
         style={{ margin: "0 1.2rem", padding: "1.2rem 0" }}
       >
-        <Col xs={12} sm={12}>
-          <Card
-            hoverable
-            cover={
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "10rem",
-                }}
-              >
-                <img
-                  alt="example"
-                  src={require("../../../src/Assets/Images/salon.png")}
+        {categories.map((item, index) => (
+          <Col xs={12} sm={12} key={index}>
+            <Card
+              hoverable
+              cover={
+                <div
                   style={{
-                    width: "10rem",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                     height: "10rem",
-                    objectFit: "cover",
                   }}
-                />
-              </div>
-            }
-            style={{
-              height: "100%",
-              boxShadow: "2.128px 2.128px 5.32px 0px rgba(0, 0, 0, 0.25)",
-            }}
-            bodyStyle={{ padding: "8px" }}
-            onClick={() => history.push("/salons/add-salon#1")}
-          >
-            <Meta
-              className="meta"
-              title="Salon/Beauty Parlor"
-              description="To Add or fill the details of salons “Click on the Salon”"
-              style={{ padding: "0", paddingBottom: "5px" }}
-            />
-          </Card>
-        </Col>
-        <Col xs={12} sm={12}>
-          <Card
-            hoverable
-            cover={
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "10rem",
-                }}
-              >
-                <img
-                  alt="example"
-                  src={require("../../../src/Assets/Images/hospital.jpeg")}
-                  style={{
-                    width: "10rem",
-                    height: "10rem",
-                    objectFit: "cover",
-                  }}
-                />
-              </div>
-            }
-            style={{
-              height: "100%",
-              boxShadow: "2.128px 2.128px 5.32px 0px rgba(0, 0, 0, 0.25)",
-            }}
-            bodyStyle={{ padding: "8px" }}
-            onClick={() => history.push("/hospitals/add-hospital#1")}
-          >
-            <Meta
-              className="meta"
-              title="Hospital"
-              description="To Add or fill the details of hospitals “Click on the Hospital”"
-              style={{ padding: "0", paddingBottom: "5px" }}
-            />
-          </Card>
-        </Col>
+                >
+                  <img
+                    alt="example"
+                    src={item.category_id === 3 ? category3 : category1}
+                    style={{
+                      width: "10rem",
+                      height: "10rem",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+              }
+              style={{
+                height: "100%",
+                boxShadow: "2.128px 2.128px 5.32px 0px rgba(0, 0, 0, 0.25)",
+              }}
+              bodyStyle={{ padding: "8px" }}
+              onClick={() =>
+                history.push(
+                  item.category_id === 3
+                    ? "/hospitals/add-hospital#1"
+                    : "/salons/add-salon#1"
+                )
+              }
+            >
+              <Meta
+                className="meta"
+                title={item.name}
+                description={`To Add or fill the details of ${item.name} “Click on the ${item.name}”`}
+                style={{ padding: "0", paddingBottom: "5px" }}
+              />
+            </Card>
+          </Col>
+        ))}
       </Row>
     </div>
   );

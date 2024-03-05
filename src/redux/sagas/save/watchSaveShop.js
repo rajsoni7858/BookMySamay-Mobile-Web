@@ -7,7 +7,7 @@ function* processSaveShop(params) {
   const { data, onSuccess, onFailure } = params;
 
   try {
-    const response = yield call(saveAPI, "api/admin/shops", data);
+    const response = yield call(saveAPI, "admin/shops", data);
 
     if (response.status === 200 && response.data.success) {
       yield put(saveShopSucceeded());

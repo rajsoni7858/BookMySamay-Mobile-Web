@@ -7,7 +7,7 @@ function* processLoadShops(params) {
   const { onSuccess, onFailure } = params;
 
   try {
-    const response = yield call(loadAPI, "api/admin/shops");
+    const response = yield call(loadAPI, "admin/shops");
 
     if (response.status === 200 && response.data.success) {
       yield put(loadShopsSucceeded());
