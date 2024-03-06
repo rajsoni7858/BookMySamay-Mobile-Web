@@ -1,20 +1,115 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Form, Input, Select, Typography } from "antd";
+import { useDispatch } from "react-redux";
+import SaveParams from "../../../models/SaveParams";
+import { saveShop, updateShop } from "../../../redux/actions/shopActions";
 
 const { Title } = Typography;
 
 const Step1Component = ({ form, formId, onNext }) => {
-  const handleNext = async () => {
-    onNext();
-    // try {
-    //   await form.validateFields().then((values) => {
-    //     console.log("hi ronak", values);
-    //     onNext();
-    //   });
-    // } catch (errorInfo) {
-    //   console.log("Validation failed:", errorInfo);
-    // }
+  const dispatch = useDispatch();
+  const [latitude, setLatitude] = React.useState(null);
+  const [longitude, setLongitude] = React.useState(null);
+
+  const storedData = JSON.parse(localStorage.getItem("salon"));
+
+  const handleClick = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+        },
+        (error) => {
+          console.error("Error getting geolocation:", error.message);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
   };
+
+  const handleShopSuccessed = (data) => {
+    localStorage.setItem("salon", JSON.stringify({ ...storedData, ...data }));
+    onNext();
+  };
+
+  const handleNext = async () => {
+    // onNext();
+    try {
+      await form.validateFields().then((values) => {
+        const payload = {
+          ...values,
+          category_id: 1,
+          location_lat: 12.345678,
+          location_lng: 98.765432,
+          address: "123 Bean Road, Coffeetown",
+          staff: {
+            name: values.owner_name,
+            mobile_number: values.mobile_number,
+          },
+        };
+        localStorage.setItem(
+          "salon",
+          JSON.stringify({ ...storedData, ...payload })
+        );
+        if (storedData) {
+          const daysOfWeek = [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ];
+
+          const shop_daily_operational_details =
+            storedData.shop_daily_operational_details
+              ? storedData.shop_daily_operational_details
+              : daysOfWeek.map((day) => ({
+                  op_type: values.op_type,
+                  day_of_week: day,
+                  is_open: 0,
+                  opening_time: "",
+                  closing_time: "",
+                  lunch_start_time: "",
+                  lunch_end_time: "",
+                }));
+          dispatch(
+            updateShop(
+              new SaveParams(
+                {
+                  ...payload,
+                  ...storedData,
+                  shop_daily_operational_details,
+                  shop_operational_details: {
+                    op_type: values.op_type,
+                    slot_duration: values.slot_duration,
+                    upi_id: storedData.upi_id || "",
+                  },
+                },
+                handleShopSuccessed,
+                () => {}
+              )
+            )
+          );
+        } else {
+          dispatch(
+            saveShop(new SaveParams(payload, handleShopSuccessed, () => {}))
+          );
+        }
+      });
+    } catch (errorInfo) {
+      console.log("Validation failed:", errorInfo);
+    }
+  };
+
+  useEffect(() => {
+    if (storedData) {
+      form.setFieldsValue(storedData);
+    }
+  }, [form, storedData]);
 
   return (
     <Form
@@ -42,61 +137,62 @@ const Step1Component = ({ form, formId, onNext }) => {
           Here you need to fill the shop details
         </Title>
 
+        {/* <button onClick={handleClick}>Get Current Location</button> */}
+
         {/* Content */}
         <Form.Item
           label="Shop Name:"
-          name="shopName"
+          name="name"
           rules={[{ required: true, message: "Please enter shop name" }]}
         >
           <Input placeholder="Enter shop name" />
         </Form.Item>
         <Form.Item
           label="Shop Owner:"
-          name="shopOwner"
+          name="owner_name"
           rules={[{ required: true, message: "Please enter shop owner" }]}
         >
           <Input placeholder="Enter shop Owner" />
         </Form.Item>
         <Form.Item
+          label="Mobile No:"
+          name="mobile_number"
+          rules={[{ required: true, message: "Please enter mobile number" }]}
+        >
+          <Input placeholder="Enter mobile no." maxLength={10} />
+        </Form.Item>
+        <Form.Item
           label="Shop Location:"
-          name="shopLocation"
+          name="location_name"
           rules={[{ required: true, message: "Please enter shop location" }]}
         >
           <Input placeholder="Enter shop location" />
         </Form.Item>
         <Form.Item
-          label="Mobile No:"
-          name="shopOwner"
-          rules={[{ required: true, message: "Please enter mobile number" }]}
-        >
-          <Input placeholder="Enter mobile no." />
-        </Form.Item>
-        <Form.Item
           label="Set Location:"
-          name="setLocation"
+          name="set_location"
           rules={[{ required: true, message: "Please enter set location" }]}
         >
           <Input placeholder="Enter set location " />
         </Form.Item>
         <Form.Item
           label="Services offered:"
-          name="service_type"
+          name="op_type"
           rules={[{ required: true, message: "Please select service" }]}
         >
           <Select
-            mode="multiple"
             placeholder="men, women, unisex"
             style={{ fontFamily: "Poppins", height: "38px" }}
             options={[
-              { value: "men", label: "Men" },
-              { value: "women", label: "Women" },
-              { value: "unisex", label: "Unisex" },
+              { value: "Men", label: "Men" },
+              { value: "Women", label: "Women" },
+              { value: "Unisex", label: "Unisex" },
             ]}
           />
         </Form.Item>
         <Form.Item
           label="General Time Slot:"
-          name="general_timeslot"
+          name="slot_duration"
           rules={[
             { required: true, message: "Please select general time slot" },
           ]}

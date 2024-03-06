@@ -1,31 +1,26 @@
-import React, { useState } from "react";
-import { Button, Input, Layout, Table, Typography } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Input, Layout, Spin, Table, Typography } from "antd";
 import { Link, useHistory } from "react-router-dom";
 import { trimString } from "../../utils/utils";
+import { useDispatch, useSelector } from "react-redux";
 import "./Shop.css";
+import { loadShops } from "../../redux/actions";
+import LoadParams from "../../models/LoadParams";
 
 const { Content } = Layout;
 const { Text } = Typography;
 
-const originData = [];
-for (let i = 0; i < 100; i++) {
-  originData.push({
-    key: i.toString(),
-    ShopName: `Salon Royale for Kids and Mens fef fef dsd dsd dds dsds`,
-    MobileNo: "9427778440",
-    setLocation: `London. ${i}`, // Corrected the key to "setLocation"
-  });
-}
-
 const ShopsComponent = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
-  const [data, setData] = useState(originData);
+  const shopLoading = useSelector((state) => state.LoadShop);
+  const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   const columns = [
     {
       title: "Shop Name",
-      dataIndex: "ShopName",
+      dataIndex: "name",
       width: "40%",
       render: (text) => (
         <div style={{ paddingLeft: "14px" }}>
@@ -36,14 +31,14 @@ const ShopsComponent = () => {
               fontSize: "0.75rem",
             }}
           >
-            {trimString(text, 40)}
+            {text && trimString(text, 40)}
           </span>
         </div>
       ),
     },
     {
       title: "Mobile No",
-      dataIndex: "MobileNo",
+      dataIndex: "mobile_number",
       align: "center",
       ellipsis: true,
       render: (text) => (
@@ -60,7 +55,7 @@ const ShopsComponent = () => {
     },
     {
       title: "Location",
-      dataIndex: "setLocation",
+      dataIndex: "location_name",
       align: "center",
       ellipsis: true,
     },
@@ -90,83 +85,95 @@ const ShopsComponent = () => {
     },
   ];
 
-  const mergedColumns = columns.map((col) => {
-    if (!col.editable) {
-      return col;
-    }
-    return {
-      ...col,
-      onCell: (record) => ({
-        record,
-        inputType: col.inputType || "text",
-        dataIndex: col.dataIndex,
-        title: col.title,
-        editing: record,
-      }),
-    };
-  });
-
   const handleAddShopClick = () => {
     history.push("/salons/add-salon#1");
   };
 
+  const handleLoadShopsSuccessed = (data) => {
+    setData(data);
+  };
+
+  useEffect(() => {
+    dispatch(
+      loadShops(new LoadParams({ id: 1 }, handleLoadShopsSuccessed, () => {}))
+    );
+  }, [dispatch]);
+
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+  };
+
   const filteredData = searchQuery
-    ? data.filter(
-        (item) =>
-          item.ShopName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item.MobileNo.includes(searchQuery)
-      )
+    ? data.filter((item) => {
+        const nameIncludes =
+          item.name &&
+          item.name.toLowerCase().includes(searchQuery.toLowerCase());
+        const mobileIncludes =
+          item.mobile_number && item.mobile_number.includes(searchQuery);
+        return nameIncludes || mobileIncludes;
+      })
     : data;
 
   return (
     <div style={{ backgroundColor: "#eff3fd", height: "calc(100vh - 55px)" }}>
-      <Content
-        style={{
-          padding: "1.2rem",
-          minHeight: 280,
-          backgroundColor: "#eff3fd",
-        }}
-      >
-        <Input
-          placeholder="Search by Shop Name/Mobile No."
-          allowClear
-          prefix={
-            <img
-              src={require("../../Assets/Images/search.png")}
-              alt="Your Logo"
-              className="search"
-            />
-          }
-          style={{
-            marginBottom: "1rem",
-            fontFamily: "Poppins",
-            borderRadius: 8,
-            padding: "0.5rem",
-            paddingLeft: "0.55rem",
-            border: "1px solid #1C4792",
-          }}
-        />
-
-        {/* Add Shop */}
-        <Button
-          type="primary"
-          style={{
-            marginBottom: "0.6rem",
-            background: "#1C4792",
-            borderRadius: 5,
-            float: "right",
-            fontFamily: "Poppins",
-            border: 0,
-          }}
-          onClick={handleAddShopClick}
+      {shopLoading ? (
+        <div
+          className="common__wrapper"
+          style={{ height: "calc(100vh - 100px)" }}
         >
-          ADD SALON
-        </Button>
+          <Spin size="large" />
+        </div>
+      ) : (
+        <Content
+          style={{
+            padding: "1.2rem",
+            minHeight: 280,
+            backgroundColor: "#eff3fd",
+          }}
+        >
+          <Input
+            placeholder="Search by Shop Name/Mobile No."
+            allowClear
+            prefix={
+              <img
+                src={require("../../Assets/Images/search.png")}
+                alt="Your Logo"
+                className="search"
+              />
+            }
+            style={{
+              marginBottom: "1rem",
+              fontFamily: "Poppins",
+              borderRadius: 8,
+              padding: "0.5rem",
+              paddingLeft: "0.55rem",
+              border: "1px solid #1C4792",
+            }}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
 
-        {/* Table */}
-        <Table bordered dataSource={filteredData} columns={mergedColumns} />
-      </Content>
+          {/* Add Shop */}
+          <Button
+            type="primary"
+            style={{
+              marginBottom: "0.6rem",
+              background: "#1C4792",
+              borderRadius: 5,
+              float: "right",
+              fontFamily: "Poppins",
+              border: 0,
+            }}
+            onClick={handleAddShopClick}
+          >
+            ADD SALON
+          </Button>
+
+          {/* Table */}
+          <Table bordered dataSource={filteredData} columns={columns} />
+        </Content>
+      )}
     </div>
   );
 };
+
 export default ShopsComponent;

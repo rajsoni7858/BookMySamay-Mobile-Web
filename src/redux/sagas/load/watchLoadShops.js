@@ -4,10 +4,13 @@ import { SHOP } from "../../action-types";
 import { loadShopsFailed, loadShopsSucceeded } from "../../actions";
 
 function* processLoadShops(params) {
-  const { onSuccess, onFailure } = params;
+  const { fetchParams, onSuccess, onFailure } = params;
 
   try {
-    const response = yield call(loadAPI, "admin/shops");
+    const response = yield call(
+      loadAPI,
+      `admin/shops?category_id=${fetchParams.id}`
+    );
 
     if (response.status === 200 && response.data.success) {
       yield put(loadShopsSucceeded());

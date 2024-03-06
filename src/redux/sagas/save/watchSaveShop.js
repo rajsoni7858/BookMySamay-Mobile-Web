@@ -6,12 +6,15 @@ import saveAPI from "../../../apis/saveAPI";
 function* processSaveShop(params) {
   const { data, onSuccess, onFailure } = params;
 
+  delete data.owner_name;
+  delete data.mobile_number;
+
   try {
     const response = yield call(saveAPI, "admin/shops", data);
 
     if (response.status === 200 && response.data.success) {
       yield put(saveShopSucceeded());
-      yield call(onSuccess, response.data);
+      yield call(onSuccess, response.data.shop);
     } else {
       yield put(saveShopFailed());
       yield call(onFailure, response.statusText);

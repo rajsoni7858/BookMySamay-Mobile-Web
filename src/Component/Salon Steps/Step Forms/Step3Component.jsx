@@ -6,6 +6,8 @@ const { Title, Text } = Typography;
 const { Dragger } = Upload;
 
 const Step3Component = ({ formId, onPrevious, onNext }) => {
+  const storedData = JSON.parse(localStorage.getItem("salon"));
+
   const props = {
     name: "file",
     multiple: true,
@@ -52,7 +54,7 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
               title: "Salons",
             },
             {
-              title: "Application Center",
+              title: storedData?.name,
             },
             {
               title: formId === "editForm" ? "Edit Salon" : "Add Salon",

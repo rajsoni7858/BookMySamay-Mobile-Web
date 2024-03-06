@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Dashboard from "../Pages/Dashboard/DashboardComponent.jsx";
 import UsersComponent from "../Pages/Users/UsersComponent.jsx";
 import ShopsComponent from "../Pages/Shops/ShopsComponent.jsx";
@@ -32,6 +32,7 @@ function AuthRouterconfig() {
         component={EditHospitalComponent}
       />
       <Route path="/users" component={UsersComponent} />
+      <Redirect to="/dashboard" />
     </Switch>
   );
 }
