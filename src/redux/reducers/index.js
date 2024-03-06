@@ -9,10 +9,12 @@ import ServicesLoadingReducer from "./load/servicesReducer";
 import shopSavingReducer from "./save/shopReducer";
 import ShopUpdatingReducer from "./update/shopReducer";
 import ServicesUpdatingReducer from "./update/servicesReducer";
+import ShopsLoadingReducer from "./load/shopsReducer";
 
 const rootReducer = combineReducers({
   LoadHome: HomeLoadingReducer,
   LoadCategory: CategoryLoadingReducer,
+  LoadShops: ShopsLoadingReducer,
   LoadShop: ShopLoadingReducer,
   LoadServices: ServicesLoadingReducer,
   SaveLogin: LoginReducer,

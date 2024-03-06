@@ -78,7 +78,6 @@ const Step2Component = ({ formId, onPrevious, onNext }) => {
   };
 
   const renderTimePickers = (dayIndex) => {
-    console.log("hi ronak", formattedTime(timeValues[dayIndex].opening_time));
     return (
       <Space style={{ width: "100%" }} direction="horizontal">
         <Space direction="vertical">

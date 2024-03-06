@@ -1,6 +1,6 @@
 import { SHOP } from "../action-types";
 
-// LOAD
+// LOAD SHOPS
 export const loadShops = (params) => ({
   type: SHOP.LOAD,
   params,
@@ -13,6 +13,22 @@ export const loadShopsSucceeded = (data) => ({
 
 export const loadShopsFailed = (error) => ({
   type: SHOP.LOAD_FAILED,
+  error,
+});
+
+// LOAD
+export const loadShop = (params) => ({
+  type: SHOP.LOAD_SHOP,
+  params,
+});
+
+export const loadShopSucceeded = (data) => ({
+  type: SHOP.LOAD_SHOP_SUCCEEDED,
+  data,
+});
+
+export const loadShopFailed = (error) => ({
+  type: SHOP.LOAD_SHOP_FAILED,
   error,
 });
 

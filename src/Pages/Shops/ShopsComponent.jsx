@@ -3,9 +3,9 @@ import { Button, Input, Layout, Spin, Table, Typography } from "antd";
 import { Link, useHistory } from "react-router-dom";
 import { trimString } from "../../utils/utils";
 import { useDispatch, useSelector } from "react-redux";
-import "./Shop.css";
 import { loadShops } from "../../redux/actions";
 import LoadParams from "../../models/LoadParams";
+import "./Shop.css";
 
 const { Content } = Layout;
 const { Text } = Typography;
@@ -13,7 +13,7 @@ const { Text } = Typography;
 const ShopsComponent = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const shopLoading = useSelector((state) => state.LoadShop);
+  const shopsLoading = useSelector((state) => state.LoadShops);
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -64,16 +64,16 @@ const ShopsComponent = () => {
       key: "Edit",
       width: "15%",
       align: "center",
-      render: (text, record) => (
+      render: (data, record) => (
         <>
-          <Link to={`/salons/${record.key}/edit-salon#1`}>
+          <Link to={`/salons/${data.shop_id}/edit-salon#1`}>
             <img
               src={require("../../Assets/Images/edit.png")}
               alt="Your Logo"
               style={{ width: "17px", Height: "17px", padding: "3px" }}
             />
           </Link>
-          <Link to={`/salons/${record.key}/services`}>
+          <Link to={`/salons/${data.shop_id}/services`}>
             <img
               src={require("../../Assets/Images/setting.png")}
               alt="Your Logo"
@@ -97,6 +97,7 @@ const ShopsComponent = () => {
     dispatch(
       loadShops(new LoadParams({ id: 1 }, handleLoadShopsSuccessed, () => {}))
     );
+    localStorage.removeItem("salon");
   }, [dispatch]);
 
   const handleSearch = (value) => {
@@ -116,7 +117,7 @@ const ShopsComponent = () => {
 
   return (
     <div style={{ backgroundColor: "#eff3fd", height: "calc(100vh - 55px)" }}>
-      {shopLoading ? (
+      {shopsLoading ? (
         <div
           className="common__wrapper"
           style={{ height: "calc(100vh - 100px)" }}
