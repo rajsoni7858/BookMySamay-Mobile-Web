@@ -1,23 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Upload, Typography, message, Button } from "antd";
 import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
+import { URL } from "../../../utils/utils";
+import axios from "axios";
 
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
 
 const Step3Component = ({ formId, onPrevious, onNext }) => {
+  const [images, setImages] = useState([]);
   const storedData = JSON.parse(localStorage.getItem("salon"));
+
+  const handleSubmit = async (image) => {
+    const formData = new FormData();
+    formData.append(`image`, image);
+    formData.append(`sequence`, 1);
+
+    try {
+      const response = await axios.post(
+        URL + `admin/shops/upload/${storedData.shop_id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("Upload successful:", response.data);
+      setImages([...images, response.data]);
+    } catch (error) {
+      console.error("Error uploading images:", error);
+    }
+  };
 
   const props = {
     name: "file",
     multiple: true,
-    action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
+    // action: `${URL}admin/shops/upload/${storedData.shop_id}`,
     onChange(info) {
       const { status } = info.file;
       if (status !== "uploading") {
         console.log(info.file, info.fileList);
       }
       if (status === "done") {
+        handleSubmit(info.file.originFileObj);
         message.success(`${info.file.name} file uploaded successfully.`);
       } else if (status === "error") {
         message.error(`${info.file.name} file upload failed.`);

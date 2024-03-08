@@ -10,6 +10,7 @@
     "@types/react": "^18.2.48",
     "antd": "^5.13.1",
     "axios": "^1.6.7",
+    "lodash": "^4.17.21",
     "moment": "^2.30.1",
     "multiselect-react-dropdown": "^2.0.25",
     "primereact": "^10.3.1",

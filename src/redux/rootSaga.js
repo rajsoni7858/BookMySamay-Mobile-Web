@@ -10,6 +10,7 @@ import watchSaveShop from "./sagas/save/watchSaveShop";
 import watchUpdateShop from "./sagas/update/watchUpdateShop";
 import watchUpdateServices from "./sagas/update/watchUpdateServices";
 import watchLoadShop from "./sagas/load/watchLoadShop";
+import watchLoadSearchLocation from "./sagas/load/watchLoadSearchLocation";
 
 // Combine all sagas into the root saga
 export default function* rootSaga() {
@@ -19,6 +20,7 @@ export default function* rootSaga() {
     watchLoadServices(),
     watchLoadShops(),
     watchLoadShop(),
+    watchLoadSearchLocation(),
     watchSaveShop(),
     watchUpdateShop(),
     watchUpdateServices(),

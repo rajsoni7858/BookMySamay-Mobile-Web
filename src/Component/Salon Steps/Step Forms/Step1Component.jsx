@@ -1,24 +1,80 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Form, Input, Select, Typography } from "antd";
 import { useDispatch } from "react-redux";
 import SaveParams from "../../../models/SaveParams";
 import { saveShop, updateShop } from "../../../redux/actions/shopActions";
+import { debounce } from "lodash";
+import axios from "axios";
+import LoadParams from "../../../models/LoadParams";
+import { loadSearchLocation } from "../../../redux/actions/locationActions";
 
 const { Title } = Typography;
 
 const Step1Component = ({ form, formId, onNext }) => {
   const dispatch = useDispatch();
-  const [latitude, setLatitude] = React.useState(null);
-  const [longitude, setLongitude] = React.useState(null);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+
+  const [searchQuery, setSearchQuery] = useState();
+  const [cancelToken, setCancelToken] = useState();
+  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState();
+
+  const cancelTokenRef = useRef(null);
 
   const storedData = JSON.parse(localStorage.getItem("salon"));
 
-  const handleClick = () => {
+  const handleSearchSuccessed = (data) => {
+    setResults(data);
+    setLoading(false);
+  };
+
+  const performSearch = async (payload, cancelToken) => {
+    dispatch(
+      loadSearchLocation(
+        new LoadParams(
+          {
+            ...payload,
+            cancelToken: cancelToken?.token,
+          },
+          handleSearchSuccessed,
+          () => {}
+        )
+      )
+    );
+  };
+
+  const debouncedHandleSearch = debounce((query) => {
+    setSearchQuery(query);
+
+    const newCancelToken = axios.CancelToken.source();
+
+    if (cancelTokenRef.current) {
+      cancelTokenRef.current.cancel("Previous request cancelled");
+    }
+
+    cancelTokenRef.current = newCancelToken;
+    setLoading(true);
+
+    const url = { url: `q=${query}` };
+    performSearch(url, newCancelToken);
+  }, 500);
+
+  const handleSearch = (query) => {
+    debouncedHandleSearch(query);
+  };
+
+  const handleGetLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
+          const { latitude, longitude } = position.coords;
+          setLatitude(latitude);
+          setLongitude(longitude);
+          const url = {
+            url: `location_lat=${latitude}&location_lng=${longitude}`,
+          };
+          performSearch(url);
         },
         (error) => {
           console.error("Error getting geolocation:", error.message);
@@ -80,8 +136,8 @@ const Step1Component = ({ form, formId, onNext }) => {
             updateShop(
               new SaveParams(
                 {
-                  ...payload,
                   ...storedData,
+                  ...payload,
                   shop_daily_operational_details,
                   shop_operational_details: {
                     op_type: values.op_type,
@@ -111,6 +167,10 @@ const Step1Component = ({ form, formId, onNext }) => {
     }
   }, [form, storedData]);
 
+  useEffect(() => {
+    handleGetLocation();
+  }, []);
+
   return (
     <Form
       form={form}
@@ -137,8 +197,6 @@ const Step1Component = ({ form, formId, onNext }) => {
           Here you need to fill the shop details
         </Title>
 
-        {/* <button onClick={handleClick}>Get Current Location</button> */}
-
         {/* Content */}
         <Form.Item
           label="Shop Name:"
@@ -162,18 +220,34 @@ const Step1Component = ({ form, formId, onNext }) => {
           <Input placeholder="Enter mobile no." maxLength={10} />
         </Form.Item>
         <Form.Item
-          label="Shop Location:"
+          label="Current Location:"
           name="location_name"
-          rules={[{ required: true, message: "Please enter shop location" }]}
+          rules={[
+            { required: true, message: "Please select current location" },
+          ]}
         >
-          <Input placeholder="Enter shop location" />
+          <Select
+            showSearch
+            loading={loading}
+            placeholder="Please select current location"
+            style={{ fontFamily: "Poppins", height: "38px" }}
+            defaultActiveFirstOption={false}
+            filterOption={false}
+            onSearch={handleSearch}
+            notFoundContent={null}
+            options={[
+              { value: "Men", label: "Men" },
+              { value: "Women", label: "Women" },
+              { value: "Unisex", label: "Unisex" },
+            ]}
+          />
         </Form.Item>
         <Form.Item
-          label="Set Location:"
-          name="set_location"
-          rules={[{ required: true, message: "Please enter set location" }]}
+          label="Shop Address:"
+          name="address"
+          rules={[{ required: true, message: "Please enter shop Address" }]}
         >
-          <Input placeholder="Enter set location " />
+          <Input placeholder="Enter shop address" />
         </Form.Item>
         <Form.Item
           label="Services offered:"
@@ -198,7 +272,7 @@ const Step1Component = ({ form, formId, onNext }) => {
           ]}
         >
           <Select
-            placeholder="select general time slot"
+            placeholder="Please select general time slot"
             style={{ fontFamily: "Poppins", height: "38px" }}
             options={[
               { value: "15", label: "15" },
