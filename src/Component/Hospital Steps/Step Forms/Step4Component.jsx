@@ -61,7 +61,7 @@ const Step4Component = ({ formId, onPrevious, onNext }) => {
                   : "Add Hospital",
             },
           ]}
-          path={"/hospitals"}
+          path={"/3/hospital"}
         />
 
         <Title

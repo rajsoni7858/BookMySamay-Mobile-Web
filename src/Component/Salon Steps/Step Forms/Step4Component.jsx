@@ -1,14 +1,16 @@
 import React from "react";
 import { Button, Form, Input, Typography, message } from "antd";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useParams } from "react-router-dom";
 import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
 import { updateShop } from "../../../redux/actions/shopActions";
 import SaveParams from "../../../models/SaveParams";
 import { useDispatch } from "react-redux";
+import { convertToTitleCase } from "../../../utils/utils";
 
 const { Title } = Typography;
 
 const Step4Component = ({ form, formId, onPrevious }) => {
+  let { categoryId, category } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -17,7 +19,7 @@ const Step4Component = ({ form, formId, onPrevious }) => {
   const handleShopSuccessed = () => {
     message.success("Form submitted successfully!");
     localStorage.removeItem("salon");
-    history.push("/salons");
+    history.push(`/${category}`);
   };
 
   const handleFinish = () => {
@@ -67,16 +69,16 @@ const Step4Component = ({ form, formId, onPrevious }) => {
           <CustomBreadcrumb
             items={[
               {
-                title: "Salons",
+                title: convertToTitleCase(category),
               },
               {
                 title: storedData?.name,
               },
               {
-                title: formId === "editForm" ? "Edit Salon" : "Add Salon",
+                title: formId === "editForm" ? `Edit` : `Add`,
               },
             ]}
-            path={"/salons"}
+            path={`/${categoryId}/${category}`}
           />
 
           <Title

@@ -10,7 +10,7 @@ const Step5Component = ({ formId, onPrevious }) => {
 
   const handleFinish = () => {
     message.success("Form submitted successfully!");
-    history.push("/hospitals");
+    history.push("/3/hospital");
   };
 
   return (
@@ -44,7 +44,7 @@ const Step5Component = ({ formId, onPrevious }) => {
                   : "Add Hospital",
             },
           ]}
-          path={"/hospitals"}
+          path={"/3/hospital"}
         />
 
         <Title

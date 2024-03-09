@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Form, Upload, Typography, message, Button } from "antd";
+import { useParams } from "react-router-dom";
 import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
-import { URL } from "../../../utils/utils";
+import { URL, convertToTitleCase } from "../../../utils/utils";
 import axios from "axios";
 
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
 
 const Step3Component = ({ formId, onPrevious, onNext }) => {
+  let { categoryId, category } = useParams();
   const [images, setImages] = useState([]);
   const storedData = JSON.parse(localStorage.getItem("salon"));
 
@@ -78,16 +80,16 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
         <CustomBreadcrumb
           items={[
             {
-              title: "Salons",
+              title: convertToTitleCase(category),
             },
             {
               title: storedData?.name,
             },
             {
-              title: formId === "editForm" ? "Edit Salon" : "Add Salon",
+              title: formId === "editForm" ? `Edit` : `Add`,
             },
           ]}
-          path={"/salons"}
+          path={`/${categoryId}/${category}`}
         />
 
         <Title

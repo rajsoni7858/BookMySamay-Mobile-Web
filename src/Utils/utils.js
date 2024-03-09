@@ -10,3 +10,8 @@ export const trimString = (originalString, maxLength) => {
 
   return trimmedString;
 };
+
+export function convertToTitleCase(str) {
+  const withSpaces = str.replace(/-/g, " ");
+  return withSpaces.replace(/\b\w/g, (char) => char.toUpperCase());
+}

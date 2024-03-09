@@ -7,11 +7,13 @@ import { debounce } from "lodash";
 import axios from "axios";
 import LoadParams from "../../../models/LoadParams";
 import { loadSearchLocation } from "../../../redux/actions/locationActions";
+import { useParams } from "react-router-dom";
 
 const { Title } = Typography;
 
 const Step1Component = ({ form, formId, onNext }) => {
   const dispatch = useDispatch();
+  let { categoryId } = useParams();
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
@@ -96,7 +98,7 @@ const Step1Component = ({ form, formId, onNext }) => {
       await form.validateFields().then((values) => {
         const payload = {
           ...values,
-          category_id: 1,
+          category_id: categoryId,
           location_lat: 12.345678,
           location_lng: 98.765432,
           address: "123 Bean Road, Coffeetown",
@@ -252,6 +254,7 @@ const Step1Component = ({ form, formId, onNext }) => {
         <Form.Item
           label="Services offered:"
           name="op_type"
+          initialValue={categoryId === "2" ? "Women" : null}
           rules={[{ required: true, message: "Please select service" }]}
         >
           <Select

@@ -57,6 +57,11 @@ const Dashboard = () => {
   const category1 = require("../../../src/Assets/Images/salon.png");
   const category3 = require("../../../src/Assets/Images/hospital.jpeg");
 
+  const handleCatrgoryUrl = (name, id) => {
+    const updatedName = name && name.toLowerCase().replace(/ /g, "-");
+    return `/${id}/${updatedName}/add#1`;
+  };
+
   return (
     <div
       style={{ minHeight: "calc(100vh - 65px)", backgroundColor: "#FAFAFA" }}
@@ -196,11 +201,7 @@ const Dashboard = () => {
               }}
               bodyStyle={{ padding: "8px" }}
               onClick={() =>
-                history.push(
-                  item.category_id === 3
-                    ? "/hospitals/add-hospital#1"
-                    : "/salons/add-salon#1"
-                )
+                history.push(handleCatrgoryUrl(item.name, item.category_id))
               }
             >
               <Meta

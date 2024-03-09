@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Layout, Spin, Table, Typography } from "antd";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { trimString } from "../../utils/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { loadShops } from "../../redux/actions";
@@ -13,6 +13,7 @@ const { Text } = Typography;
 const ShopsComponent = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  let { categoryId, category } = useParams();
   const shopsLoading = useSelector((state) => state.LoadShops);
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -66,14 +67,14 @@ const ShopsComponent = () => {
       align: "center",
       render: (data, record) => (
         <>
-          <Link to={`/salons/${data.shop_id}/edit-salon#1`}>
+          <Link to={`/${categoryId}/${category}/${data.shop_id}/edit#1`}>
             <img
               src={require("../../Assets/Images/edit.png")}
               alt="Your Logo"
               style={{ width: "17px", Height: "17px", padding: "3px" }}
             />
           </Link>
-          <Link to={`/salons/${data.shop_id}/services`}>
+          <Link to={`/${categoryId}/${category}/${data.shop_id}/services`}>
             <img
               src={require("../../Assets/Images/setting.png")}
               alt="Your Logo"
@@ -86,7 +87,7 @@ const ShopsComponent = () => {
   ];
 
   const handleAddShopClick = () => {
-    history.push("/salons/add-salon#1");
+    history.push(`/${categoryId}/${category}/add#1`);
   };
 
   const handleLoadShopsSuccessed = (data) => {
@@ -95,10 +96,12 @@ const ShopsComponent = () => {
 
   useEffect(() => {
     dispatch(
-      loadShops(new LoadParams({ id: 1 }, handleLoadShopsSuccessed, () => {}))
+      loadShops(
+        new LoadParams({ id: categoryId }, handleLoadShopsSuccessed, () => {})
+      )
     );
     localStorage.removeItem("salon");
-  }, [dispatch]);
+  }, [dispatch, categoryId]);
 
   const handleSearch = (value) => {
     setSearchQuery(value);
@@ -166,7 +169,7 @@ const ShopsComponent = () => {
             }}
             onClick={handleAddShopClick}
           >
-            ADD SALON
+            {categoryId === "1" ? "ADD SALON" : "ADD BEAUTY PARLOR"}
           </Button>
 
           {/* Table */}

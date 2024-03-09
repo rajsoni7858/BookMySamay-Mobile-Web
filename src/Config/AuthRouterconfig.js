@@ -16,20 +16,28 @@ function AuthRouterconfig() {
     <Switch>
       {/* <Route exact path="/" component={Dashboard} /> */}
       <Route exact path="/dashboard" component={Dashboard} />
-      <Route exact path="/salons" component={ShopsComponent} />
-      <Route path="/salons/add-salon" component={AddShopComponent} />
-      <Route path="/salons/:id/edit-salon" component={EditshopComponent} />
-      <Route exact path="/salons/:id/services" component={ServicesComponent} />
+      <Route exact path="/3/hospital" component={HospitalsComponent} />
+      <Route exact path="/3/hospital/add" component={AddHospitalComponent} />
       <Route
         exact
-        path="/salons/:id/services/:id"
-        component={ServiceDetailsComponent}
-      />
-      <Route exact path="/hospitals" component={HospitalsComponent} />
-      <Route path="/hospitals/add-hospital" component={AddHospitalComponent} />
-      <Route
-        path="/hospitals/:id/edit-hospital"
+        path="/3/hospital/:id/edit"
         component={EditHospitalComponent}
+      />
+      <Route exact path="/:categoryId/:category" component={ShopsComponent} />
+      <Route path="/:categoryId/:category/add" component={AddShopComponent} />
+      <Route
+        path="/:categoryId/:category/:id/edit"
+        component={EditshopComponent}
+      />
+      <Route
+        exact
+        path="/:categoryId/:category/:id/services"
+        component={ServicesComponent}
+      />
+      <Route
+        exact
+        path="/:categoryId/:category/:id/services/:id"
+        component={ServiceDetailsComponent}
       />
       <Route path="/users" component={UsersComponent} />
       <Redirect to="/dashboard" />

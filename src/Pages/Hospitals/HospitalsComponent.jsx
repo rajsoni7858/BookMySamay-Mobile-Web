@@ -71,7 +71,7 @@ const HospitalsComponent = () => {
       align: "center",
       render: (text, record) => (
         <>
-          <Link to={`/hospitals/${record.key}/edit-hospital#1`}>
+          <Link to={`/3/hospital/${record.key}/edit#1`}>
             <img
               src={require("../../Assets/Images/edit.png")}
               alt="Your Logo"
@@ -84,7 +84,7 @@ const HospitalsComponent = () => {
   ];
 
   const handleAddShopClick = () => {
-    history.push("/hospitals/add-hospital#1");
+    history.push("/3/hospital/add#1");
   };
 
   const filteredData = searchQuery

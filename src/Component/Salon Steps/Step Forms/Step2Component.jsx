@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Collapse, TimePicker, Button, Space } from "antd";
+import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
+import { convertToTitleCase } from "../../../utils/utils";
 
 const { Panel } = Collapse;
 
@@ -25,6 +27,7 @@ const initialTimeValues = Array.from({ length: 7 }, (_, dayIndex) => ({
 }));
 
 const Step2Component = ({ formId, onPrevious, onNext }) => {
+  let { categoryId, category } = useParams();
   const [timeValues, setTimeValues] = useState([]);
 
   const storedData = JSON.parse(localStorage.getItem("salon"));
@@ -163,16 +166,16 @@ const Step2Component = ({ formId, onPrevious, onNext }) => {
         <CustomBreadcrumb
           items={[
             {
-              title: "Salons",
+              title: convertToTitleCase(category),
             },
             {
               title: storedData?.name,
             },
             {
-              title: formId === "editForm" ? "Edit Salon" : "Add Salon",
+              title: formId === "editForm" ? `Edit` : `Add`,
             },
           ]}
-          path={"/salons"}
+          path={`/${categoryId}/${category}`}
         />
 
         <Collapse
