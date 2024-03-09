@@ -12,6 +12,8 @@ import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
 const { Title } = Typography;
 
 const Step2Component = ({ form, formId, onPrevious, onNext }) => {
+  const storedData = JSON.parse(localStorage.getItem("salon"));
+
   const handleNext = async () => {
     onNext();
     // try {
@@ -42,16 +44,13 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
         <CustomBreadcrumb
           items={[
             {
-              title: "Hospitals",
+              title: "Hospital",
             },
             {
-              title: "Application Center",
+              title: storedData?.name,
             },
             {
-              title:
-                formId === "editHospitalForm"
-                  ? "Edit Hospital"
-                  : "Add Hospital",
+              title: formId === "editHospitalForm" ? "Edit" : "Add",
             },
           ]}
           path={"/3/hospital"}
@@ -141,7 +140,7 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
         </Form.Item>
         <Form.Item
           label="Appointment Fee:"
-          name="appointmentFee"
+          name="mr_fee"
           rules={[{ required: true, message: "Please enter appointment fee" }]}
         >
           <InputNumber

@@ -1,31 +1,26 @@
-import React, { useState } from "react";
-import { Button, Input, Layout, Table, Typography } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Input, Layout, Spin, Table, Typography } from "antd";
 import { Link, useHistory } from "react-router-dom";
 import { trimString } from "../../utils/utils";
 import "./Hospital.css";
+import { useDispatch, useSelector } from "react-redux";
+import LoadParams from "../../models/LoadParams";
+import { loadShops } from "../../redux/actions";
 
 const { Content } = Layout;
 const { Text } = Typography;
 
-const originData = [];
-for (let i = 0; i < 100; i++) {
-  originData.push({
-    key: i.toString(),
-    ShopName: `Salon Royale for Kids and Mens fef fef dsd dsd dds dsds`,
-    MobileNo: "9427778440",
-    setLocation: `London. ${i}`, // Corrected the key to "setLocation"
-  });
-}
-
 const HospitalsComponent = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
-  const [data, setData] = useState(originData);
+  const shopsLoading = useSelector((state) => state.LoadShops);
+  const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   const columns = [
     {
       title: "Hospital Name",
-      dataIndex: "ShopName",
+      dataIndex: "name",
       width: "40%",
       render: (text) => (
         <div style={{ paddingLeft: "14px" }}>
@@ -36,14 +31,14 @@ const HospitalsComponent = () => {
               fontSize: "0.75rem",
             }}
           >
-            {trimString(text, 40)}
+            {text && trimString(text, 40)}
           </span>
         </div>
       ),
     },
     {
       title: "Mobile No",
-      dataIndex: "MobileNo",
+      dataIndex: "mobile_number",
       align: "center",
       ellipsis: true,
       render: (text) => (
@@ -60,7 +55,7 @@ const HospitalsComponent = () => {
     },
     {
       title: "Location",
-      dataIndex: "setLocation",
+      dataIndex: "location_name",
       align: "center",
       ellipsis: true,
     },
@@ -69,9 +64,9 @@ const HospitalsComponent = () => {
       key: "Edit",
       width: "15%",
       align: "center",
-      render: (text, record) => (
+      render: (data, record) => (
         <>
-          <Link to={`/3/hospital/${record.key}/edit#1`}>
+          <Link to={`/3/hospital/${data.shop_id}/edit#1`}>
             <img
               src={require("../../Assets/Images/edit.png")}
               alt="Your Logo"
@@ -87,62 +82,91 @@ const HospitalsComponent = () => {
     history.push("/3/hospital/add#1");
   };
 
+  const handleLoadShopsSuccessed = (data) => {
+    setData(data);
+  };
+
+  useEffect(() => {
+    dispatch(
+      loadShops(new LoadParams({ id: 3 }, handleLoadShopsSuccessed, () => {}))
+    );
+    localStorage.removeItem("salon");
+  }, [dispatch]);
+
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+  };
+
   const filteredData = searchQuery
-    ? data.filter(
-        (item) =>
-          item.ShopName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item.MobileNo.includes(searchQuery)
-      )
+    ? data.filter((item) => {
+        const nameIncludes =
+          item.name &&
+          item.name.toLowerCase().includes(searchQuery.toLowerCase());
+        const mobileIncludes =
+          item.mobile_number && item.mobile_number.includes(searchQuery);
+        return nameIncludes || mobileIncludes;
+      })
     : data;
 
   return (
     <div style={{ backgroundColor: "#eff3fd", height: "calc(100vh - 55px)" }}>
-      <Content
-        style={{
-          padding: "1.2rem",
-          minHeight: 280,
-          backgroundColor: "#eff3fd",
-        }}
-      >
-        <Input
-          placeholder="Search by Hospital Name/Mobile No."
-          allowClear
-          prefix={
-            <img
-              src={require("../../Assets/Images/search.png")}
-              alt="Your Logo"
-              className="search"
-            />
-          }
-          style={{
-            marginBottom: "1rem",
-            fontFamily: "Poppins",
-            borderRadius: 8,
-            padding: "0.5rem",
-            paddingLeft: "0.55rem",
-            border: "1px solid #1C4792",
-          }}
-        />
-
-        {/* Add Shop */}
-        <Button
-          type="primary"
-          style={{
-            marginBottom: "0.6rem",
-            background: "#1C4792",
-            borderRadius: 5,
-            float: "right",
-            fontFamily: "Poppins",
-            border: 0,
-          }}
-          onClick={handleAddShopClick}
+      {shopsLoading ? (
+        <div
+          className="common__wrapper"
+          style={{ height: "calc(100vh - 100px)" }}
         >
-          ADD HOSPITAL
-        </Button>
+          <Spin size="large" />
+        </div>
+      ) : (
+        <Content
+          style={{
+            padding: "1.2rem",
+            minHeight: 280,
+            backgroundColor: "#eff3fd",
+          }}
+        >
+          <Input
+            placeholder="Search by Hospital Name/Mobile No."
+            allowClear
+            prefix={
+              <img
+                src={require("../../Assets/Images/search.png")}
+                alt="Your Logo"
+                className="search"
+              />
+            }
+            value={searchQuery}
+            style={{
+              marginBottom: "1rem",
+              fontFamily: "Poppins",
+              borderRadius: 8,
+              padding: "0.5rem",
+              paddingLeft: "0.55rem",
+              border: "1px solid #1C4792",
+            }}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
 
-        {/* Table */}
-        <Table bordered dataSource={filteredData} columns={columns} />
-      </Content>
+          {/* Add Shop */}
+          <Button
+            type="primary"
+            style={{
+              marginBottom: "0.6rem",
+              background: "#1C4792",
+              borderRadius: 5,
+              float: "right",
+              fontFamily: "Poppins",
+              border: 0,
+            }}
+            onClick={handleAddShopClick}
+          >
+            ADD HOSPITAL
+          </Button>
+
+          {/* Table */}
+          <Table bordered dataSource={filteredData} columns={columns} />
+        </Content>
+      )}
     </div>
   );
 };

@@ -6,6 +6,8 @@ const { Title, Text } = Typography;
 const { Dragger } = Upload;
 
 const Step4Component = ({ formId, onPrevious, onNext }) => {
+  const storedData = JSON.parse(localStorage.getItem("salon"));
+
   const props = {
     name: "file",
     multiple: true,
@@ -49,16 +51,13 @@ const Step4Component = ({ formId, onPrevious, onNext }) => {
         <CustomBreadcrumb
           items={[
             {
-              title: "Hospitals",
+              title: "Hospital",
             },
             {
-              title: "Application Center",
+              title: storedData?.name,
             },
             {
-              title:
-                formId === "editHospitalForm"
-                  ? "Edit Hospital"
-                  : "Add Hospital",
+              title: formId === "editHospitalForm" ? "Edit" : "Add",
             },
           ]}
           path={"/3/hospital"}

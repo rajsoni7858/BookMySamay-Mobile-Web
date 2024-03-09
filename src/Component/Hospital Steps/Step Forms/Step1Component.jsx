@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Form, Input, InputNumber, Select, Typography } from "antd";
 
 const { Title } = Typography;
 
 const Step1Component = ({ form, formId, onNext }) => {
+  const storedData = JSON.parse(localStorage.getItem("salon"));
+
   const handleNext = async () => {
     onNext();
     // try {
@@ -15,6 +17,12 @@ const Step1Component = ({ form, formId, onNext }) => {
     //   console.log("Validation failed:", errorInfo);
     // }
   };
+
+  useEffect(() => {
+    if (storedData) {
+      form.setFieldsValue(storedData);
+    }
+  }, [form, storedData]);
 
   return (
     <Form
@@ -45,12 +53,12 @@ const Step1Component = ({ form, formId, onNext }) => {
         {/* Content */}
         <Form.Item
           label="Hospital Name:"
-          name="hospitalName"
+          name="name"
           rules={[{ required: true, message: "Please enter hospital name" }]}
         >
           <Input placeholder="Enter hospital name" />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           label="Hospital Speciality:"
           name="shopOwner"
           rules={[
@@ -58,26 +66,33 @@ const Step1Component = ({ form, formId, onNext }) => {
           ]}
         >
           <Input placeholder="Enter hospital speciality" />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item
-          label="Hospital Location:"
-          name="shopLocation"
+          label="Current Location:"
+          name="location_name"
           rules={[
-            { required: true, message: "Please enter hospital location" },
+            { required: true, message: "Please select current location" },
           ]}
         >
           <Input placeholder="Enter hospital location" />
         </Form.Item>
         <Form.Item
+          label="Hospital Address:"
+          name="address"
+          rules={[{ required: true, message: "Please enter hospital Address" }]}
+        >
+          <Input placeholder="Enter hospital address" />
+        </Form.Item>
+        <Form.Item
           label="Mobile No:"
-          name="shopOwner"
+          name="mobile_number"
           rules={[{ required: true, message: "Please enter mobile number" }]}
         >
           <Input placeholder="Enter mobile no." />
         </Form.Item>
         <Form.Item
           label="Number of Doctors:"
-          name="setLocation"
+          name="staff_count"
           rules={[
             { required: true, message: "Please enter number of doctors" },
           ]}
@@ -86,7 +101,7 @@ const Step1Component = ({ form, formId, onNext }) => {
         </Form.Item>
         <Form.Item
           label="Time slots taken for patient:"
-          name="general_timeslot"
+          name="slot_duration"
           rules={[
             {
               required: true,
@@ -106,15 +121,8 @@ const Step1Component = ({ form, formId, onNext }) => {
           />
         </Form.Item>
         <Form.Item
-          label="Set Location:"
-          name="shopLocation"
-          rules={[{ required: true, message: "Please enter set location" }]}
-        >
-          <Input placeholder="Enter set location" />
-        </Form.Item>
-        <Form.Item
           label="Old Case Consultation Fee:"
-          name="shopLocation"
+          name="old_case_fee"
           rules={[
             {
               required: true,
@@ -134,7 +142,7 @@ const Step1Component = ({ form, formId, onNext }) => {
         </Form.Item>
         <Form.Item
           label="New Case Consultation Fee:"
-          name="shopLocation"
+          name="new_case_fee"
           rules={[
             {
               required: true,

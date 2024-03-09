@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Steps } from "antd";
+import { Spin, Steps } from "antd";
 
 import "./Step.css";
 import Step1Component from "./Step Forms/Step1Component";
@@ -7,10 +7,17 @@ import Step2Component from "./Step Forms/Step2Component";
 import Step3Component from "./Step Forms/Step3Component";
 import Step4Component from "./Step Forms/Step4Component";
 import Step5Component from "./Step Forms/Step5Component";
+import { useDispatch, useSelector } from "react-redux";
+import { loadShop } from "../../redux/actions/shopActions";
+import LoadParams from "../../models/LoadParams";
+import { useParams } from "react-router-dom";
 
 const { Step } = Steps;
 
 const MultiStepHospitalFormComponent = ({ form, formId }) => {
+  const dispatch = useDispatch();
+  let { id } = useParams();
+  const shopLoading = useSelector((state) => state.LoadShop);
   const [currentStep, setCurrentStep] = useState(0);
 
   const handlePrevious = () => {
@@ -81,6 +88,24 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
     },
   ];
 
+  const handleLoadShopSuccessed = (data) => {
+    const updatedData = {
+      ...data[0],
+      ...data[0].shop_operational_details,
+      owner_name: data[0].staff.name,
+      mobile_number: data[0].staff.mobile_number,
+    };
+    localStorage.setItem("salon", JSON.stringify(updatedData));
+  };
+
+  useEffect(() => {
+    if (formId === "editHospitalForm") {
+      dispatch(
+        loadShop(new LoadParams({ id }, handleLoadShopSuccessed, () => {}))
+      );
+    }
+  }, []);
+
   useEffect(() => {
     // Listen for hash changes
     const handleHashChange = () => {
@@ -110,24 +135,36 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
   }, [currentStep]);
 
   return (
-    <div style={{ margin: "1.4rem", padding: 0 }}>
-      {/* Steps */}
-      <Steps
-        current={currentStep}
-        responsive={false}
-        style={{ padding: "1rem 0rem" }}
-      >
-        {steps.map((step) => (
-          <Step key={step.id} title={null} />
-        ))}
-      </Steps>
+    <div>
+      {shopLoading ? (
+        <div className="common__wrapper">
+          <Spin size="large" />
+        </div>
+      ) : (
+        <div style={{ margin: "1.4rem", padding: 0 }}>
+          {/* Steps */}
+          <Steps
+            current={currentStep}
+            responsive={false}
+            style={{ padding: "1rem 0rem" }}
+          >
+            {steps.map((step) => (
+              <Step key={step.id} title={null} />
+            ))}
+          </Steps>
 
-      {/* Content */}
-      <div
-        style={{ display: "flex", flex: 1, minHeight: "calc(100vh - 165px)" }}
-      >
-        {steps[currentStep].content}
-      </div>
+          {/* Content */}
+          <div
+            style={{
+              display: "flex",
+              flex: 1,
+              minHeight: "calc(100vh - 165px)",
+            }}
+          >
+            {steps[currentStep].content}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

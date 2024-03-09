@@ -145,6 +145,7 @@ const ShopsComponent = () => {
                 className="search"
               />
             }
+            value={searchQuery}
             style={{
               marginBottom: "1rem",
               fontFamily: "Poppins",
@@ -169,7 +170,7 @@ const ShopsComponent = () => {
             }}
             onClick={handleAddShopClick}
           >
-            {categoryId === "1" ? "ADD SALON" : "ADD BEAUTY PARLOR"}
+            {categoryId === "1" ? "ADD SALON" : "ADD BEAUTY PARLOUR"}
           </Button>
 
           {/* Table */}

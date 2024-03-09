@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Collapse, TimePicker, Button, Space } from "antd";
+import { useParams } from "react-router-dom";
+import dayjs from "dayjs";
 import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
+import { convertToTitleCase } from "../../../utils/utils";
 
 const { Panel } = Collapse;
 
@@ -14,22 +17,67 @@ const daysOfWeek = [
   "Sunday",
 ];
 
-const Step3Component = ({ formId, onPrevious, onNext }) => {
-  const [timeValues, setTimeValues] = useState(
-    Array.from({ length: 7 }, () => Array(4).fill(""))
-  );
+const initialTimeValues = Array.from({ length: 7 }, (_, dayIndex) => ({
+  day_of_week: daysOfWeek[dayIndex],
+  is_open: 0,
+  opening_time: "",
+  closing_time: "",
+  lunch_start_time: "",
+  lunch_end_time: "",
+}));
 
-  const handleTimeChange = (dayIndex, timeIndex, time) => {
+const Step3Component = ({ formId, onPrevious, onNext }) => {
+  let { categoryId, category } = useParams();
+  const [timeValues, setTimeValues] = useState([]);
+
+  const storedData = JSON.parse(localStorage.getItem("salon"));
+
+  const handleTimeChange = (dayIndex, name, time) => {
     const newTimeValues = [...timeValues];
-    newTimeValues[dayIndex][timeIndex] = time;
+    newTimeValues[dayIndex] = {
+      ...newTimeValues[dayIndex],
+      [name]: time ? time.format("HH:mm") : "",
+    };
     setTimeValues(newTimeValues);
   };
 
   const handleCopyFromAbove = (dayIndex) => {
     const newTimeValues = [...timeValues];
-    const aboveDayIndex = dayIndex > 0 ? dayIndex - 1 : 6;
-    newTimeValues[dayIndex] = [...timeValues[aboveDayIndex]];
+    const aboveDayIndex = dayIndex === 0 ? 6 : dayIndex - 1; // Adjust index for Sunday
+    newTimeValues[dayIndex] = {
+      ...newTimeValues[aboveDayIndex],
+      day_of_week: newTimeValues[dayIndex].day_of_week,
+    };
     setTimeValues(newTimeValues);
+  };
+
+  const handleNext = async () => {
+    const payload = timeValues.map((item) => {
+      const is_open = item.opening_time && item.closing_time ? 1 : 0;
+      return {
+        ...item,
+        is_open,
+        op_type: storedData?.op_type,
+      };
+    });
+
+    localStorage.setItem(
+      "salon",
+      JSON.stringify({ ...storedData, shop_daily_operational_details: payload })
+    );
+    onNext();
+  };
+
+  useEffect(() => {
+    if (storedData && storedData.shop_daily_operational_details) {
+      setTimeValues(storedData.shop_daily_operational_details);
+    } else {
+      setTimeValues(initialTimeValues);
+    }
+  }, []);
+
+  const formattedTime = (time) => {
+    return time ? dayjs(time, "HH:mm") : "";
   };
 
   const renderTimePickers = (dayIndex) => {
@@ -38,58 +86,65 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
         <Space direction="vertical">
           <div>Open At:</div>
           <TimePicker
-            value={timeValues[dayIndex][0]}
-            onChange={(time) => handleTimeChange(dayIndex, 0, time)}
+            value={formattedTime(timeValues[dayIndex].opening_time)}
+            onChange={(time) =>
+              handleTimeChange(dayIndex, "opening_time", time)
+            }
             format="h:mm a"
             minuteStep={15}
             placeholder="Select Time"
             style={{ width: "100%" }}
+            name="opening_time"
             required
           />
         </Space>
         <Space direction="vertical">
           <div>Close At:</div>
           <TimePicker
-            value={timeValues[dayIndex][1]}
-            onChange={(time) => handleTimeChange(dayIndex, 1, time)}
+            value={formattedTime(timeValues[dayIndex].closing_time)}
+            onChange={(time) =>
+              handleTimeChange(dayIndex, "closing_time", time)
+            }
             format="h:mm a"
             minuteStep={15}
             placeholder="Select Time"
             style={{ width: "100%" }}
+            name="closing_time"
             required
           />
         </Space>
         <Space direction="vertical">
           <div>Break Start:</div>
           <TimePicker
-            value={timeValues[dayIndex][2]}
-            onChange={(time) => handleTimeChange(dayIndex, 2, time)}
+            value={formattedTime(timeValues[dayIndex].lunch_start_time)}
+            onChange={(time) =>
+              handleTimeChange(dayIndex, "lunch_start_time", time)
+            }
             format="h:mm a"
             minuteStep={15}
             placeholder="Select Time"
             style={{ width: "100%" }}
+            name="lunch_start_time"
             required
           />
         </Space>
         <Space direction="vertical">
           <div>Break End:</div>
           <TimePicker
-            value={timeValues[dayIndex][3]}
-            onChange={(time) => handleTimeChange(dayIndex, 3, time)}
+            value={formattedTime(timeValues[dayIndex].lunch_end_time)}
+            onChange={(time) =>
+              handleTimeChange(dayIndex, "lunch_end_time", time)
+            }
             format="h:mm a"
             minuteStep={15}
             placeholder="Select Time"
             style={{ width: "100%" }}
+            name="lunch_end_time"
             required
           />
         </Space>
       </Space>
     );
-  };
-
-  const handleNext = async () => {
-    console.log("hi ronak", timeValues);
-    onNext();
   };
 
   return (
@@ -111,29 +166,26 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
         <CustomBreadcrumb
           items={[
             {
-              title: "Hospitals",
+              title: convertToTitleCase(category),
             },
             {
-              title: "Application Center",
+              title: storedData?.name,
             },
             {
-              title:
-                formId === "editHospitalForm"
-                  ? "Edit Hospital"
-                  : "Add Hospital",
+              title: formId === "editForm" ? `Edit` : `Add`,
             },
           ]}
-          path={"/3/hospital"}
+          path={`/${categoryId}/${category}`}
         />
 
         <Collapse
-          defaultActiveKey={daysOfWeek.map((day, index) => `${index}`)}
+          activeKey={timeValues.map((day, index) => `${index}`)}
           bordered={false}
         >
-          {daysOfWeek.map((day, index) => (
+          {timeValues.map((item, index) => (
             <Panel
               collapsible="disabled"
-              header={day}
+              header={item.day_of_week}
               key={index}
               extra={
                 index !== 0 && (
@@ -171,12 +223,12 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
           style={{
             width: "100%",
             color: "#1C4792",
-            borderColor: "#1C4792 !important",
+            borderColor: "#1C4792",
             borderRadius: "12px",
             fontFamily: "Poppins",
             height: "2.5rem",
             marginRight: "0.4rem",
-            background: "white !important",
+            background: "white",
           }}
           onClick={onPrevious}
         >

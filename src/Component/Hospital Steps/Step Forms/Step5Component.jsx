@@ -8,6 +8,8 @@ const { Title } = Typography;
 const Step5Component = ({ formId, onPrevious }) => {
   const history = useHistory();
 
+  const storedData = JSON.parse(localStorage.getItem("salon"));
+
   const handleFinish = () => {
     message.success("Form submitted successfully!");
     history.push("/3/hospital");
@@ -32,16 +34,13 @@ const Step5Component = ({ formId, onPrevious }) => {
         <CustomBreadcrumb
           items={[
             {
-              title: "Hospitals",
+              title: "Hospital",
             },
             {
-              title: "Application Center",
+              title: storedData?.name,
             },
             {
-              title:
-                formId === "editHospitalForm"
-                  ? "Edit Hospital"
-                  : "Add Hospital",
+              title: formId === "editHospitalForm" ? "Edit" : "Add",
             },
           ]}
           path={"/3/hospital"}

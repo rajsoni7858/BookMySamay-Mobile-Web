@@ -19,7 +19,7 @@ const menuItems = [
   },
   {
     route: "/2/beauty-parlor",
-    label: "Beauty Parlor",
+    label: "Beauty Parlour",
     icon: "hospital-menu.png",
     active: "hospital-active.png",
   },
