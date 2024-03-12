@@ -1,6 +1,7 @@
 import { SERVICES } from "../../action-types";
 
 const initialServicesLoadingState = {
+  loading: false,
   menServices: [],
   womenServices: [],
   packages: [],
@@ -14,6 +15,7 @@ const ServicesLoadingReducer = (
     case SERVICES.LOAD:
       return {
         ...state,
+        loading: true,
         menServices: [],
         womenServices: [],
         packages: [],
@@ -21,6 +23,7 @@ const ServicesLoadingReducer = (
     case SERVICES.LOAD_SUCCEEDED:
       return {
         ...state,
+        loading: false,
         menServices: action.data.menServices,
         womenServices: action.data.womenServices,
         packages: action.data.packages,
@@ -28,6 +31,7 @@ const ServicesLoadingReducer = (
     case SERVICES.LOAD_FAILED:
       return {
         ...state,
+        loading: false,
         menServices: [],
         womenServices: [],
         packages: [],

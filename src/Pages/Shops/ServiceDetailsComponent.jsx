@@ -6,17 +6,20 @@ import CustomBreadcrumb from "../../Component/Breadcrumb/CustomBreadcrumbCompone
 import { useDispatch, useSelector } from "react-redux";
 import { loadServicesSucceeded } from "../../redux/actions";
 import { useHistory, useParams } from "react-router-dom";
+import { convertToTitleCase } from "../../utils/utils";
 
 const { Text, Title } = Typography;
 
-const ServiceDetailsComponent = () => {
+const ServiceDetailsComponent = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  let { id } = useParams();
+  let { categoryId, category, id } = useParams();
   const serviceData = useSelector((state) => state.LoadServices);
   const storedData = JSON.parse(sessionStorage.getItem("service"));
   const selectedType = sessionStorage.getItem("type");
   const [data, setData] = useState();
+
+  const { shopName } = props.location.state;
 
   const handleInputChange = useCallback((value, subServiceIndex, key) => {
     setData((prevData) => {
@@ -104,16 +107,16 @@ const ServiceDetailsComponent = () => {
       <CustomBreadcrumb
         items={[
           {
-            title: "Salons",
+            title: convertToTitleCase(category),
           },
           {
-            title: "Application Center",
+            title: shopName,
           },
           {
             title: "Services",
           },
         ]}
-        path={"/salons"}
+        path={`/${categoryId}/${category}`}
       />
 
       <div

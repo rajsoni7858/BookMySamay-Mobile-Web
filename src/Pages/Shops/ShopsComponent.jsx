@@ -74,7 +74,12 @@ const ShopsComponent = () => {
               style={{ width: "17px", Height: "17px", padding: "3px" }}
             />
           </Link>
-          <Link to={`/${categoryId}/${category}/${data.shop_id}/services`}>
+          <Link
+            to={{
+              pathname: `/${categoryId}/${category}/${data.shop_id}/services`,
+              state: { shopName: data.name },
+            }}
+          >
             <img
               src={require("../../Assets/Images/setting.png")}
               alt="Your Logo"

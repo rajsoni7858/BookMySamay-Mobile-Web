@@ -1,33 +1,35 @@
 import { useState, useCallback, useEffect } from "react";
 import {
   Tabs,
-  Collapse,
   Input,
   InputNumber,
   Button,
   Typography,
   message,
+  Spin,
 } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import CustomBreadcrumb from "../../Component/Breadcrumb/CustomBreadcrumbComponent";
 import { useHistory, useParams } from "react-router-dom";
-import "./Services.css";
 import { useDispatch, useSelector } from "react-redux";
 import LoadParams from "../../models/LoadParams";
 import { loadServices, updateServices } from "../../redux/actions";
 import SaveParams from "../../models/SaveParams";
+import "./Services.css";
+import { convertToTitleCase } from "../../utils/utils";
 
 const { TabPane } = Tabs;
-const { Panel } = Collapse;
 const { TextArea } = Input;
 const { Text } = Typography;
 
-const ServicesComponent = () => {
+const ServicesComponent = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const serviceData = useSelector((state) => state.LoadServices);
   let { categoryId, category, id } = useParams();
   const [packages, setPackages] = useState([]);
+
+  const { shopName } = props.location.state;
 
   const handleSubmit = () => {
     const filteredPackages = packages.filter((item) => item.name);
@@ -83,6 +85,7 @@ const ServicesComponent = () => {
 
   useEffect(() => {
     sessionStorage.removeItem("service");
+    sessionStorage.removeItem("type");
     if (!serviceData.menServices.length && !serviceData.womenServices.length) {
       dispatch(
         loadServices(
@@ -106,11 +109,11 @@ const ServicesComponent = () => {
               borderBottom: "1px solid #C1C1C1",
             }}
             onClick={() => {
-              sessionStorage.removeItem("service");
               sessionStorage.setItem("type", name);
               sessionStorage.setItem("service", JSON.stringify(service));
               history.push(
-                `/${categoryId}/${category}/${id}/services/${serviceIndex + 1}`
+                `/${categoryId}/${category}/${id}/services/${serviceIndex + 1}`,
+                { shopName }
               );
             }}
           >
@@ -250,84 +253,97 @@ const ServicesComponent = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundColor: "#FAFAFA",
-        display: "flex",
-        flex: 1,
-        flexDirection: "column",
-        minHeight: "calc(100vh - 88px)",
-        padding: "0 1.4rem",
-        paddingTop: "2rem",
-      }}
-    >
-      <CustomBreadcrumb
-        items={[
-          {
-            title: "Salons",
-          },
-          {
-            title: "Application Center",
-          },
-          {
-            title: "Services",
-          },
-        ]}
-        path={"/salons"}
-      />
-
-      <div
-        style={{
-          display: "flex",
-          flex: 1,
-          flexDirection: "column",
-        }}
-      >
-        <Tabs
-          defaultActiveKey="0"
-          centered
-          size="large"
+    <div style={{ backgroundColor: "#FAFAFA" }}>
+      {serviceData.loading ? (
+        <div
+          className="common__wrapper"
+          style={{ height: "calc(100vh - 57px)" }}
+        >
+          <Spin size="large" />
+        </div>
+      ) : (
+        <div
           style={{
-            marginTop: "0.5rem",
-            marginBottom: "0.8rem",
-            fontFamily: "Poppins",
-          }}
-          tabBarStyle={{
-            backgroundColor: "#f0f2f5",
-            borderRadius: "8px",
-            paddingTop: "3px",
+            backgroundColor: "#FAFAFA",
+            display: "flex",
+            flex: 1,
+            flexDirection: "column",
+            minHeight: "calc(100vh - 88px)",
+            padding: "0 1.4rem",
+            paddingTop: "2rem",
           }}
         >
-          {renderServiceTab("Men", serviceData.menServices, 1)}
-          {renderServiceTab("Women", serviceData.womenServices, 2)}
-          {renderPackageTab(packages, 3)}
-        </Tabs>
-      </div>
+          <CustomBreadcrumb
+            items={[
+              {
+                title: convertToTitleCase(category),
+              },
+              {
+                title: shopName,
+              },
+              {
+                title: "Services",
+              },
+            ]}
+            path={`/${categoryId}/${category}`}
+          />
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          marginBottom: "0.8rem",
-          marginTop: "1.5rem",
-        }}
-      >
-        <Button
-          style={{
-            width: "80%",
-            background: "#1C4792",
-            borderRadius: "12px",
-            fontFamily: "Poppins",
-            height: "2.5rem",
-          }}
-          type="primary"
-          onClick={handleSubmit}
-        >
-          SUBMIT
-        </Button>
-      </div>
+          <div
+            style={{
+              display: "flex",
+              flex: 1,
+              flexDirection: "column",
+            }}
+          >
+            <Tabs
+              defaultActiveKey="0"
+              centered
+              size="large"
+              style={{
+                marginTop: "0.5rem",
+                marginBottom: "0.8rem",
+                fontFamily: "Poppins",
+              }}
+              tabBarStyle={{
+                backgroundColor: "#f0f2f5",
+                borderRadius: "8px",
+                paddingTop: "3px",
+              }}
+            >
+              {serviceData.menServices.length > 0 &&
+                renderServiceTab("Men", serviceData.menServices, 1)}
+              {serviceData.womenServices.length > 0 &&
+                renderServiceTab("Women", serviceData.womenServices, 2)}
+              {renderPackageTab(packages, 3)}
+            </Tabs>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              marginBottom: "0.8rem",
+              marginTop: "1.5rem",
+            }}
+          >
+            <Button
+              style={{
+                width: "80%",
+                background: "#1C4792",
+                borderRadius: "12px",
+                fontFamily: "Poppins",
+                height: "2.5rem",
+              }}
+              type="primary"
+              onClick={handleSubmit}
+            >
+              SUBMIT
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

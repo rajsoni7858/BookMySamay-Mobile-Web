@@ -36,7 +36,7 @@ function AuthRouterconfig() {
       />
       <Route
         exact
-        path="/:categoryId/:category/:id/services/:id"
+        path="/:categoryId/:category/:id/services/:serviceId"
         component={ServiceDetailsComponent}
       />
       <Route path="/users" component={UsersComponent} />

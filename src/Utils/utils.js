@@ -1,5 +1,5 @@
 // production
-export const URL = "https://backend.bookmysamay.com/api/";
+export const URL = "https://admin.bookmysamay.com/api/";
 
 export const trimString = (originalString, maxLength) => {
   let trimmedString = originalString;
