@@ -30,7 +30,7 @@ const Step2Component = ({ formId, onPrevious, onNext }) => {
   let { categoryId, category } = useParams();
   const [timeValues, setTimeValues] = useState([]);
 
-  const storedData = JSON.parse(localStorage.getItem("salon"));
+  const storedData = JSON.parse(sessionStorage.getItem("salon"));
 
   const handleTimeChange = (dayIndex, name, time) => {
     const newTimeValues = [...timeValues];
@@ -61,7 +61,7 @@ const Step2Component = ({ formId, onPrevious, onNext }) => {
       };
     });
 
-    localStorage.setItem(
+    sessionStorage.setItem(
       "salon",
       JSON.stringify({ ...storedData, shop_daily_operational_details: payload })
     );

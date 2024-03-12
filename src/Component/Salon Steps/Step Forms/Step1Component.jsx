@@ -18,13 +18,12 @@ const Step1Component = ({ form, formId, onNext }) => {
   const [longitude, setLongitude] = useState(null);
 
   const [searchQuery, setSearchQuery] = useState();
-  const [cancelToken, setCancelToken] = useState();
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
 
   const cancelTokenRef = useRef(null);
 
-  const storedData = JSON.parse(localStorage.getItem("salon"));
+  const storedData = JSON.parse(sessionStorage.getItem("salon"));
 
   const handleSearchSuccessed = (data) => {
     setResults(data);
@@ -90,7 +89,7 @@ const Step1Component = ({ form, formId, onNext }) => {
   };
 
   const handleShopSuccessed = (data) => {
-    localStorage.setItem("salon", JSON.stringify({ ...storedData, ...data }));
+    sessionStorage.setItem("salon", JSON.stringify({ ...storedData, ...data }));
     onNext();
   };
 
@@ -108,7 +107,7 @@ const Step1Component = ({ form, formId, onNext }) => {
             mobile_number: values.mobile_number,
           },
         };
-        localStorage.setItem(
+        sessionStorage.setItem(
           "salon",
           JSON.stringify({ ...storedData, ...payload })
         );
@@ -236,6 +235,7 @@ const Step1Component = ({ form, formId, onNext }) => {
             style={{ fontFamily: "Poppins", height: "38px" }}
             defaultActiveFirstOption={false}
             filterOption={false}
+            searchValue={searchQuery}
             onSearch={handleSearch}
             notFoundContent={null}
             options={results.map((location, index) => ({

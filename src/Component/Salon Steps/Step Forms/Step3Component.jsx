@@ -15,13 +15,13 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
   const dispatch = useDispatch();
   let { categoryId, category } = useParams();
   const [images, setImages] = useState([]);
-  const storedData = JSON.parse(localStorage.getItem("salon"));
+  const storedData = JSON.parse(sessionStorage.getItem("salon"));
 
   const handleSubmit = async (image) => {
     const formData = new FormData();
     formData.append(`image`, image);
     formData.append(`sequence`, 1);
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     try {
       const response = await axios.post(
@@ -49,7 +49,7 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
         img.image_id !== payload.imgId || img.image_url !== payload.imageKey
     );
 
-    localStorage.setItem(
+    sessionStorage.setItem(
       "salon",
       JSON.stringify({ ...storedData, images: updatedImages })
     );
@@ -100,7 +100,7 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
   };
 
   const handleNext = async () => {
-    localStorage.setItem(
+    sessionStorage.setItem(
       "salon",
       JSON.stringify({ ...storedData, images: images })
     );

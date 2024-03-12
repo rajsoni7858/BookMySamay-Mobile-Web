@@ -85,7 +85,7 @@ const MultiStepFormComponent = ({ form, formId }) => {
     delete updatedData.mr_fee;
     delete updatedData.new_case_fee;
     delete updatedData.old_case_fee;
-    localStorage.setItem("salon", JSON.stringify(updatedData));
+    sessionStorage.setItem("salon", JSON.stringify(updatedData));
   };
 
   useEffect(() => {

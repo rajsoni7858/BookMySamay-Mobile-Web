@@ -14,11 +14,11 @@ const Step4Component = ({ form, formId, onPrevious }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const storedData = JSON.parse(localStorage.getItem("salon"));
+  const storedData = JSON.parse(sessionStorage.getItem("salon"));
 
   const handleShopSuccessed = () => {
     message.success("Form submitted successfully!");
-    localStorage.removeItem("salon");
+    sessionStorage.removeItem("salon");
     history.push(`/${category}`);
   };
 
