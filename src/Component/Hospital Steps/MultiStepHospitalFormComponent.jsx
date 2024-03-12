@@ -90,10 +90,10 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
 
   const handleLoadShopSuccessed = (data) => {
     const updatedData = {
-      ...data[0],
-      ...data[0].shop_operational_details,
-      owner_name: data[0].staff.name,
-      mobile_number: data[0].staff.mobile_number,
+      ...data,
+      ...data.shop_operational_details,
+      owner_name: data.staff.name,
+      mobile_number: data.staff.mobile_number,
     };
     localStorage.setItem("salon", JSON.stringify(updatedData));
   };

@@ -11,6 +11,7 @@ import ShopUpdatingReducer from "./update/shopReducer";
 import ServicesUpdatingReducer from "./update/servicesReducer";
 import ShopsLoadingReducer from "./load/shopsReducer";
 import SearchlocationLoadingReducer from "./load/locationReducer";
+import ImageDeletingReducer from "./delete/imageReducer";
 
 const rootReducer = combineReducers({
   LoadHome: HomeLoadingReducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   SaveShop: shopSavingReducer,
   UpdateShop: ShopUpdatingReducer,
   UpdateServices: ServicesUpdatingReducer,
+  DeleteImage: ImageDeletingReducer,
 });
 
 export default rootReducer;

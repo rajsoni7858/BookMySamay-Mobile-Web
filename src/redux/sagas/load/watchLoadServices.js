@@ -4,14 +4,17 @@ import { SERVICES } from "../../action-types";
 import { loadServicesFailed, loadServicesSucceeded } from "../../actions";
 
 function* processLoadServices(params) {
-  const { onSuccess, onFailure } = params;
+  const { fetchParams, onSuccess, onFailure } = params;
 
   try {
-    const response = yield call(loadAPI, "admin/shops/1/services");
+    const response = yield call(
+      loadAPI,
+      `admin/shops/${fetchParams.id}/services`
+    );
 
     if (response.status === 200 && response.data.success) {
-      yield put(loadServicesSucceeded());
-      yield call(onSuccess, response.data.services);
+      yield put(loadServicesSucceeded(response.data.shopInfo));
+      yield call(onSuccess, response.data.shopInfo);
     } else {
       yield put(loadServicesFailed());
       yield call(onFailure, response.statusText);

@@ -9,3 +9,4 @@ export { default as saveShopSaga } from "./save/watchSaveShop";
 export { default as updateShopSaga } from "./update/watchUpdateShop";
 export { default as updateServicesSaga } from "./update/watchUpdateServices";
 export { default as loadSearchLocationSaga } from "./load/watchLoadSearchLocation";
+export { default as deleteImageSaga } from "./delete/watchDeleteImage";

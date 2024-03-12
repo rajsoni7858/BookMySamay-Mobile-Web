@@ -20,7 +20,7 @@ const Step1Component = ({ form, formId, onNext }) => {
   const [searchQuery, setSearchQuery] = useState();
   const [cancelToken, setCancelToken] = useState();
   const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState();
+  const [results, setResults] = useState([]);
 
   const cancelTokenRef = useRef(null);
 
@@ -49,17 +49,19 @@ const Step1Component = ({ form, formId, onNext }) => {
   const debouncedHandleSearch = debounce((query) => {
     setSearchQuery(query);
 
-    const newCancelToken = axios.CancelToken.source();
+    if (query && query.length > 2) {
+      const newCancelToken = axios.CancelToken.source();
 
-    if (cancelTokenRef.current) {
-      cancelTokenRef.current.cancel("Previous request cancelled");
+      if (cancelTokenRef.current) {
+        cancelTokenRef.current.cancel("Previous request cancelled");
+      }
+
+      cancelTokenRef.current = newCancelToken;
+      setLoading(true);
+
+      const url = { url: `q=${query}` };
+      performSearch(url, newCancelToken);
     }
-
-    cancelTokenRef.current = newCancelToken;
-    setLoading(true);
-
-    const url = { url: `q=${query}` };
-    performSearch(url, newCancelToken);
   }, 500);
 
   const handleSearch = (query) => {
@@ -99,9 +101,8 @@ const Step1Component = ({ form, formId, onNext }) => {
         const payload = {
           ...values,
           category_id: categoryId,
-          location_lat: 12.345678,
-          location_lng: 98.765432,
-          address: "123 Bean Road, Coffeetown",
+          location_lat: latitude,
+          location_lng: longitude,
           staff: {
             name: values.owner_name,
             mobile_number: values.mobile_number,
@@ -237,11 +238,10 @@ const Step1Component = ({ form, formId, onNext }) => {
             filterOption={false}
             onSearch={handleSearch}
             notFoundContent={null}
-            options={[
-              { value: "Men", label: "Men" },
-              { value: "Women", label: "Women" },
-              { value: "Unisex", label: "Unisex" },
-            ]}
+            options={results.map((location, index) => ({
+              value: location.name,
+              label: location.name,
+            }))}
           />
         </Form.Item>
         <Form.Item

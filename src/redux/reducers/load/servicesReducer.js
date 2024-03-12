@@ -1,6 +1,10 @@
 import { SERVICES } from "../../action-types";
 
-const initialServicesLoadingState = false;
+const initialServicesLoadingState = {
+  menServices: [],
+  womenServices: [],
+  packages: [],
+};
 
 const ServicesLoadingReducer = (
   state = initialServicesLoadingState,
@@ -8,11 +12,26 @@ const ServicesLoadingReducer = (
 ) => {
   switch (action.type) {
     case SERVICES.LOAD:
-      return true;
+      return {
+        ...state,
+        menServices: [],
+        womenServices: [],
+        packages: [],
+      };
     case SERVICES.LOAD_SUCCEEDED:
-      return false;
+      return {
+        ...state,
+        menServices: action.data.menServices,
+        womenServices: action.data.womenServices,
+        packages: action.data.packages,
+      };
     case SERVICES.LOAD_FAILED:
-      return false;
+      return {
+        ...state,
+        menServices: [],
+        womenServices: [],
+        packages: [],
+      };
     default:
       return state;
   }

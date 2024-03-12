@@ -75,6 +75,27 @@ const MultiStepFormComponent = ({ form, formId }) => {
     },
   ];
 
+  const handleLoadShopSuccessed = (data) => {
+    const updatedData = {
+      ...data,
+      ...data.shop_operational_details,
+      owner_name: data.staff.name,
+      mobile_number: data.staff.mobile_number,
+    };
+    delete updatedData.mr_fee;
+    delete updatedData.new_case_fee;
+    delete updatedData.old_case_fee;
+    localStorage.setItem("salon", JSON.stringify(updatedData));
+  };
+
+  useEffect(() => {
+    if (formId === "editForm") {
+      dispatch(
+        loadShop(new LoadParams({ id }, handleLoadShopSuccessed, () => {}))
+      );
+    }
+  }, []);
+
   useEffect(() => {
     // Listen for hash changes
     const handleHashChange = () => {
@@ -102,27 +123,6 @@ const MultiStepFormComponent = ({ form, formId }) => {
       window.removeEventListener("popstate", handlePopState);
     };
   }, [currentStep]);
-
-  const handleLoadShopSuccessed = (data) => {
-    const updatedData = {
-      ...data[0],
-      ...data[0].shop_operational_details,
-      owner_name: data[0].staff.name,
-      mobile_number: data[0].staff.mobile_number,
-    };
-    delete updatedData.mr_fee;
-    delete updatedData.new_case_fee;
-    delete updatedData.old_case_fee;
-    localStorage.setItem("salon", JSON.stringify(updatedData));
-  };
-
-  useEffect(() => {
-    if (formId === "editForm") {
-      dispatch(
-        loadShop(new LoadParams({ id }, handleLoadShopSuccessed, () => {}))
-      );
-    }
-  }, []);
 
   return (
     <div>

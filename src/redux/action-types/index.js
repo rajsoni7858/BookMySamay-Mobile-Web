@@ -6,3 +6,4 @@ export { default as HOME } from "./homeActionTypes";
 export { default as SHOP } from "./shopActionTypes";
 export { default as SERVICES } from "./servicesActionTypes";
 export { default as LOCATION } from "./locationActionTypes";
+export { default as IMAGE } from "./imageActionTypes";

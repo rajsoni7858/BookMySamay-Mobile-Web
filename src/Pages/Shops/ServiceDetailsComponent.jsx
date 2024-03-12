@@ -1,28 +1,27 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Input, InputNumber, Button, Typography } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import "./Services.css";
 import CustomBreadcrumb from "../../Component/Breadcrumb/CustomBreadcrumbComponent";
+import { useDispatch, useSelector } from "react-redux";
+import { loadServicesSucceeded } from "../../redux/actions";
+import { useHistory, useParams } from "react-router-dom";
 
 const { Text, Title } = Typography;
 
-const sampleData = {
-  type: "Face Treatment",
-  sub_services: [
-    { name: "Hair Cut" },
-    { name: "Hair Cut" },
-    { name: "Hair Cut" },
-    { name: "Hair Cut" },
-  ],
-};
-
 const ServiceDetailsComponent = () => {
-  const [data, setData] = useState(sampleData);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  let { id } = useParams();
+  const serviceData = useSelector((state) => state.LoadServices);
+  const storedData = JSON.parse(sessionStorage.getItem("service"));
+  const selectedType = sessionStorage.getItem("type");
+  const [data, setData] = useState();
 
   const handleInputChange = useCallback((value, subServiceIndex, key) => {
     setData((prevData) => {
       const newData = { ...prevData };
-      newData.sub_services[subServiceIndex][key] = value;
+      newData.type[subServiceIndex][key] = value;
       return newData;
     });
   }, []);
@@ -30,7 +29,12 @@ const ServiceDetailsComponent = () => {
   const handleCheckboxChange = useCallback((subServiceIndex, checked) => {
     setData((prevData) => {
       const newData = { ...prevData };
-      newData.sub_services[subServiceIndex].selected = checked;
+      newData.type[subServiceIndex].selected = checked;
+      if (checked) {
+        newData.type[subServiceIndex].shop_id = parseInt(id);
+      } else {
+        delete newData.type[subServiceIndex]?.shop_id;
+      }
       return newData;
     });
   }, []);
@@ -38,14 +42,51 @@ const ServiceDetailsComponent = () => {
   const handleAddExtra = useCallback(() => {
     setData((prevData) => {
       const newData = { ...prevData };
-      newData.sub_services.push({
+      newData.type.push({
         name: "",
-        time: "",
-        charge: "",
+        duration: "",
+        price: "",
         selected: false,
       });
       return newData;
     });
+  }, []);
+
+  const handleSave = () => {
+    const updatedServices = { ...serviceData };
+    const selectedCount = data.type.reduce(
+      (count, item) => (item.selected ? count + 1 : count),
+      0
+    );
+    const filteredData = data.type.filter((item) => item.name);
+    const serviceTypeArray =
+      selectedType === "Women" ? "womenServices" : "menServices";
+
+    updatedServices[serviceTypeArray] = updatedServices[serviceTypeArray].map(
+      (service) => {
+        if (service.service_type === data?.service_type) {
+          return { ...filteredData, selectedCount };
+        }
+        return service;
+      }
+    );
+
+    dispatch(loadServicesSucceeded(updatedServices));
+    history.goBack();
+    sessionStorage.removeItem("service");
+    sessionStorage.removeItem("type");
+  };
+
+  useEffect(() => {
+    if (storedData) {
+      setData(storedData);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!serviceData.menServices.length && !serviceData.womenServices.length) {
+      history.goBack();
+    }
   }, []);
 
   return (
@@ -94,11 +135,11 @@ const ServiceDetailsComponent = () => {
             borderBottom: "1px solid #C1C1C1",
           }}
         >
-          {data.type}
+          {data?.service_type}
         </Title>
 
         {data &&
-          data.sub_services.map((subService, subServiceIndex) => (
+          data.type.map((subService, subServiceIndex) => (
             <div
               key={subServiceIndex}
               style={{
@@ -108,9 +149,20 @@ const ServiceDetailsComponent = () => {
                 marginBottom: "0.5rem",
               }}
             >
-              {!subService.name ? (
+              {subService.service_type_id ? (
+                <Text
+                  style={{
+                    fontFamily: "Poppins",
+                    color: "black",
+                    fontSize: "15px",
+                    width: "41%",
+                  }}
+                >
+                  {subService.name}
+                </Text>
+              ) : (
                 <Input
-                  placeholder="Enter other services"
+                  placeholder="Enter service name"
                   value={subService.name}
                   onChange={(e) =>
                     handleInputChange(e.target.value, subServiceIndex, "name")
@@ -123,23 +175,12 @@ const ServiceDetailsComponent = () => {
                     border: "1px solid #1C4792",
                   }}
                 />
-              ) : (
-                <Text
-                  style={{
-                    fontFamily: "Poppins",
-                    color: "black",
-                    fontSize: "15px",
-                    width: "41%",
-                  }}
-                >
-                  {subService.name}
-                </Text>
               )}
               <InputNumber
                 placeholder="Time in min"
-                value={subService.time}
+                value={subService.duration}
                 onChange={(value) =>
-                  handleInputChange(value, subServiceIndex, "time")
+                  handleInputChange(value, subServiceIndex, "duration")
                 }
                 style={{
                   width: "23%",
@@ -150,9 +191,9 @@ const ServiceDetailsComponent = () => {
               />
               <InputNumber
                 placeholder="Charges"
-                value={subService.charge}
+                value={subService.price}
                 onChange={(value) =>
-                  handleInputChange(value, subServiceIndex, "charge")
+                  handleInputChange(value, subServiceIndex, "price")
                 }
                 style={{
                   width: "23%",
@@ -214,7 +255,7 @@ const ServiceDetailsComponent = () => {
             height: "2.5rem",
           }}
           type="primary"
-          // onClick={handleNext}
+          onClick={handleSave}
         >
           SAVE
         </Button>

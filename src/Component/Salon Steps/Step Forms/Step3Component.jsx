@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Upload, Typography, message, Button } from "antd";
 import { useParams } from "react-router-dom";
 import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
 import { URL, convertToTitleCase } from "../../../utils/utils";
 import axios from "axios";
+import { deleteImage } from "../../../redux/actions/imageActions";
+import DeleteParams from "../../../models/DeleteParams";
+import { useDispatch } from "react-redux";
 
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
 
 const Step3Component = ({ formId, onPrevious, onNext }) => {
+  const dispatch = useDispatch();
   let { categoryId, category } = useParams();
   const [images, setImages] = useState([]);
   const storedData = JSON.parse(localStorage.getItem("salon"));
@@ -17,6 +21,7 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
     const formData = new FormData();
     formData.append(`image`, image);
     formData.append(`sequence`, 1);
+    const token = localStorage.getItem("token");
 
     try {
       const response = await axios.post(
@@ -25,27 +30,64 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
-      console.log("Upload successful:", response.data);
-      setImages([...images, response.data]);
+      if (response.status === 200) {
+        setImages((prevImages) => [...prevImages, response.data.data]);
+      }
     } catch (error) {
       console.error("Error uploading images:", error);
     }
   };
 
+  const handleRemoveSuccessed = (payload) => {
+    const updatedImages = images.filter(
+      (img) =>
+        img.image_id !== payload.imgId || img.image_url !== payload.imageKey
+    );
+
+    localStorage.setItem(
+      "salon",
+      JSON.stringify({ ...storedData, images: updatedImages })
+    );
+    setImages(updatedImages);
+  };
+
+  const handleRemove = (img) => {
+    const payload = {
+      imageKey: img.name,
+      id: storedData.shop_id,
+      imgId: img.image_id,
+    };
+    dispatch(
+      deleteImage(
+        new DeleteParams(
+          payload,
+          () => {
+            handleRemoveSuccessed(payload);
+          },
+          () => {}
+        )
+      )
+    );
+  };
+
+  const dummyRequest = ({ file, onSuccess }) => {
+    setTimeout(() => {
+      onSuccess("ok");
+    }, 0);
+  };
+
   const props = {
     name: "file",
     multiple: true,
-    // action: `${URL}admin/shops/upload/${storedData.shop_id}`,
     onChange(info) {
       const { status } = info.file;
-      if (status !== "uploading") {
-        console.log(info.file, info.fileList);
-      }
-      if (status === "done") {
+      console.log("hi ronak", info);
+      if (status === "uploading" || status === "done") {
         handleSubmit(info.file.originFileObj);
         message.success(`${info.file.name} file uploaded successfully.`);
       } else if (status === "error") {
@@ -58,8 +100,19 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
   };
 
   const handleNext = async () => {
+    localStorage.setItem(
+      "salon",
+      JSON.stringify({ ...storedData, images: images })
+    );
+
     onNext();
   };
+
+  useEffect(() => {
+    if (storedData && storedData.images) {
+      setImages(storedData.images);
+    }
+  }, []);
 
   return (
     <div
@@ -108,11 +161,23 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
         {/* Content */}
         <Form.Item
           name="image"
-          valuePropName="fileList"
-          getValueFromEvent={(e) => e.fileList}
           rules={[{ required: true, message: "Please upload an image" }]}
         >
-          <Dragger {...props} listType="picture-card">
+          <Dragger
+            customRequest={dummyRequest}
+            listType="picture-card"
+            fileList={images.map((url, index) => ({
+              image_id: url.image_id,
+              uid: index,
+              name: url.image_url || url.imageUrl,
+              status: "done",
+              url:
+                "https://bookmysamay-data.s3.ap-south-1.amazonaws.com/" +
+                  url.image_url || url.imageUrl,
+            }))}
+            onRemove={handleRemove}
+            {...props}
+          >
             <div className="drag-and-drop-text">
               <p>
                 <img

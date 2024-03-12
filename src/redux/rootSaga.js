@@ -11,6 +11,7 @@ import watchUpdateShop from "./sagas/update/watchUpdateShop";
 import watchUpdateServices from "./sagas/update/watchUpdateServices";
 import watchLoadShop from "./sagas/load/watchLoadShop";
 import watchLoadSearchLocation from "./sagas/load/watchLoadSearchLocation";
+import watchDeleteImage from "./sagas/delete/watchDeleteImage";
 
 // Combine all sagas into the root saga
 export default function* rootSaga() {
@@ -26,5 +27,6 @@ export default function* rootSaga() {
     watchUpdateServices(),
     watchSaveLogin(),
     watchSaveOTP(),
+    watchDeleteImage(),
   ]);
 }

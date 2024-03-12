@@ -6,3 +6,4 @@ export * from "./initialRouteAction";
 export * from "./categoryActions";
 export * from "./servicesActions";
 export * from "./locationActions";
+export * from "./imageActions";
