@@ -31,3 +31,9 @@ export const updateServicesFailed = (error) => ({
   type: SERVICES.UPDATE_FAILED,
   error,
 });
+
+// SAVE SERVICE
+export const saveService = (data) => ({
+  type: SERVICES.SAVE,
+  data,
+});

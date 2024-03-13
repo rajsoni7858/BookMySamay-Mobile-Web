@@ -21,7 +21,7 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
     const formData = new FormData();
     formData.append(`image`, image);
     formData.append(`sequence`, 1);
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     try {
       const response = await axios.post(

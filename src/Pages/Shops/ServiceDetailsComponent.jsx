@@ -1,12 +1,12 @@
 import { useState, useCallback, useEffect } from "react";
 import { Input, InputNumber, Button, Typography } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
-import "./Services.css";
 import CustomBreadcrumb from "../../Component/Breadcrumb/CustomBreadcrumbComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { loadServicesSucceeded } from "../../redux/actions";
+import { loadServicesSucceeded, saveService } from "../../redux/actions";
 import { useHistory, useParams } from "react-router-dom";
 import { convertToTitleCase } from "../../utils/utils";
+import "./Services.css";
 
 const { Text, Title } = Typography;
 
@@ -14,83 +14,117 @@ const ServiceDetailsComponent = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   let { categoryId, category, id } = useParams();
-  const serviceData = useSelector((state) => state.LoadServices);
-  const storedData = JSON.parse(sessionStorage.getItem("service"));
-  const selectedType = sessionStorage.getItem("type");
-  const [data, setData] = useState();
+  const servicesData = useSelector((state) => state.LoadServices);
+  const selectedService = useSelector((state) => state.SaveService);
+  const [data, setData] = useState({ type: [] });
 
   const { shopName } = props.location.state;
 
+  useEffect(() => {
+    return () => {
+      dispatch(saveService({ type: null, service: null }));
+    };
+  }, []);
+
+  useEffect(() => {
+    if (selectedService && selectedService.service) {
+      setData(selectedService.service);
+    }
+  }, [selectedService]);
+
+  useEffect(() => {
+    if (
+      !servicesData.menServices.length &&
+      !servicesData.womenServices.length
+    ) {
+      history.goBack();
+    }
+  }, [servicesData, history]);
+
   const handleInputChange = useCallback((value, subServiceIndex, key) => {
     setData((prevData) => {
-      const newData = { ...prevData };
-      newData.type[subServiceIndex][key] = value;
+      const newData = {
+        ...prevData,
+        type: prevData.type.map((item, index) => {
+          if (index === subServiceIndex) {
+            return {
+              ...item,
+              [key]: value,
+            };
+          }
+          return item;
+        }),
+      };
       return newData;
     });
   }, []);
 
-  const handleCheckboxChange = useCallback((subServiceIndex, checked) => {
-    setData((prevData) => {
-      const newData = { ...prevData };
-      newData.type[subServiceIndex].selected = checked;
-      if (checked) {
-        newData.type[subServiceIndex].shop_id = parseInt(id);
-      } else {
-        delete newData.type[subServiceIndex]?.shop_id;
-      }
-      return newData;
-    });
-  }, []);
+  const handleCheckboxChange = useCallback(
+    (subServiceIndex, checked) => {
+      setData((prevData) => {
+        const newData = {
+          ...prevData,
+          type: prevData.type.map((item, index) => {
+            if (index === subServiceIndex) {
+              return {
+                ...item,
+                selected: checked,
+                // shop_id: checked ? parseInt(id) : undefined,
+              };
+            }
+            return item;
+          }),
+        };
+        return newData;
+      });
+    },
+    [id]
+  );
 
   const handleAddExtra = useCallback(() => {
     setData((prevData) => {
-      const newData = { ...prevData };
-      newData.type.push({
-        name: "",
-        duration: "",
-        price: "",
-        selected: false,
-      });
+      const newData = {
+        ...prevData,
+        type: [
+          ...prevData.type,
+          {
+            name: "",
+            duration: "",
+            price: "",
+            selected: false,
+            service_type_id: prevData.type[0].service_type_id,
+          },
+        ],
+      };
       return newData;
     });
   }, []);
 
   const handleSave = () => {
-    const updatedServices = { ...serviceData };
-    const selectedCount = data.type.reduce(
-      (count, item) => (item.selected ? count + 1 : count),
-      0
-    );
     const filteredData = data.type.filter((item) => item.name);
     const serviceTypeArray =
-      selectedType === "Women" ? "womenServices" : "menServices";
-
-    updatedServices[serviceTypeArray] = updatedServices[serviceTypeArray].map(
-      (service) => {
+      selectedService.type === "Women" ? "womenServices" : "menServices";
+    const updatedServices = {
+      ...servicesData,
+      [serviceTypeArray]: servicesData[serviceTypeArray].map((service) => {
         if (service.service_type === data?.service_type) {
-          return { ...filteredData, selectedCount };
+          return {
+            ...service,
+            type: filteredData,
+            service_type: data.service_type,
+            selected_count: filteredData.reduce(
+              (count, item) => (item.selected ? count + 1 : count),
+              0
+            ),
+          };
         }
         return service;
-      }
-    );
+      }),
+    };
 
     dispatch(loadServicesSucceeded(updatedServices));
     history.goBack();
-    sessionStorage.removeItem("service");
-    sessionStorage.removeItem("type");
   };
-
-  useEffect(() => {
-    if (storedData) {
-      setData(storedData);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!serviceData.menServices.length && !serviceData.womenServices.length) {
-      history.goBack();
-    }
-  }, []);
 
   return (
     <div
@@ -119,30 +153,30 @@ const ServiceDetailsComponent = (props) => {
         path={`/${categoryId}/${category}`}
       />
 
-      <div
-        style={{
-          display: "flex",
-          flex: 1,
-          flexDirection: "column",
-        }}
-      >
-        <Title
-          level={5}
+      {data && (
+        <div
           style={{
-            textAlign: "center",
-            margin: 0,
-            paddingTop: "0.5rem",
-            paddingBottom: "0.4rem",
-            marginBottom: "1rem",
-            fontFamily: "Inter",
-            borderBottom: "1px solid #C1C1C1",
+            display: "flex",
+            flex: 1,
+            flexDirection: "column",
           }}
         >
-          {data?.service_type}
-        </Title>
+          <Title
+            level={5}
+            style={{
+              textAlign: "center",
+              margin: 0,
+              paddingTop: "0.5rem",
+              paddingBottom: "0.4rem",
+              marginBottom: "1rem",
+              fontFamily: "Inter",
+              borderBottom: "1px solid #C1C1C1",
+            }}
+          >
+            {data.service_type}
+          </Title>
 
-        {data &&
-          data.type.map((subService, subServiceIndex) => (
+          {data.type.map((subService, subServiceIndex) => (
             <div
               key={subServiceIndex}
               style={{
@@ -152,7 +186,7 @@ const ServiceDetailsComponent = (props) => {
                 marginBottom: "0.5rem",
               }}
             >
-              {subService.service_type_id ? (
+              {subService.service_id ? (
                 <Text
                   style={{
                     fontFamily: "Poppins",
@@ -215,29 +249,30 @@ const ServiceDetailsComponent = (props) => {
               />
             </div>
           ))}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: "1rem",
-          }}
-        >
-          <Button
-            type="text"
-            onClick={handleAddExtra}
+          <div
             style={{
-              borderRadius: "8px",
-              backgroundColor: "rgb(235 235 235)",
-              fontFamily: "Poppins",
-              paddingTop: "5px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "1rem",
             }}
           >
-            <PlusCircleOutlined size="large" style={{ fontSize: "16px" }} /> Add
-            Other Services
-          </Button>
+            <Button
+              type="text"
+              onClick={handleAddExtra}
+              style={{
+                borderRadius: "8px",
+                backgroundColor: "rgb(235 235 235)",
+                fontFamily: "Poppins",
+                paddingTop: "5px",
+              }}
+            >
+              <PlusCircleOutlined size="large" style={{ fontSize: "16px" }} />{" "}
+              Add Other Services
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
 
       <div
         style={{

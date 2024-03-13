@@ -6,6 +6,8 @@ const servicesActionTypes = {
   UPDATE: "UPDATE_SERVICES",
   UPDATE_SUCCEEDED: "UPDATE_SERVICES_SUCCEEDED",
   UPDATE_FAILED: "UPDATE_SERVICES_FAILED",
+
+  SAVE: "SAVE_SERVICE",
 };
 
 export default servicesActionTypes;

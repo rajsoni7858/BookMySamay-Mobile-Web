@@ -13,10 +13,10 @@ import CustomBreadcrumb from "../../Component/Breadcrumb/CustomBreadcrumbCompone
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoadParams from "../../models/LoadParams";
-import { loadServices, updateServices } from "../../redux/actions";
+import { loadServices, saveService, updateServices } from "../../redux/actions";
 import SaveParams from "../../models/SaveParams";
-import "./Services.css";
 import { convertToTitleCase } from "../../utils/utils";
+import "./Services.css";
 
 const { TabPane } = Tabs;
 const { TextArea } = Input;
@@ -28,6 +28,14 @@ const ServicesComponent = (props) => {
   const serviceData = useSelector((state) => state.LoadServices);
   let { categoryId, category, id } = useParams();
   const [packages, setPackages] = useState([]);
+
+  const samplePackage = {
+    name: null,
+    description: null,
+    price: null,
+    duration: null,
+    shop_id: id,
+  };
 
   const { shopName } = props.location.state;
 
@@ -58,40 +66,28 @@ const ServicesComponent = (props) => {
   const handleAddExtra = useCallback(() => {
     setPackages((prevData) => {
       const newData = [...prevData];
-      newData.push({
-        name: null,
-        description: null,
-        price: null,
-        duration: null,
-      });
+      newData.push(samplePackage);
       return newData;
     });
   }, []);
 
   const handleLoadServicesSuccessed = (data) => {
     const updatedData =
-      data.packages.length > 0
-        ? data.packages
-        : [
-            {
-              name: null,
-              description: null,
-              price: null,
-              duration: null,
-            },
-          ];
+      data.packages.length > 0 ? data.packages : [samplePackage];
     setPackages(updatedData);
   };
 
   useEffect(() => {
-    sessionStorage.removeItem("service");
-    sessionStorage.removeItem("type");
     if (!serviceData.menServices.length && !serviceData.womenServices.length) {
       dispatch(
         loadServices(
           new LoadParams({ id }, handleLoadServicesSuccessed, () => {})
         )
       );
+    }
+
+    if (serviceData.packages.length === 0) {
+      setPackages([samplePackage]);
     }
   }, []);
 
@@ -109,8 +105,7 @@ const ServicesComponent = (props) => {
               borderBottom: "1px solid #C1C1C1",
             }}
             onClick={() => {
-              sessionStorage.setItem("type", name);
-              sessionStorage.setItem("service", JSON.stringify(service));
+              dispatch(saveService({ type: name, service }));
               history.push(
                 `/${categoryId}/${category}/${id}/services/${serviceIndex + 1}`,
                 { shopName }
@@ -126,9 +121,9 @@ const ServicesComponent = (props) => {
             >
               {service.service_type}
             </Text>
-            {service?.selectedCount > 0 && (
+            {service?.selected_count > 0 && (
               <Text style={{ fontFamily: "Poppins" }}>
-                {service.selectedCount} services Added
+                {service.selected_count} services Added
               </Text>
             )}
           </div>

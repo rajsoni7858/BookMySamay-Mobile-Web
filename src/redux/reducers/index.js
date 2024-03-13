@@ -12,6 +12,7 @@ import ServicesUpdatingReducer from "./update/servicesReducer";
 import ShopsLoadingReducer from "./load/shopsReducer";
 import SearchlocationLoadingReducer from "./load/locationReducer";
 import ImageDeletingReducer from "./delete/imageReducer";
+import ServiceSavingReducer from "./save/serviceReducer";
 
 const rootReducer = combineReducers({
   LoadHome: HomeLoadingReducer,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   SaveOTP: otpReducer,
   SaveInitialRoute: initialRouteReducer,
   SaveShop: shopSavingReducer,
+  SaveService: ServiceSavingReducer,
   UpdateShop: ShopUpdatingReducer,
   UpdateServices: ServicesUpdatingReducer,
   DeleteImage: ImageDeletingReducer,

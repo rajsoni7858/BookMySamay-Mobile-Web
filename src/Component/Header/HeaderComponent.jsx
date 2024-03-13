@@ -33,14 +33,15 @@ const HeaderComponent = () => {
   };
 
   const handleLogout = () => {
+    localStorage.clear();
     setModalVisible(false);
   };
 
   const items = [
-    {
-      label: "Settings",
-      key: "1",
-    },
+    // {
+    //   label: "Settings",
+    //   key: "1",
+    // },
     {
       label: "Logout",
       key: "2",

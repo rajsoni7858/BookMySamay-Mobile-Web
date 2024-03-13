@@ -3,7 +3,7 @@ import { Button, Input, Layout, Spin, Table, Typography } from "antd";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { trimString } from "../../utils/utils";
 import { useDispatch, useSelector } from "react-redux";
-import { loadShops } from "../../redux/actions";
+import { loadServicesFailed, loadShops } from "../../redux/actions";
 import LoadParams from "../../models/LoadParams";
 import "./Shop.css";
 
@@ -100,12 +100,12 @@ const ShopsComponent = () => {
   };
 
   useEffect(() => {
+    dispatch(loadServicesFailed());
     dispatch(
       loadShops(
         new LoadParams({ id: categoryId }, handleLoadShopsSuccessed, () => {})
       )
     );
-    localStorage.removeItem("salon");
   }, [dispatch, categoryId]);
 
   const handleSearch = (value) => {
