@@ -90,7 +90,7 @@ const HospitalsComponent = () => {
     dispatch(
       loadShops(new LoadParams({ id: 3 }, handleLoadShopsSuccessed, () => {}))
     );
-    localStorage.removeItem("salon");
+    sessionStorage.removeItem("salon");
   }, [dispatch]);
 
   const handleSearch = (value) => {

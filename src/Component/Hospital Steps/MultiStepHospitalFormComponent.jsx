@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Spin, Steps } from "antd";
-
-import "./Step.css";
 import Step1Component from "./Step Forms/Step1Component";
 import Step2Component from "./Step Forms/Step2Component";
 import Step3Component from "./Step Forms/Step3Component";
@@ -11,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadShop } from "../../redux/actions/shopActions";
 import LoadParams from "../../models/LoadParams";
 import { useParams } from "react-router-dom";
+import "./Step.css";
 
 const { Step } = Steps;
 
@@ -95,7 +94,7 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
       owner_name: data.staff.name,
       mobile_number: data.staff.mobile_number,
     };
-    localStorage.setItem("salon", JSON.stringify(updatedData));
+    sessionStorage.setItem("salon", JSON.stringify(updatedData));
   };
 
   useEffect(() => {

@@ -16,7 +16,6 @@ const Step1Component = ({ form, formId, onNext }) => {
   let { categoryId } = useParams();
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-
   const [searchQuery, setSearchQuery] = useState();
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);

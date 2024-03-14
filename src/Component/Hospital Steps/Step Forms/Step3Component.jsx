@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Collapse, TimePicker, Button, Space } from "antd";
-import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
-import { convertToTitleCase } from "../../../utils/utils";
 
 const { Panel } = Collapse;
 
@@ -27,10 +25,9 @@ const initialTimeValues = Array.from({ length: 7 }, (_, dayIndex) => ({
 }));
 
 const Step3Component = ({ formId, onPrevious, onNext }) => {
-  let { categoryId, category } = useParams();
   const [timeValues, setTimeValues] = useState([]);
 
-  const storedData = JSON.parse(localStorage.getItem("salon"));
+  const storedData = JSON.parse(sessionStorage.getItem("salon"));
 
   const handleTimeChange = (dayIndex, name, time) => {
     const newTimeValues = [...timeValues];
@@ -61,7 +58,7 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
       };
     });
 
-    localStorage.setItem(
+    sessionStorage.setItem(
       "salon",
       JSON.stringify({ ...storedData, shop_daily_operational_details: payload })
     );
@@ -166,7 +163,7 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
         <CustomBreadcrumb
           items={[
             {
-              title: convertToTitleCase(category),
+              title: "Hospital",
             },
             {
               title: storedData?.name,
@@ -175,7 +172,7 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
               title: formId === "editForm" ? `Edit` : `Add`,
             },
           ]}
-          path={`/${categoryId}/${category}`}
+          path={"/3/hospital"}
         />
 
         <Collapse

@@ -1,21 +1,165 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Form, Input, InputNumber, Select, Typography } from "antd";
+import { saveShop, updateShop } from "../../../redux/actions/shopActions";
+import SaveParams from "../../../models/SaveParams";
+import { useDispatch } from "react-redux";
+import { debounce } from "lodash";
+import { loadSearchLocation } from "../../../redux/actions/locationActions";
+import LoadParams from "../../../models/LoadParams";
+import axios from "axios";
 
 const { Title } = Typography;
 
 const Step1Component = ({ form, formId, onNext }) => {
-  const storedData = JSON.parse(localStorage.getItem("salon"));
+  const dispatch = useDispatch();
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [searchQuery, setSearchQuery] = useState();
+  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState([]);
+
+  const cancelTokenRef = useRef(null);
+
+  const storedData = JSON.parse(sessionStorage.getItem("salon"));
+
+  const handleSearchSuccessed = (data) => {
+    setResults(data);
+    setLoading(false);
+  };
+
+  const performSearch = async (payload, cancelToken) => {
+    dispatch(
+      loadSearchLocation(
+        new LoadParams(
+          {
+            ...payload,
+            cancelToken: cancelToken?.token,
+          },
+          handleSearchSuccessed,
+          () => {}
+        )
+      )
+    );
+  };
+
+  const debouncedHandleSearch = debounce((query) => {
+    setSearchQuery(query);
+
+    if (query && query.length > 2) {
+      const newCancelToken = axios.CancelToken.source();
+
+      if (cancelTokenRef.current) {
+        cancelTokenRef.current.cancel("Previous request cancelled");
+      }
+
+      cancelTokenRef.current = newCancelToken;
+      setLoading(true);
+
+      const url = { url: `q=${query}` };
+      performSearch(url, newCancelToken);
+    }
+  }, 500);
+
+  const handleSearch = (query) => {
+    debouncedHandleSearch(query);
+  };
+
+  const handleGetLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLatitude(latitude);
+          setLongitude(longitude);
+          const url = {
+            url: `location_lat=${latitude}&location_lng=${longitude}`,
+          };
+          performSearch(url);
+        },
+        (error) => {
+          console.error("Error getting geolocation:", error.message);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  };
+
+  const handleShopSuccessed = (data) => {
+    sessionStorage.setItem("salon", JSON.stringify({ ...storedData, ...data }));
+    onNext();
+  };
 
   const handleNext = async () => {
-    onNext();
-    // try {
-    //   await form.validateFields().then((values) => {
-    //     console.log("hi ronak", values);
-    //     onNext();
-    //   });
-    // } catch (errorInfo) {
-    //   console.log("Validation failed:", errorInfo);
-    // }
+    try {
+      await form.validateFields().then((values) => {
+        const payload = {
+          ...values,
+          category_id: 3,
+          location_lat: latitude,
+          location_lng: longitude,
+          staff: {
+            name: values.owner_name,
+            mobile_number: values.mobile_number,
+          },
+        };
+        sessionStorage.setItem(
+          "salon",
+          JSON.stringify({ ...storedData, ...payload })
+        );
+        if (storedData) {
+          const daysOfWeek = [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ];
+
+          const shop_daily_operational_details =
+            storedData.shop_daily_operational_details
+              ? storedData.shop_daily_operational_details
+              : daysOfWeek.map((day) => ({
+                  op_type: values.op_type,
+                  day_of_week: day,
+                  is_open: 0,
+                  opening_time: "",
+                  closing_time: "",
+                  lunch_start_time: "",
+                  lunch_end_time: "",
+                }));
+          dispatch(
+            updateShop(
+              new SaveParams(
+                {
+                  ...storedData,
+                  ...payload,
+                  shop_daily_operational_details,
+                  shop_operational_details: {
+                    op_type: values.op_type,
+                    slot_duration: values.slot_duration,
+                    speciality: values.speciality,
+                    staff_count: values.staff_count,
+                    max_no_appointment: storedData.max_no_appointment,
+                    upi_id: storedData.upi_id || "",
+                  },
+                },
+                handleShopSuccessed,
+                () => {}
+              )
+            )
+          );
+        } else {
+          dispatch(
+            saveShop(new SaveParams(payload, handleShopSuccessed, () => {}))
+          );
+        }
+      });
+    } catch (errorInfo) {
+      console.log("Validation failed:", errorInfo);
+    }
   };
 
   useEffect(() => {
@@ -23,6 +167,12 @@ const Step1Component = ({ form, formId, onNext }) => {
       form.setFieldsValue(storedData);
     }
   }, [form, storedData]);
+
+  useEffect(() => {
+    if (!latitude) {
+      handleGetLocation();
+    }
+  }, []);
 
   return (
     <Form
@@ -58,15 +208,22 @@ const Step1Component = ({ form, formId, onNext }) => {
         >
           <Input placeholder="Enter hospital name" />
         </Form.Item>
-        {/* <Form.Item
+        <Form.Item
+          label="Hospital Owner:"
+          name="owner_name"
+          rules={[{ required: true, message: "Please enter hospital owner" }]}
+        >
+          <Input placeholder="Enter hospital owner" />
+        </Form.Item>
+        <Form.Item
           label="Hospital Speciality:"
-          name="shopOwner"
+          name="speciality"
           rules={[
             { required: true, message: "Please enter hospital speciality" },
           ]}
         >
           <Input placeholder="Enter hospital speciality" />
-        </Form.Item> */}
+        </Form.Item>
         <Form.Item
           label="Current Location:"
           name="location_name"
@@ -74,7 +231,21 @@ const Step1Component = ({ form, formId, onNext }) => {
             { required: true, message: "Please select current location" },
           ]}
         >
-          <Input placeholder="Enter hospital location" />
+          <Select
+            showSearch
+            loading={loading}
+            placeholder="Please select current location"
+            style={{ fontFamily: "Poppins", height: "38px" }}
+            defaultActiveFirstOption={false}
+            filterOption={false}
+            searchValue={searchQuery}
+            onSearch={handleSearch}
+            notFoundContent={null}
+            options={results.map((location, index) => ({
+              value: location.name,
+              label: location.name,
+            }))}
+          />
         </Form.Item>
         <Form.Item
           label="Hospital Address:"

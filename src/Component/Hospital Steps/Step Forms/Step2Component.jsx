@@ -12,18 +12,30 @@ import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
 const { Title } = Typography;
 
 const Step2Component = ({ form, formId, onPrevious, onNext }) => {
-  const storedData = JSON.parse(localStorage.getItem("salon"));
+  const storedData = JSON.parse(sessionStorage.getItem("salon"));
 
   const handleNext = async () => {
-    onNext();
-    // try {
-    //   await form.validateFields().then((values) => {
-    //     console.log("hi ronak", values);
-    //     onNext();
-    //   });
-    // } catch (errorInfo) {
-    //   console.log("Validation failed:", errorInfo);
-    // }
+    try {
+      await form.validateFields().then((values) => {
+        const payload = {
+          ...values,
+          opening_time: values.opening_time.format("HH:mm"),
+          closing_time: values.closing_time.format("HH:mm"),
+        };
+
+        sessionStorage.setItem(
+          "salon",
+          JSON.stringify({
+            ...storedData,
+            mr_fee: values.mr_fee,
+            mr_details: payload,
+          })
+        );
+        onNext();
+      });
+    } catch (errorInfo) {
+      console.log("Validation failed:", errorInfo);
+    }
   };
 
   return (
@@ -73,7 +85,7 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Form.Item
             label="Day"
-            name="day"
+            name="day_of_week"
             style={{ width: "32%" }}
             rules={[{ required: true, message: "Please select a day" }]}
           >
@@ -93,7 +105,7 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
           </Form.Item>
           <Form.Item
             label="Opening Time"
-            name="openingTime"
+            name="opening_time"
             style={{ width: "32%" }}
             rules={[{ required: true, message: "Please select opening time" }]}
           >
@@ -106,7 +118,7 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
           </Form.Item>
           <Form.Item
             label="Closing Time"
-            name="closingTime"
+            name="closing_time"
             style={{ width: "32%" }}
             rules={[{ required: true, message: "Please select closing time" }]}
           >
@@ -120,7 +132,7 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
         </div>
         <Form.Item
           label="Total Number of Appointment:"
-          name="totalAppointment"
+          name="max_no_appointment"
           rules={[
             {
               required: true,

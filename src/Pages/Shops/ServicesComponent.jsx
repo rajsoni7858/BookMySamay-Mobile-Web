@@ -34,7 +34,7 @@ const ServicesComponent = (props) => {
     description: null,
     price: null,
     duration: null,
-    shop_id: id,
+    shop_id: parseInt(id),
   };
 
   const { shopName } = props.location.state;

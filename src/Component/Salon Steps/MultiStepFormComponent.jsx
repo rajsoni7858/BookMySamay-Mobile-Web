@@ -6,9 +6,9 @@ import Step1Component from "./Step Forms/Step1Component";
 import Step3Component from "./Step Forms/Step3Component";
 import Step2Component from "./Step Forms/Step2Component";
 import Step4Component from "./Step Forms/Step4Component";
-import "./Step.css";
 import LoadParams from "../../models/LoadParams";
 import { loadShop } from "../../redux/actions/shopActions";
+import "./Step.css";
 
 const { Step } = Steps;
 
