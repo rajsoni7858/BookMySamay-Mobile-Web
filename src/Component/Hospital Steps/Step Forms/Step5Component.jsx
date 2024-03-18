@@ -101,7 +101,7 @@ const Step5Component = ({ form, formId, onPrevious }) => {
 
           {/* Content */}
           <Form.Item
-            name="upiMode"
+            name="upi_id"
             rules={[{ required: true, message: "Please select UPI mode" }]}
             style={{ marginBottom: "3rem" }}
           >

@@ -88,9 +88,20 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
   ];
 
   const handleLoadShopSuccessed = (data) => {
+    const marketingDetails = data.shop_daily_operational_details.filter(
+      (detail) => detail.op_type === "Marketing"
+    );
+    const patientDetails = data.shop_daily_operational_details.filter(
+      (detail) => detail.op_type === "Patient"
+    );
     const updatedData = {
       ...data,
       ...data.shop_operational_details,
+      day_of_week: marketingDetails[0]?.day_of_week,
+      opening_time: marketingDetails[0]?.opening_time,
+      closing_time: marketingDetails[0]?.closing_time,
+      detail_id: marketingDetails[0]?.detail_id,
+      shop_daily_operational_details: patientDetails,
       owner_name: data.staff.name,
       mobile_number: data.staff.mobile_number,
     };

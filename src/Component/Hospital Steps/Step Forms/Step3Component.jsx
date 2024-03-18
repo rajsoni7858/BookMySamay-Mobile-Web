@@ -22,6 +22,7 @@ const initialTimeValues = Array.from({ length: 7 }, (_, dayIndex) => ({
   closing_time: "",
   lunch_start_time: "",
   lunch_end_time: "",
+  op_type: "Patient",
 }));
 
 const Step3Component = ({ formId, onPrevious, onNext }) => {
@@ -54,7 +55,6 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
       return {
         ...item,
         is_open,
-        op_type: storedData?.op_type,
       };
     });
 

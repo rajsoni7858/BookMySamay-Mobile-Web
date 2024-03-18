@@ -19,8 +19,10 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
       await form.validateFields().then((values) => {
         const payload = {
           ...values,
+          op_type: "Marketing",
           opening_time: values.opening_time.format("HH:mm"),
           closing_time: values.closing_time.format("HH:mm"),
+          detail_id: storedData?.detail_id,
         };
 
         sessionStorage.setItem(
@@ -28,6 +30,7 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
           JSON.stringify({
             ...storedData,
             mr_fee: values.mr_fee,
+            max_no_appointment: values.max_no_appointment,
             mr_details: payload,
           })
         );

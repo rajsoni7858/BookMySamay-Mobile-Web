@@ -7,6 +7,7 @@ import { debounce } from "lodash";
 import { loadSearchLocation } from "../../../redux/actions/locationActions";
 import LoadParams from "../../../models/LoadParams";
 import axios from "axios";
+import dayjs from "dayjs";
 
 const { Title } = Typography;
 
@@ -122,7 +123,7 @@ const Step1Component = ({ form, formId, onNext }) => {
             storedData.shop_daily_operational_details
               ? storedData.shop_daily_operational_details
               : daysOfWeek.map((day) => ({
-                  op_type: values.op_type,
+                  op_type: "Patient",
                   day_of_week: day,
                   is_open: 0,
                   opening_time: "",
@@ -138,7 +139,7 @@ const Step1Component = ({ form, formId, onNext }) => {
                   ...payload,
                   shop_daily_operational_details,
                   shop_operational_details: {
-                    op_type: values.op_type,
+                    op_type: null,
                     slot_duration: values.slot_duration,
                     speciality: values.speciality,
                     staff_count: values.staff_count,
@@ -164,11 +165,16 @@ const Step1Component = ({ form, formId, onNext }) => {
 
   useEffect(() => {
     if (storedData) {
-      form.setFieldsValue(storedData);
+      form.setFieldsValue({
+        ...storedData,
+        opening_time: dayjs(storedData?.opening_time, "HH:mm"),
+        closing_time: dayjs(storedData?.closing_time, "HH:mm"),
+      });
     }
   }, [form, storedData]);
 
   useEffect(() => {
+    console.log("hi ronak latitude", latitude);
     if (!latitude) {
       handleGetLocation();
     }
