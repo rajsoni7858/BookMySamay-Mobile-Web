@@ -3,7 +3,7 @@ import { Layout, Avatar, Dropdown } from "antd";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import CustomDrawer from "../Drawer/DrawerComponent";
 import LogoutModal from "../Logout/LogoutModal";
-import "./Header.css";
+import "./header.css";
 
 const { Header } = Layout;
 
@@ -49,7 +49,13 @@ const HeaderComponent = () => {
   ];
 
   return (
-    <Layout>
+    <Layout
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 1000,
+      }}
+    >
       <Header className="header">
         <div className="mobile-menu">
           <MenuOutlined style={{ fontSize: "16px" }} onClick={showDrawer} />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Collapse, TimePicker, Button, Space } from "antd";
 import dayjs from "dayjs";
 import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
+import { disabledMinutes } from "../../../utils/utils";
 
 const { Panel } = Collapse;
 
@@ -92,6 +93,9 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
             placeholder="Select Time"
             style={{ width: "100%" }}
             name="opening_time"
+            showNow={false}
+            disabledMinutes={disabledMinutes}
+            use12Hours
             required
           />
         </Space>
@@ -107,6 +111,9 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
             placeholder="Select Time"
             style={{ width: "100%" }}
             name="closing_time"
+            showNow={false}
+            disabledMinutes={disabledMinutes}
+            use12Hours
             required
           />
         </Space>
@@ -122,6 +129,9 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
             placeholder="Select Time"
             style={{ width: "100%" }}
             name="lunch_start_time"
+            showNow={false}
+            disabledMinutes={disabledMinutes}
+            use12Hours
             required
           />
         </Space>
@@ -137,6 +147,9 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
             placeholder="Select Time"
             style={{ width: "100%" }}
             name="lunch_end_time"
+            showNow={false}
+            disabledMinutes={disabledMinutes}
+            use12Hours
             required
           />
         </Space>

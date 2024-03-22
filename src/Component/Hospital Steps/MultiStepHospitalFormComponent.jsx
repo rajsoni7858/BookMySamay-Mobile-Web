@@ -145,30 +145,43 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
   }, [currentStep]);
 
   return (
-    <div>
+    <div style={{ backgroundColor: "white", marginBottom: "1.4rem" }}>
       {shopLoading ? (
         <div className="common__wrapper">
           <Spin size="large" />
         </div>
       ) : (
-        <div style={{ margin: "1.4rem", padding: 0 }}>
+        <div
+          style={{
+            margin: "0 1.4rem",
+            backgroundColor: "white",
+          }}
+        >
           {/* Steps */}
-          <Steps
-            current={currentStep}
-            responsive={false}
-            style={{ padding: "1rem 0rem" }}
+          <div
+            style={{
+              backgroundColor: "white",
+              position: "sticky",
+              top: 54.5,
+              zIndex: 1000,
+              paddingTop: "2.4rem",
+              paddingBottom: "1.4rem",
+            }}
           >
-            {steps.map((step) => (
-              <Step key={step.id} title={null} />
-            ))}
-          </Steps>
+            <Steps current={currentStep} responsive={false}>
+              {steps.map((step) => (
+                <Step key={step.id} title={null} />
+              ))}
+            </Steps>
+          </div>
 
           {/* Content */}
           <div
             style={{
               display: "flex",
               flex: 1,
-              minHeight: "calc(100vh - 165px)",
+              minHeight: "calc(100vh - 170px)",
+              overflow: "auto",
             }}
           >
             {steps[currentStep].content}

@@ -118,3 +118,7 @@
 .ant-input-number .ant-input-number-input {
   font-family: Poppins;
 }
+
+.ant-picker-time-panel-column {
+  overflow-y: auto !important;
+}

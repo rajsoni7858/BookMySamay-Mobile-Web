@@ -8,6 +8,8 @@ import {
   Typography,
 } from "antd";
 import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
+import "../Step.css";
+import { disabledMinutes } from "../../../utils/utils";
 
 const { Title } = Typography;
 
@@ -107,7 +109,7 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
             />
           </Form.Item>
           <Form.Item
-            label="Opening Time"
+            label="Open At:"
             name="opening_time"
             style={{ width: "32%" }}
             rules={[{ required: true, message: "Please select opening time" }]}
@@ -117,10 +119,13 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
               format="h:mm a"
               minuteStep={15}
               placeholder="Select Time"
+              showNow={false}
+              disabledMinutes={disabledMinutes}
+              use12Hours
             />
           </Form.Item>
           <Form.Item
-            label="Closing Time"
+            label="Close At:"
             name="closing_time"
             style={{ width: "32%" }}
             rules={[{ required: true, message: "Please select closing time" }]}
@@ -130,6 +135,9 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
               format="h:mm a"
               minuteStep={15}
               placeholder="Select Time"
+              showNow={false}
+              disabledMinutes={disabledMinutes}
+              use12Hours
             />
           </Form.Item>
         </div>

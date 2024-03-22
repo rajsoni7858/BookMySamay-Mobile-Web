@@ -167,14 +167,15 @@ const Step1Component = ({ form, formId, onNext }) => {
     if (storedData) {
       form.setFieldsValue({
         ...storedData,
-        opening_time: dayjs(storedData?.opening_time, "HH:mm"),
-        closing_time: dayjs(storedData?.closing_time, "HH:mm"),
+        opening_time:
+          storedData?.opening_time && dayjs(storedData.opening_time, "HH:mm"),
+        closing_time:
+          storedData?.closing_time && dayjs(storedData.closing_time, "HH:mm"),
       });
     }
   }, [form, storedData]);
 
   useEffect(() => {
-    console.log("hi ronak latitude", latitude);
     if (!latitude) {
       handleGetLocation();
     }
