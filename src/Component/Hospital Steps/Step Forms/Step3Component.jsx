@@ -182,7 +182,7 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
               title: storedData?.name,
             },
             {
-              title: formId === "editForm" ? `Edit` : `Add`,
+              title: formId === "editHospitalForm" ? `Edit` : `Add`,
             },
           ]}
           path={"/3/hospital"}

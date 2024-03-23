@@ -97,6 +97,7 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
     const updatedData = {
       ...data,
       ...data.shop_operational_details,
+      mr_details: marketingDetails[0],
       day_of_week: marketingDetails[0]?.day_of_week,
       opening_time: marketingDetails[0]?.opening_time,
       closing_time: marketingDetails[0]?.closing_time,
@@ -107,6 +108,12 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
     };
     sessionStorage.setItem("salon", JSON.stringify(updatedData));
   };
+
+  useEffect(() => {
+    if (currentStep === 0) {
+      window.location.hash = "#1";
+    }
+  }, [currentStep]);
 
   useEffect(() => {
     if (formId === "editHospitalForm") {

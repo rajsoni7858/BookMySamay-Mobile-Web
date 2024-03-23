@@ -45,8 +45,6 @@ const Step1Component = ({ form, formId, onNext }) => {
   };
 
   const debouncedHandleSearch = debounce((query) => {
-    setSearchQuery(query);
-
     if (query && query.length > 2) {
       const newCancelToken = axios.CancelToken.source();
 
@@ -63,6 +61,7 @@ const Step1Component = ({ form, formId, onNext }) => {
   }, 500);
 
   const handleSearch = (query) => {
+    setSearchQuery(query);
     debouncedHandleSearch(query);
   };
 

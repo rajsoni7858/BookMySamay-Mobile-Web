@@ -44,8 +44,6 @@ const Step1Component = ({ form, formId, onNext }) => {
   };
 
   const debouncedHandleSearch = debounce((query) => {
-    setSearchQuery(query);
-
     if (query && query.length > 2) {
       const newCancelToken = axios.CancelToken.source();
 
@@ -62,6 +60,7 @@ const Step1Component = ({ form, formId, onNext }) => {
   }, 500);
 
   const handleSearch = (query) => {
+    setSearchQuery(query);
     debouncedHandleSearch(query);
   };
 
@@ -131,13 +130,17 @@ const Step1Component = ({ form, formId, onNext }) => {
                   lunch_start_time: "",
                   lunch_end_time: "",
                 }));
+
+          const updatedOperationalDetails = storedData.mr_details
+            ? [storedData.mr_details, ...shop_daily_operational_details]
+            : shop_daily_operational_details;
           dispatch(
             updateShop(
               new SaveParams(
                 {
                   ...storedData,
                   ...payload,
-                  shop_daily_operational_details,
+                  shop_daily_operational_details: updatedOperationalDetails,
                   shop_operational_details: {
                     op_type: null,
                     slot_duration: values.slot_duration,

@@ -89,6 +89,12 @@ const MultiStepFormComponent = ({ form, formId }) => {
   };
 
   useEffect(() => {
+    if (currentStep === 0) {
+      window.location.hash = "#1";
+    }
+  }, [currentStep]);
+
+  useEffect(() => {
     if (formId === "editForm") {
       dispatch(
         loadShop(new LoadParams({ id }, handleLoadShopSuccessed, () => {}))

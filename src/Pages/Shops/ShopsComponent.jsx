@@ -106,6 +106,7 @@ const ShopsComponent = () => {
         new LoadParams({ id: categoryId }, handleLoadShopsSuccessed, () => {})
       )
     );
+    sessionStorage.removeItem("salon");
   }, [dispatch, categoryId]);
 
   const handleSearch = (value) => {
