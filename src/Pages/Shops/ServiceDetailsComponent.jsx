@@ -69,7 +69,8 @@ const ServiceDetailsComponent = (props) => {
               return {
                 ...item,
                 selected: checked,
-                // shop_id: checked ? parseInt(id) : undefined,
+                shop_id: checked ? parseInt(id) : undefined,
+                gender: selectedService.type,
               };
             }
             return item;
@@ -91,7 +92,9 @@ const ServiceDetailsComponent = (props) => {
             name: "",
             duration: "",
             price: "",
-            selected: false,
+            selected: true,
+            shop_id: parseInt(id),
+            gender: selectedService.type,
             service_type_id: prevData.type[0].service_type_id,
           },
         ],

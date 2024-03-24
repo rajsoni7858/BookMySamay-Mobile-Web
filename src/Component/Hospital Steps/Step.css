@@ -122,3 +122,8 @@
 .ant-picker-time-panel-column {
   overflow-y: auto !important;
 }
+
+/* hide time picker clock  */
+.ant-picker .ant-picker-suffix {
+  display: none !important;
+}

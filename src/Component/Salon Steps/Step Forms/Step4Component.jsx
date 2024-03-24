@@ -17,9 +17,9 @@ const Step4Component = ({ form, formId, onPrevious }) => {
   const storedData = JSON.parse(sessionStorage.getItem("salon"));
 
   const handleShopSuccessed = () => {
-    message.success("Form submitted successfully!");
     sessionStorage.removeItem("salon");
-    history.push(`/${category}`);
+    history.push(`/${categoryId}/${category}`);
+    message.success(`${storedData.name} submitted successfully`);
   };
 
   const handleFinish = () => {

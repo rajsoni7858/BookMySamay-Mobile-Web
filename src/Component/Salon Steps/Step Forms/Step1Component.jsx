@@ -124,7 +124,7 @@ const Step1Component = ({ form, formId, onNext }) => {
             storedData.shop_daily_operational_details
               ? storedData.shop_daily_operational_details
               : daysOfWeek.map((day) => ({
-                  op_type: values.op_type,
+                  // op_type: values.op_type,
                   day_of_week: day,
                   is_open: 0,
                   opening_time: "",

@@ -15,7 +15,7 @@ const Step4Component = ({ formId, onPrevious, onNext }) => {
   const [images, setImages] = useState([]);
   const storedData = JSON.parse(sessionStorage.getItem("salon"));
 
-  const handleSubmit = async (image) => {
+  const handleSubmit = async (image, name) => {
     const formData = new FormData();
     formData.append(`image`, image);
     formData.append(`sequence`, images.length + 1);
@@ -35,6 +35,7 @@ const Step4Component = ({ formId, onPrevious, onNext }) => {
 
       if (response.status === 200) {
         setImages((prevImages) => [...prevImages, response.data.data]);
+        message.success(`${name} file uploaded successfully.`);
       }
     } catch (error) {
       console.error("Error uploading images:", error);
@@ -85,8 +86,7 @@ const Step4Component = ({ formId, onPrevious, onNext }) => {
     onChange(info) {
       const { status } = info.file;
       if (status === "uploading" || status === "done") {
-        handleSubmit(info.file.originFileObj);
-        message.success(`${info.file.name} file uploaded successfully.`);
+        handleSubmit(info.file.originFileObj, info.file.name);
       } else if (status === "error") {
         message.error(`${info.file.name} file upload failed.`);
       }

@@ -95,6 +95,7 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
             name="opening_time"
             showNow={false}
             disabledMinutes={disabledMinutes}
+            inputReadOnly
             use12Hours
             required
           />
@@ -113,6 +114,7 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
             name="closing_time"
             showNow={false}
             disabledMinutes={disabledMinutes}
+            inputReadOnly
             use12Hours
             required
           />
@@ -131,6 +133,7 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
             name="lunch_start_time"
             showNow={false}
             disabledMinutes={disabledMinutes}
+            inputReadOnly
             use12Hours
             required
           />
@@ -149,6 +152,7 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
             name="lunch_end_time"
             showNow={false}
             disabledMinutes={disabledMinutes}
+            inputReadOnly
             use12Hours
             required
           />

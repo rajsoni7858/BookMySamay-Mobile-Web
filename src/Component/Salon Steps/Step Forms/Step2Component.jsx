@@ -57,7 +57,7 @@ const Step2Component = ({ formId, onPrevious, onNext }) => {
       return {
         ...item,
         is_open,
-        op_type: storedData?.op_type,
+        // op_type: storedData?.op_type,
       };
     });
 
@@ -97,6 +97,7 @@ const Step2Component = ({ formId, onPrevious, onNext }) => {
             name="opening_time"
             showNow={false}
             disabledMinutes={disabledMinutes}
+            inputReadOnly
             use12Hours
             required
           />
@@ -115,6 +116,7 @@ const Step2Component = ({ formId, onPrevious, onNext }) => {
             name="closing_time"
             showNow={false}
             disabledMinutes={disabledMinutes}
+            inputReadOnly
             use12Hours
             required
           />
@@ -133,6 +135,7 @@ const Step2Component = ({ formId, onPrevious, onNext }) => {
             name="lunch_start_time"
             showNow={false}
             disabledMinutes={disabledMinutes}
+            inputReadOnly
             use12Hours
             required
           />
@@ -151,6 +154,7 @@ const Step2Component = ({ formId, onPrevious, onNext }) => {
             name="lunch_end_time"
             showNow={false}
             disabledMinutes={disabledMinutes}
+            inputReadOnly
             use12Hours
             required
           />

@@ -122,6 +122,7 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
               showNow={false}
               disabledMinutes={disabledMinutes}
               use12Hours
+              inputReadOnly
             />
           </Form.Item>
           <Form.Item
@@ -138,6 +139,7 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
               showNow={false}
               disabledMinutes={disabledMinutes}
               use12Hours
+              inputReadOnly
             />
           </Form.Item>
         </div>
