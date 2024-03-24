@@ -22,25 +22,23 @@ const ShopsComponent = () => {
     {
       title: "Shop Name",
       dataIndex: "name",
+      align: "left",
       width: "40%",
       render: (text) => (
-        <div style={{ paddingLeft: "14px" }}>
-          <span
-            style={{
-              fontFamily: "Poppins-SemiBold",
-              color: "#192A3E",
-              fontSize: "0.75rem",
-            }}
-          >
-            {text && trimString(text, 40)}
-          </span>
-        </div>
+        <span
+          style={{
+            fontFamily: "Poppins-SemiBold",
+            color: "#192A3E",
+            fontSize: "0.75rem",
+          }}
+        >
+          {text && trimString(text, 40)}
+        </span>
       ),
     },
     {
       title: "Mobile No",
       dataIndex: "mobile_number",
-      align: "center",
       ellipsis: true,
       render: (text) => (
         <Text
@@ -48,6 +46,7 @@ const ShopsComponent = () => {
             fontFamily: "Poppins",
             color: "#90A0B7",
             fontSize: "0.75rem",
+            textAlign: "left",
           }}
         >
           {text}
@@ -57,14 +56,12 @@ const ShopsComponent = () => {
     {
       title: "Location",
       dataIndex: "location_name",
-      align: "center",
       ellipsis: true,
     },
     {
       title: "Edit",
       key: "Edit",
-      width: "15%",
-      align: "center",
+      width: "20%",
       render: (data, record) => (
         <>
           <Link to={`/${categoryId}/${category}/${data.shop_id}/edit#1`}>

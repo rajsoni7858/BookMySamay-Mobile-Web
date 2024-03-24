@@ -23,23 +23,20 @@ const HospitalsComponent = () => {
       dataIndex: "name",
       width: "40%",
       render: (text) => (
-        <div style={{ paddingLeft: "14px" }}>
-          <span
-            style={{
-              fontFamily: "Poppins-SemiBold",
-              color: "#192A3E",
-              fontSize: "0.75rem",
-            }}
-          >
-            {text && trimString(text, 40)}
-          </span>
-        </div>
+        <span
+          style={{
+            fontFamily: "Poppins-SemiBold",
+            color: "#192A3E",
+            fontSize: "0.75rem",
+          }}
+        >
+          {text && trimString(text, 40)}
+        </span>
       ),
     },
     {
       title: "Mobile No",
       dataIndex: "mobile_number",
-      align: "center",
       ellipsis: true,
       render: (text) => (
         <Text
@@ -56,7 +53,6 @@ const HospitalsComponent = () => {
     {
       title: "Location",
       dataIndex: "location_name",
-      align: "center",
       ellipsis: true,
     },
     {
