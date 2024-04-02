@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import SaveParams from "../../models/SaveParams";
 import { getOtp, verifyOtp } from "../../redux/actions";
+import OTPInput from "react-otp-input";
+import "./Login.css";
 
 const { Title } = Typography;
 
@@ -14,6 +16,7 @@ const LoginForm = () => {
 
   const [loading, setLoading] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
+  const [isEnableOTP, setIsEnableOTP] = useState(false);
 
   const handleVerifyOTPSuccessed = (data) => {
     localStorage.setItem("token", data.token);
@@ -42,6 +45,7 @@ const LoginForm = () => {
   const handleGetOTPSuccessed = () => {
     setLoading(false);
     setButtonClicked(false);
+    setIsEnableOTP(true);
   };
 
   const handleGetOTPFailed = () => {
@@ -64,10 +68,10 @@ const LoginForm = () => {
 
   const onFinish = async () => {
     form.validateFields().then((values) => {
-      if (values.email && !values.password) {
-        handleGetOTP(values.email);
-      } else if (values.email && values.password) {
-        handleVerifyOTP(values.email, values.password);
+      if (values.mobile && !values.otp) {
+        handleGetOTP(values.mobile);
+      } else if (values.mobile && values.otp) {
+        handleVerifyOTP(values.mobile, values.otp);
       }
     });
   };
@@ -108,7 +112,7 @@ const LoginForm = () => {
               layout="vertical"
             >
               {/* Logo */}
-              <div style={{ textAlign: "center", marginBottom: "20px" }}>
+              <div style={{ textAlign: "center" }}>
                 <img
                   src={require("../../Assets/Images/logo.png")}
                   alt="Your Logo"
@@ -119,27 +123,62 @@ const LoginForm = () => {
               {/* Title */}
               <Title
                 level={5}
-                style={{ textAlign: "center", color: "#1C4792" }}
+                style={{
+                  textAlign: "center",
+                  color: "#1C4792",
+                  marginTop: "20px",
+                  marginBottom: "20px",
+                }}
               >
                 Login To Dashboard
               </Title>
 
               <Form.Item
-                label="Email"
-                name="email"
-                rules={[{ message: "Please input your email!" }]}
+                label="Mobile number"
+                name="mobile"
+                rules={[{ message: "Please enter your mobile number" }]}
+                style={{ marginBottom: isEnableOTP ? "15px" : "24px" }}
               >
-                <Input placeholder="Enter your email" />
+                <Input
+                  style={{
+                    borderRadius: "5px",
+                    height: "38px",
+                    border: "1px solid #1C4792",
+                    fontFamily: "Inter",
+                  }}
+                  disabled={isEnableOTP}
+                  placeholder="Enter your mobile number"
+                />
               </Form.Item>
 
-              <Form.Item
-                className="inputfield"
-                label="Password"
-                name="password"
-                rules={[{ message: "Please input your password!" }]}
-              >
-                <Input.Password placeholder="Enter your password" />
-              </Form.Item>
+              {isEnableOTP && (
+                <Form.Item
+                  label="OTP"
+                  name="otp"
+                  rules={[{ message: "Please enter your OTP" }]}
+                >
+                  <OTPInput
+                    numInputs={6}
+                    renderSeparator={<span></span>}
+                    containerStyle={{
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                    renderInput={(props) => <input {...props} />}
+                    inputStyle={{
+                      width: "36px",
+                      height: "36px",
+                      margin: "0 6.5px",
+                      textAlign: "center",
+                      fontSize: "1em",
+                      border: "1px solid #ccc",
+                      borderRadius: "5px",
+                      outline: "none",
+                      fontFamily: "Inter",
+                    }}
+                  />
+                </Form.Item>
+              )}
 
               <Form.Item>
                 <Button
