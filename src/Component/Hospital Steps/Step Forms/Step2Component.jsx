@@ -155,6 +155,7 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
         >
           <InputNumber
             placeholder="Enter number of appointment"
+            type="number"
             style={{
               width: "100%",
               borderRadius: 8,
@@ -170,6 +171,7 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
         >
           <InputNumber
             placeholder="Enter appointment fee"
+            type="number"
             style={{
               width: "100%",
               borderRadius: 8,
