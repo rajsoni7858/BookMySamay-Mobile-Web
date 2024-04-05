@@ -164,11 +164,11 @@ const LoginForm = () => {
                       display: "flex",
                       justifyContent: "center",
                     }}
-                    renderInput={(props) => <input {...props} />}
+                    renderInput={(props) => <input type="number" {...props} />}
                     inputStyle={{
-                      width: "36px",
-                      height: "36px",
-                      margin: "0 6.5px",
+                      width: "9.1vw",
+                      height: "9.1vw",
+                      margin: "0 1vw",
                       textAlign: "center",
                       fontSize: "1em",
                       border: "1px solid #ccc",

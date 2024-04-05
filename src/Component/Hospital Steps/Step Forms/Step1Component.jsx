@@ -102,6 +102,12 @@ const Step1Component = ({ form, formId, onNext }) => {
             name: values.owner_name,
             mobile_number: values.mobile_number,
           },
+          shop_operational_details: {
+            op_type: null,
+            slot_duration: values.slot_duration,
+            speciality: values.speciality,
+            staff_count: values.staff_count,
+          },
         };
         sessionStorage.setItem(
           "salon",

@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
 import { convertToTitleCase, disabledMinutes } from "../../../utils/utils";
+import SaveParams from "../../../models/SaveParams";
+import { updateShop } from "../../../redux/actions";
+import { useDispatch } from "react-redux";
 
 const { Panel } = Collapse;
 
@@ -27,6 +30,7 @@ const initialTimeValues = Array.from({ length: 7 }, (_, dayIndex) => ({
 }));
 
 const Step2Component = ({ formId, onPrevious, onNext }) => {
+  const dispatch = useDispatch();
   let { categoryId, category } = useParams();
   const [timeValues, setTimeValues] = useState([]);
 
@@ -51,6 +55,10 @@ const Step2Component = ({ formId, onPrevious, onNext }) => {
     setTimeValues(newTimeValues);
   };
 
+  const handleShopSuccessed = (data) => {
+    onNext();
+  };
+
   const handleNext = async () => {
     const payload = timeValues.map((item) => {
       const is_open = item.opening_time && item.closing_time ? 1 : 0;
@@ -65,7 +73,19 @@ const Step2Component = ({ formId, onPrevious, onNext }) => {
       "salon",
       JSON.stringify({ ...storedData, shop_daily_operational_details: payload })
     );
-    onNext();
+
+    dispatch(
+      updateShop(
+        new SaveParams(
+          {
+            ...storedData,
+            shop_daily_operational_details: payload,
+          },
+          handleShopSuccessed,
+          () => {}
+        )
+      )
+    );
   };
 
   useEffect(() => {

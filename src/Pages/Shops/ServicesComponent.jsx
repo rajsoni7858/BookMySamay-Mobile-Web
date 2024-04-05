@@ -47,7 +47,7 @@ const ServicesComponent = (props) => {
           { ...serviceData, packages: filteredPackages },
           () => {
             history.goBack();
-            message.success("Services updated successfully!");
+            message.success(`${shopName} Services updated successfully!`);
           },
           () => {}
         )

@@ -150,6 +150,9 @@ const ServiceDetailsComponent = (props) => {
             title: shopName,
           },
           {
+            title: data?.service_type,
+          },
+          {
             title: "Services",
           },
         ]}
@@ -280,13 +283,28 @@ const ServiceDetailsComponent = (props) => {
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "row",
           justifyContent: "flex-end",
           alignItems: "center",
           marginBottom: "0.8rem",
           marginTop: "1.5rem",
         }}
       >
+        <Button
+          style={{
+            width: "80%",
+            color: "#1C4792",
+            borderColor: "#1C4792",
+            borderRadius: "12px",
+            fontFamily: "Poppins",
+            height: "2.5rem",
+            marginRight: "1rem",
+            background: "white",
+          }}
+          onClick={() => history.goBack()}
+        >
+          BACK
+        </Button>
         <Button
           style={{
             width: "80%",
