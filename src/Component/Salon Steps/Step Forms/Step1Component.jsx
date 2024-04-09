@@ -136,27 +136,34 @@ const Step1Component = ({ form, formId, onNext }) => {
                   lunch_start_time: "",
                   lunch_end_time: "",
                 }));
+          const updatePayload = {
+            ...storedData,
+            ...payload,
+            shop_daily_operational_details,
+            shop_operational_details: {
+              op_type: values.op_type,
+              slot_duration: values.slot_duration,
+              upi_id: storedData.upi_id || "",
+            },
+          };
           dispatch(
             updateShop(
               new SaveParams(
-                {
-                  ...storedData,
-                  ...payload,
-                  shop_daily_operational_details,
-                  shop_operational_details: {
-                    op_type: values.op_type,
-                    slot_duration: values.slot_duration,
-                    upi_id: storedData.upi_id || "",
-                  },
-                },
-                handleShopSuccessed,
+                updatePayload,
+                () => handleShopSuccessed(updatePayload),
                 () => {}
               )
             )
           );
         } else {
           dispatch(
-            saveShop(new SaveParams(payload, handleShopSuccessed, () => {}))
+            saveShop(
+              new SaveParams(
+                payload,
+                () => handleShopSuccessed(payload),
+                () => {}
+              )
+            )
           );
         }
       });

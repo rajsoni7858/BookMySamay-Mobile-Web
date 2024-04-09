@@ -55,6 +55,7 @@ const Dashboard = () => {
   }, [dispatch]);
 
   const category1 = require("../../../src/Assets/Images/salon.png");
+  const category2 = require("../../../src/Assets/Images/parlour.png");
   const category3 = require("../../../src/Assets/Images/hospital.jpeg");
 
   const handleCatrgoryUrl = (name, id) => {
@@ -186,7 +187,13 @@ const Dashboard = () => {
                 >
                   <img
                     alt="example"
-                    src={item.category_id === 3 ? category3 : category1}
+                    src={
+                      item.category_id === 3
+                        ? category3
+                        : index === 1
+                        ? category2
+                        : category1
+                    }
                     style={{
                       width: "10rem",
                       height: "10rem",

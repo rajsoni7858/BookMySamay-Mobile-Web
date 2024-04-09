@@ -15,7 +15,7 @@ const Step5Component = ({ form, formId, onPrevious }) => {
   const storedData = JSON.parse(sessionStorage.getItem("salon"));
 
   const handleShopSuccessed = () => {
-    message.success("Form submitted successfully!");
+    message.success(`${storedData.name} submitted successfully`);
     history.push("/3/hospital");
     sessionStorage.removeItem("salon");
   };

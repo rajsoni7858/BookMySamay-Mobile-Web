@@ -140,30 +140,38 @@ const Step1Component = ({ form, formId, onNext }) => {
           const updatedOperationalDetails = storedData.mr_details
             ? [storedData.mr_details, ...shop_daily_operational_details]
             : shop_daily_operational_details;
+
+          const updatedPayload = {
+            ...storedData,
+            ...payload,
+            shop_daily_operational_details: updatedOperationalDetails,
+            shop_operational_details: {
+              op_type: null,
+              slot_duration: values.slot_duration,
+              speciality: values.speciality,
+              staff_count: values.staff_count,
+              max_no_appointment: storedData.max_no_appointment,
+              upi_id: storedData.upi_id || "",
+            },
+          };
           dispatch(
             updateShop(
               new SaveParams(
-                {
-                  ...storedData,
-                  ...payload,
-                  shop_daily_operational_details: updatedOperationalDetails,
-                  shop_operational_details: {
-                    op_type: null,
-                    slot_duration: values.slot_duration,
-                    speciality: values.speciality,
-                    staff_count: values.staff_count,
-                    max_no_appointment: storedData.max_no_appointment,
-                    upi_id: storedData.upi_id || "",
-                  },
-                },
-                handleShopSuccessed,
+                updatedPayload,
+                () => handleShopSuccessed(updatedPayload),
                 () => {}
               )
             )
           );
         } else {
           dispatch(
-            saveShop(new SaveParams(payload, handleShopSuccessed, () => {}))
+            saveShop(
+              new SaveParams(
+                payload,
+                () => handleShopSuccessed(payload),
+                () => {}
+              )
+            )
           );
         }
       });
