@@ -55,9 +55,9 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
   useEffect(() => {
     const initialValue =
       storedData && formId === "editHospitalForm"
-        ? storedData?.is_marketing
+        ? !!storedData?.is_marketing
         : true;
-    setCheck(initialValue ?? false);
+    setCheck(initialValue);
   }, []);
 
   return (
