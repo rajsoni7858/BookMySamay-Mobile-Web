@@ -136,7 +136,7 @@ const ServiceDetailsComponent = (props) => {
         display: "flex",
         flex: 1,
         flexDirection: "column",
-        minHeight: "calc(100vh - 88px)",
+        minHeight: "calc(100dvh - 88px)",
         padding: "0 1.4rem",
         paddingTop: "2rem",
       }}

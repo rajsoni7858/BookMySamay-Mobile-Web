@@ -283,7 +283,12 @@ const Step1Component = ({ form, formId, onNext }) => {
           name="mobile_number"
           rules={[{ required: true, message: "Please enter mobile number" }]}
         >
-          <Input placeholder="Enter mobile no." maxLength={10} type="number" />
+          <Input
+            disabled={formId === "editHospitalForm"}
+            placeholder="Enter mobile no."
+            maxLength={10}
+            type="number"
+          />
         </Form.Item>
         <Form.Item
           label="Number of Doctors:"

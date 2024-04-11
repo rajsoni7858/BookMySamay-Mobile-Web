@@ -122,11 +122,11 @@ const ShopsComponent = () => {
     : data;
 
   return (
-    <div style={{ backgroundColor: "#eff3fd", height: "calc(100vh - 55px)" }}>
+    <div style={{ backgroundColor: "#eff3fd", height: "calc(100dvh - 55px)" }}>
       {shopsLoading ? (
         <div
           className="common__wrapper"
-          style={{ height: "calc(100vh - 100px)" }}
+          style={{ height: "calc(100dvh - 100px)" }}
         >
           <Spin size="large" />
         </div>

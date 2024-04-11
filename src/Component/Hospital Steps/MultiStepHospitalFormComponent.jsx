@@ -88,20 +88,28 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
   ];
 
   const handleLoadShopSuccessed = (data) => {
-    const marketingDetails = data.shop_daily_operational_details.filter(
+    const marketingDetails = data?.shop_daily_operational_details?.filter(
       (detail) => detail.op_type === "Marketing"
     );
-    const patientDetails = data.shop_daily_operational_details.filter(
+    const patientDetails = data?.shop_daily_operational_details?.filter(
       (detail) => detail.op_type === "Patient"
     );
+
+    const mrDetails =
+      marketingDetails?.length > 0
+        ? {
+            mr_details: marketingDetails[0],
+            day_of_week: marketingDetails[0]?.day_of_week,
+            opening_time: marketingDetails[0]?.opening_time,
+            closing_time: marketingDetails[0]?.closing_time,
+            detail_id: marketingDetails[0]?.detail_id,
+          }
+        : {};
+
     const updatedData = {
       ...data,
       ...data.shop_operational_details,
-      mr_details: marketingDetails[0],
-      day_of_week: marketingDetails[0]?.day_of_week,
-      opening_time: marketingDetails[0]?.opening_time,
-      closing_time: marketingDetails[0]?.closing_time,
-      detail_id: marketingDetails[0]?.detail_id,
+      ...mrDetails,
       shop_daily_operational_details: patientDetails,
       owner_name: data.staff.name,
       mobile_number: data.staff.mobile_number,
@@ -187,7 +195,7 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
             style={{
               display: "flex",
               flex: 1,
-              minHeight: "calc(100vh - 170px)",
+              minHeight: "calc(100dvh - 170px)",
               overflow: "auto",
             }}
           >

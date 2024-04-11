@@ -252,7 +252,7 @@ const ServicesComponent = (props) => {
       {serviceData.loading ? (
         <div
           className="common__wrapper"
-          style={{ height: "calc(100vh - 57px)" }}
+          style={{ height: "calc(100dvh - 57px)" }}
         >
           <Spin size="large" />
         </div>
@@ -263,7 +263,7 @@ const ServicesComponent = (props) => {
             display: "flex",
             flex: 1,
             flexDirection: "column",
-            minHeight: "calc(100vh - 88px)",
+            minHeight: "calc(100dvh - 88px)",
             padding: "0 1.4rem",
             paddingTop: "2rem",
           }}

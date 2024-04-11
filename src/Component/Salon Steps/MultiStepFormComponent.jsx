@@ -161,7 +161,7 @@ const MultiStepFormComponent = ({ form, formId }) => {
             style={{
               display: "flex",
               flex: 1,
-              minHeight: "calc(100vh - 170px)",
+              minHeight: "calc(100dvh - 170px)",
               overflow: "auto",
             }}
           >

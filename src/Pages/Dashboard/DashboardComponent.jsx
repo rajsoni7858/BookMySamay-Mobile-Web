@@ -65,7 +65,7 @@ const Dashboard = () => {
 
   return (
     <div
-      style={{ minHeight: "calc(100vh - 65px)", backgroundColor: "#FAFAFA" }}
+      style={{ minHeight: "calc(100dvh - 65px)", backgroundColor: "#FAFAFA" }}
     >
       <Row
         gutter={[48, 16]}

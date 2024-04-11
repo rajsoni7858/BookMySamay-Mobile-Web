@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Form,
@@ -11,10 +11,11 @@ import CustomBreadcrumb from "../../Breadcrumb/CustomBreadcrumbComponent";
 import "../Step.css";
 import { disabledMinutes } from "../../../utils/utils";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const Step2Component = ({ form, formId, onPrevious, onNext }) => {
   const storedData = JSON.parse(sessionStorage.getItem("salon"));
+  const [check, setCheck] = useState();
 
   const handleNext = async () => {
     try {
@@ -22,19 +23,27 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
         const payload = {
           ...values,
           op_type: "Marketing",
-          opening_time: values.opening_time.format("HH:mm"),
-          closing_time: values.closing_time.format("HH:mm"),
+          opening_time: values?.opening_time?.format("HH:mm"),
+          closing_time: values?.closing_time?.format("HH:mm"),
           detail_id: storedData?.detail_id,
         };
 
         sessionStorage.setItem(
           "salon",
-          JSON.stringify({
-            ...storedData,
-            mr_fee: values.mr_fee,
-            max_no_appointment: values.max_no_appointment,
-            mr_details: payload,
-          })
+          JSON.stringify(
+            check
+              ? {
+                  ...storedData,
+                  mr_fee: values.mr_fee,
+                  max_no_appointment: values.max_no_appointment,
+                  mr_details: payload,
+                  is_marketing: check,
+                }
+              : {
+                  ...storedData,
+                  is_marketing: check,
+                }
+          )
         );
         onNext();
       });
@@ -42,6 +51,14 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
       console.log("Validation failed:", errorInfo);
     }
   };
+
+  useEffect(() => {
+    const initialValue =
+      storedData && formId === "editHospitalForm"
+        ? storedData?.is_marketing
+        : true;
+    setCheck(initialValue ?? false);
+  }, []);
 
   return (
     <Form
@@ -87,99 +104,133 @@ const Step2Component = ({ form, formId, onPrevious, onNext }) => {
         </Title>
 
         {/* Content */}
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Form.Item
-            label="Day"
-            name="day_of_week"
-            style={{ width: "32%" }}
-            rules={[{ required: true, message: "Please select a day" }]}
+        <div
+          style={{
+            display: "flex",
+            marginBottom: "15px",
+            alignItems: "center",
+          }}
+        >
+          <input
+            type="checkbox"
+            id="checkbox"
+            checked={check}
+            onChange={(e) => setCheck(e.target.checked)}
+          />
+          <Text
+            style={{
+              fontFamily: "Poppins",
+              color: "black",
+              fontSize: "15px",
+              marginLeft: "6px",
+            }}
           >
-            <Select
-              placeholder="Select a day"
-              style={{ fontFamily: "Poppins", height: "38px" }}
-              options={[
-                { value: "Monday", label: "Monday" },
-                { value: "Tuesday", label: "Tuesday" },
-                { value: "Wednesday", label: "Wednesday" },
-                { value: "Thursday", label: "Thursday" },
-                { value: "Friday", label: "Friday" },
-                { value: "Saturday", label: "Saturday" },
-                { value: "Sunday", label: "Sunday" },
-              ]}
-            />
-          </Form.Item>
-          <Form.Item
-            label="Open At:"
-            name="opening_time"
-            style={{ width: "32%" }}
-            rules={[{ required: true, message: "Please select opening time" }]}
-          >
-            <TimePicker
-              style={{ width: "100%", height: "38px" }}
-              format="h:mm a"
-              minuteStep={15}
-              placeholder="Select Time"
-              showNow={false}
-              disabledMinutes={disabledMinutes}
-              use12Hours
-              inputReadOnly
-            />
-          </Form.Item>
-          <Form.Item
-            label="Close At:"
-            name="closing_time"
-            style={{ width: "32%" }}
-            rules={[{ required: true, message: "Please select closing time" }]}
-          >
-            <TimePicker
-              style={{ width: "100%", height: "38px" }}
-              format="h:mm a"
-              minuteStep={15}
-              placeholder="Select Time"
-              showNow={false}
-              disabledMinutes={disabledMinutes}
-              use12Hours
-              inputReadOnly
-            />
-          </Form.Item>
+            Check to add marketing details.
+          </Text>
         </div>
-        <Form.Item
-          label="Total Number of Appointment:"
-          name="max_no_appointment"
-          rules={[
-            {
-              required: true,
-              message: "Please enter total number of appointment",
-            },
-          ]}
-        >
-          <InputNumber
-            placeholder="Enter number of appointment"
-            type="number"
-            style={{
-              width: "100%",
-              borderRadius: 8,
-              padding: "0.2rem",
-              border: "1px solid #1C4792",
-            }}
-          />
-        </Form.Item>
-        <Form.Item
-          label="Appointment Fee:"
-          name="mr_fee"
-          rules={[{ required: true, message: "Please enter appointment fee" }]}
-        >
-          <InputNumber
-            placeholder="Enter appointment fee"
-            type="number"
-            style={{
-              width: "100%",
-              borderRadius: 8,
-              padding: "0.2rem",
-              border: "1px solid #1C4792",
-            }}
-          />
-        </Form.Item>
+        {check && (
+          <>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Form.Item
+                label="Day"
+                name="day_of_week"
+                style={{ width: "32%" }}
+                rules={[{ required: true, message: "Please select a day" }]}
+              >
+                <Select
+                  placeholder="Select a day"
+                  style={{ fontFamily: "Poppins", height: "38px" }}
+                  options={[
+                    { value: "Monday", label: "Monday" },
+                    { value: "Tuesday", label: "Tuesday" },
+                    { value: "Wednesday", label: "Wednesday" },
+                    { value: "Thursday", label: "Thursday" },
+                    { value: "Friday", label: "Friday" },
+                    { value: "Saturday", label: "Saturday" },
+                    { value: "Sunday", label: "Sunday" },
+                  ]}
+                />
+              </Form.Item>
+              <Form.Item
+                label="Open At:"
+                name="opening_time"
+                style={{ width: "32%" }}
+                rules={[
+                  { required: true, message: "Please select opening time" },
+                ]}
+              >
+                <TimePicker
+                  style={{ width: "100%", height: "38px" }}
+                  format="h:mm a"
+                  minuteStep={15}
+                  placeholder="Select Time"
+                  showNow={false}
+                  disabledMinutes={disabledMinutes}
+                  use12Hours
+                  inputReadOnly
+                />
+              </Form.Item>
+              <Form.Item
+                label="Close At:"
+                name="closing_time"
+                style={{ width: "32%" }}
+                rules={[
+                  { required: true, message: "Please select closing time" },
+                ]}
+              >
+                <TimePicker
+                  style={{ width: "100%", height: "38px" }}
+                  format="h:mm a"
+                  minuteStep={15}
+                  placeholder="Select Time"
+                  showNow={false}
+                  disabledMinutes={disabledMinutes}
+                  use12Hours
+                  inputReadOnly
+                />
+              </Form.Item>
+            </div>
+            <Form.Item
+              label="Total Number of Appointment:"
+              name="max_no_appointment"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter total number of appointment",
+                },
+              ]}
+            >
+              <InputNumber
+                placeholder="Enter number of appointment"
+                type="number"
+                style={{
+                  width: "100%",
+                  borderRadius: 8,
+                  padding: "0.2rem",
+                  border: "1px solid #1C4792",
+                }}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Appointment Fee:"
+              name="mr_fee"
+              rules={[
+                { required: true, message: "Please enter appointment fee" },
+              ]}
+            >
+              <InputNumber
+                placeholder="Enter appointment fee"
+                type="number"
+                style={{
+                  width: "100%",
+                  borderRadius: 8,
+                  padding: "0.2rem",
+                  border: "1px solid #1C4792",
+                }}
+              />
+            </Form.Item>
+          </>
+        )}
       </div>
 
       <div

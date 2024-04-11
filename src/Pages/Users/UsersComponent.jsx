@@ -116,7 +116,7 @@ const UsersComponent = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "#eff3fd", height: "calc(100vh - 55px)" }}>
+    <div style={{ backgroundColor: "#eff3fd", height: "calc(100dvh - 55px)" }}>
       <Content style={{ padding: "1.2rem", minHeight: 280 }}>
         {/* Table */}
         <Table bordered dataSource={data} columns={columns} />
