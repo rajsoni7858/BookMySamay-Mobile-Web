@@ -100,7 +100,7 @@ const Dashboard = () => {
         </Col>
 
         {/* 1 */}
-        <Col xs={12} sm={12} md={12} lg={8} xl={6} style={{ padding: "10px" }}>
+        {/* <Col xs={12} sm={12} md={12} lg={8} xl={6} style={{ padding: "10px" }}>
           <Card
             bordered={false}
             bodyStyle={{
@@ -119,10 +119,10 @@ const Dashboard = () => {
               {renderTitle("Total Member")}
             </div>
           </Card>
-        </Col>
+        </Col> */}
 
         {/* 2 */}
-        <Col xs={12} sm={12} md={12} lg={8} xl={6} style={{ padding: "10px" }}>
+        {/* <Col xs={12} sm={12} md={12} lg={8} xl={6} style={{ padding: "10px" }}>
           <Card
             bordered={false}
             bodyStyle={{
@@ -141,10 +141,10 @@ const Dashboard = () => {
               {renderTitle("Active Member")}
             </div>
           </Card>
-        </Col>
+        </Col> */}
 
         {/* 3 */}
-        <Col xs={12} sm={12} md={12} lg={8} xl={6} style={{ padding: "10px" }}>
+        {/* <Col xs={12} sm={12} md={12} lg={8} xl={6} style={{ padding: "10px" }}>
           <Card
             bordered={false}
             bodyStyle={{
@@ -163,7 +163,7 @@ const Dashboard = () => {
               {renderTitle("Inactive Member")}
             </div>
           </Card>
-        </Col>
+        </Col> */}
       </Row>
 
       <Row
@@ -213,7 +213,7 @@ const Dashboard = () => {
             >
               <Meta
                 className="meta"
-                title={item.name}
+                title={`${item.name} (${item.shop_count})`}
                 description={`To Add or fill the details of ${item.name} “Click on the ${item.name}”`}
                 style={{ padding: "0", paddingBottom: "5px" }}
               />
