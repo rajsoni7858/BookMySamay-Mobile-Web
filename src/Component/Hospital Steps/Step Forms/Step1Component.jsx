@@ -85,8 +85,11 @@ const Step1Component = ({ form, formId, onNext }) => {
     }
   };
 
-  const handleShopSuccessed = (data) => {
-    sessionStorage.setItem("salon", JSON.stringify({ ...storedData, ...data }));
+  const handleShopSuccessed = (data, response) => {
+    sessionStorage.setItem(
+      "salon",
+      JSON.stringify({ ...storedData, ...data, ...response })
+    );
     onNext();
   };
 
@@ -158,7 +161,7 @@ const Step1Component = ({ form, formId, onNext }) => {
             updateShop(
               new SaveParams(
                 updatedPayload,
-                () => handleShopSuccessed(updatedPayload),
+                (response) => handleShopSuccessed(updatedPayload, response),
                 () => {}
               )
             )
@@ -168,7 +171,7 @@ const Step1Component = ({ form, formId, onNext }) => {
             saveShop(
               new SaveParams(
                 payload,
-                () => handleShopSuccessed(payload),
+                (response) => handleShopSuccessed(payload, response),
                 () => {}
               )
             )

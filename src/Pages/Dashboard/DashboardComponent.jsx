@@ -60,7 +60,7 @@ const Dashboard = () => {
 
   const handleCatrgoryUrl = (name, id) => {
     const updatedName = name && name.toLowerCase().replace(/ /g, "-");
-    return `/${id}/${updatedName}/add#1`;
+    return `/${id}/${updatedName}`;
   };
 
   return (
