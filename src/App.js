@@ -18,6 +18,7 @@ const App = () => {
   const isLoggedIn = useSelector((state) => state.SaveOTP.isLoggedIn);
 
   useEffect(() => {
+    localStorage.removeItem("salon");
     const token = localStorage.getItem("token");
     if (token) {
       dispatch(verifyOtpSucceeded());
