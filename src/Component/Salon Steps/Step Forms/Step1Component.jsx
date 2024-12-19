@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Form, Input, Select, Typography } from "antd";
+import { Button, Form, Input, message, Select, Typography } from "antd";
 import { useDispatch } from "react-redux";
 import SaveParams from "../../../models/SaveParams";
 import { saveShop, updateShop } from "../../../redux/actions/shopActions";
@@ -87,11 +87,20 @@ const Step1Component = ({ form, formId, onNext }) => {
   };
 
   const handleShopSuccessed = (data, response) => {
-    sessionStorage.setItem(
-      "salon",
-      JSON.stringify({ ...storedData, ...data, ...response })
-    );
-    onNext();
+    if (response?.shop_id) {
+      sessionStorage.setItem(
+        "salon",
+        JSON.stringify({
+          ...storedData,
+          ...data,
+          ...response,
+          shop_id: response?.shop_id,
+        })
+      );
+      onNext();
+    } else {
+      message.error(response?.message);
+    }
   };
 
   const handleNext = async () => {

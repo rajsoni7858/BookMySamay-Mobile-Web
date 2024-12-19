@@ -40,7 +40,10 @@ instance.interceptors.response.use(
     if (error.response) {
       if (error.response.status === 401 || error.response.status === 403) {
         handleUnauthorized();
-      } else if (error.response.status === 400) {
+      } else if (
+        error.response.status === 400 ||
+        error.response.status === 500
+      ) {
         message.error(
           error.response?.data?.message || "Oops! Something went wrong."
         );
