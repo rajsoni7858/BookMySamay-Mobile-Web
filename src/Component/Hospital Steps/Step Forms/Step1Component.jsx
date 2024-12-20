@@ -94,20 +94,20 @@ const Step1Component = ({ form, formId, onNext }) => {
   };
 
   const handleShopSuccessed = (data, response) => {
-    if (response?.shop_id) {
-      sessionStorage.setItem(
-        "salon",
-        JSON.stringify({
-          ...storedData,
-          ...data,
-          ...response,
-          shop_id: response?.shop_id,
-        })
-      );
-      onNext();
-    } else {
-      message.error(response?.message);
-    }
+    sessionStorage.setItem(
+      "salon",
+      JSON.stringify({
+        ...storedData,
+        ...data,
+        ...response,
+        shop_id: response?.shop_id,
+      })
+    );
+    onNext();
+  };
+
+  const handleShopfailed = (response) => {
+    response?.message && message.error(response?.message);
   };
 
   const handleNext = async () => {
@@ -179,7 +179,7 @@ const Step1Component = ({ form, formId, onNext }) => {
               new SaveParams(
                 updatedPayload,
                 (response) => handleShopSuccessed(updatedPayload, response),
-                () => {}
+                (error) => handleShopfailed(error)
               )
             )
           );
@@ -189,7 +189,7 @@ const Step1Component = ({ form, formId, onNext }) => {
               new SaveParams(
                 payload,
                 (response) => handleShopSuccessed(payload, response),
-                () => {}
+                (error) => handleShopfailed(error)
               )
             )
           );
@@ -308,6 +308,7 @@ const Step1Component = ({ form, formId, onNext }) => {
             placeholder="Enter mobile no."
             maxLength={10}
             type="number"
+            onWheel={(e) => e.target.blur()}
           />
         </Form.Item>
         <Form.Item

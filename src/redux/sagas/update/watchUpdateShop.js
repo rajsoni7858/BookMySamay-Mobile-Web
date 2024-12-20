@@ -14,7 +14,7 @@ function* processUpdateShop(params) {
       yield call(onSuccess, response.data);
     } else {
       yield put(updateShopFailed());
-      yield call(onFailure, response.statusText);
+      yield call(onFailure, response.data);
     }
   } catch (error) {
     yield put(updateShopFailed());

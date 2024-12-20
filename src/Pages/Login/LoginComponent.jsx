@@ -159,22 +159,25 @@ const LoginForm = () => {
                 >
                   <OTPInput
                     numInputs={6}
-                    renderSeparator={<span></span>}
+                    renderSeparator={<span style={{ margin: "0 5px" }}></span>} // Adjust spacing between inputs
                     containerStyle={{
                       display: "flex",
-                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "7px", // Add gap for consistent spacing
                     }}
                     renderInput={(props) => <input type="number" {...props} />}
                     inputStyle={{
-                      width: "32px",
-                      height: "32px",
-                      margin: "0 10px",
+                      width: "32px", // Adjust input width for better padding
+                      height: "32px", // Adjust height to balance the padding
+                      padding: "0", // Remove padding to avoid overlap
+                      margin: "0", // Reset margin to prevent extra space
                       textAlign: "center",
-                      fontSize: "1em",
-                      border: "1px solid #ccc",
+                      fontSize: "1rem",
+                      border: "1px solid #ccc", // Ensure border is visible
                       borderRadius: "5px",
                       outline: "none",
                       fontFamily: "Inter",
+                      boxSizing: "border-box", // Include padding and border in width/height
                     }}
                   />
                 </Form.Item>

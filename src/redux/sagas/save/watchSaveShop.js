@@ -14,13 +14,10 @@ function* processSaveShop(params) {
 
     if (response.status === 200 && response.data.success) {
       yield put(saveShopSucceeded());
-      yield call(
-        onSuccess,
-        response.data.success ? response.data.shop : response.data
-      );
+      yield call(onSuccess, response.data.shop);
     } else {
       yield put(saveShopFailed());
-      yield call(onFailure, response.statusText);
+      yield call(onFailure, response.data);
     }
   } catch (error) {
     yield put(saveShopFailed());
