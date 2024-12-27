@@ -26,12 +26,9 @@ const Step5Component = ({ form, formId, onPrevious }) => {
       .then((values) => {
         const payload = {
           ...storedData,
-          shop_daily_operational_details: storedData?.mr_details
-            ? [
-                storedData.mr_details,
-                ...(storedData.shop_daily_operational_details || []),
-              ]
-            : [...(storedData.shop_daily_operational_details || [])],
+          shop_daily_operational_details: [
+            ...(storedData.shop_daily_operational_details || []),
+          ],
           shop_operational_details: {
             op_type: storedData.op_type,
             slot_duration: storedData.slot_duration,

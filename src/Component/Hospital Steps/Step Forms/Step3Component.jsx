@@ -67,9 +67,16 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
       };
     });
 
+    const updatedOperationalDetails = storedData.mr_details
+      ? [storedData.mr_details, ...payload]
+      : payload;
+
     sessionStorage.setItem(
       "salon",
-      JSON.stringify({ ...storedData, shop_daily_operational_details: payload })
+      JSON.stringify({
+        ...storedData,
+        shop_daily_operational_details: updatedOperationalDetails,
+      })
     );
 
     dispatch(
@@ -77,7 +84,7 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
         new SaveParams(
           {
             ...storedData,
-            shop_daily_operational_details: payload,
+            shop_daily_operational_details: updatedOperationalDetails,
           },
           handleShopSuccessed,
           () => {}
@@ -88,7 +95,11 @@ const Step3Component = ({ formId, onPrevious, onNext }) => {
 
   useEffect(() => {
     if (storedData && storedData.shop_daily_operational_details) {
-      setTimeValues(storedData.shop_daily_operational_details);
+      const filteredDetails = storedData.shop_daily_operational_details.filter(
+        (detail) => detail.op_type !== "Marketing"
+      );
+
+      setTimeValues(filteredDetails);
     } else {
       setTimeValues(initialTimeValues);
     }
