@@ -113,6 +113,7 @@ const MultiStepHospitalFormComponent = ({ form, formId }) => {
       shop_daily_operational_details: patientDetails,
       owner_name: data.staff.name,
       mobile_number: data.staff.mobile_number,
+      location_name: `${data.location_name} - ${data.postcode}`,
     };
     sessionStorage.setItem("salon", JSON.stringify(updatedData));
   };

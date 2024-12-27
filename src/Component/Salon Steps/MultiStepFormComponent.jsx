@@ -79,6 +79,7 @@ const MultiStepFormComponent = ({ form, formId }) => {
     const updatedData = {
       ...data,
       ...data.shop_operational_details,
+      location_name: `${data.location_name} - ${data.postcode}`,
       owner_name: data.staff.name,
       mobile_number: data.staff.mobile_number,
     };

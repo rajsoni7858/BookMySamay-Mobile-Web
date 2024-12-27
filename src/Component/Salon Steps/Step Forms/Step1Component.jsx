@@ -14,11 +14,10 @@ const { Title } = Typography;
 const Step1Component = ({ form, formId, onNext }) => {
   const dispatch = useDispatch();
   let { categoryId } = useParams();
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
   const [searchQuery, setSearchQuery] = useState();
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
+  const [executionCount, setExecutionCount] = useState(0);
 
   const cancelTokenRef = useRef(null);
 
@@ -70,8 +69,6 @@ const Step1Component = ({ form, formId, onNext }) => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setLatitude(latitude);
-          setLongitude(longitude);
           const url = {
             url: `location_lat=${latitude}&location_lng=${longitude}`,
           };
@@ -93,7 +90,7 @@ const Step1Component = ({ form, formId, onNext }) => {
         ...storedData,
         ...data,
         ...response,
-        shop_id: response?.shop_id,
+        shop_id: data?.shop_id || response?.shop_id,
       })
     );
     onNext();
@@ -104,14 +101,20 @@ const Step1Component = ({ form, formId, onNext }) => {
   };
 
   const handleNext = async () => {
-    // onNext();
     try {
       await form.validateFields().then((values) => {
+        const location_name = values.location_name.split(" - ")[0];
+        const matchingRecord = results.find(
+          (record) => record.name === location_name
+        );
+
         const payload = {
           ...values,
+          location_name: location_name,
           category_id: categoryId,
-          location_lat: latitude,
-          location_lng: longitude,
+          location_lat: matchingRecord?.latitude,
+          location_lng: matchingRecord?.longitude,
+          location_id: matchingRecord?.location_id,
           staff: {
             name: values.owner_name,
             mobile_number: values.mobile_number,
@@ -185,14 +188,27 @@ const Step1Component = ({ form, formId, onNext }) => {
   };
 
   useEffect(() => {
-    if (storedData) {
+    if (executionCount < 2 && storedData) {
+      const name = storedData.location_name.split(" - ");
       form.setFieldsValue(storedData);
-    }
-  }, [form, storedData]);
+      // Optionally set results
+      setResults([
+        {
+          name: name[0],
+          postcode: name[1],
+          latitude: storedData.location_lat,
+          longitude: storedData.location_lng,
+          location_id: storedData.location_id,
+        },
+      ]);
 
-  useEffect(() => {
-    handleGetLocation();
-  }, []);
+      // Increment the counter
+      setExecutionCount((prevCount) => prevCount + 1);
+    } else if (executionCount < 2) {
+      handleGetLocation();
+      setExecutionCount((prevCount) => prevCount + 1);
+    }
+  }, [form, storedData, executionCount]);
 
   return (
     <Form
@@ -266,8 +282,8 @@ const Step1Component = ({ form, formId, onNext }) => {
             onSearch={handleSearch}
             notFoundContent={null}
             options={results.map((location, index) => ({
-              value: location.name,
-              label: location.name,
+              value: location.name + " - " + location.postcode,
+              label: location.name + " - " + location.postcode,
             }))}
           />
         </Form.Item>
